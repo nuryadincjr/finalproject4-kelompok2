@@ -6,4 +6,10 @@
     tools:context=".fragment.ProfileFragment">
 
 
+    <TextView
+        android:id="@+id/tvLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="logout"
+        android:layout_gravity="center"/>
 </FrameLayout>

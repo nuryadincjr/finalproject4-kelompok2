@@ -1,16 +1,20 @@
 package com.nuryadincjr.ebusantara.fragment;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nuryadincjr.ebusantara.R;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.nuryadincjr.ebusantara.databinding.FragmentProfileBinding;
 
 public class ProfileFragment extends Fragment {
+
+    private FragmentProfileBinding binding;
+    private FirebaseAuth auth;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -22,9 +26,16 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
+
+        auth = FirebaseAuth.getInstance();
+        binding.tvLogout.setOnClickListener(v -> {
+            auth.signOut();
+            requireActivity().finishAffinity();
+        });
+
+        return binding.getRoot();
     }
 }

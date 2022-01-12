@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "674799976836",
+    "project_id": "ebusantara-d16aa",
+    "storage_bucket": "ebusantara-d16aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674799976836:android:312b85684c0dbb3b501dd1",
+        "android_client_info": {
+          "package_name": "com.nuryadincjr.ebusantara"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674799976836-elrothd90st0svg1to0n73nnk6nbk9rq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nuryadincjr.ebusantara",
+            "certificate_hash": "7dd706cbb33e3b1aa289d30e2addbe21e2211e3c"
+          }
+        },
+        {
+          "client_id": "674799976836-45jshh39rniiqjb2v9jo9ruev362obqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp8G9dLSWUQoskUdnI8abkF14UjWTpzqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674799976836-45jshh39rniiqjb2v9jo9ruev362obqt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
