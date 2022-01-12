@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?selectableItemBackground"
+    android:layout_marginBottom="15dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:paddingTop="3dp"
+    android:paddingBottom="3dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_extrabold"
+        android:textStyle="bold"
+        tools:text="Pekanbaru" />
+
+    <TextView
+        android:id="@+id/tvTerminal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/lato"
+        android:textSize="12sp"
+        tools:text="Terminal Bandaraya" />
+</LinearLayout>

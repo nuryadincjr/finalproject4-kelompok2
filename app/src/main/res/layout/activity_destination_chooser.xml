@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_ed"
+    android:orientation="vertical"
+    tools:context=".chooser.DestinationChooserActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/p20">
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/m10"
+            android:layout_weight="1"
+            android:background="@drawable/selector_btn_rectangle"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="@dimen/p10"
+            android:elevation="@dimen/e8"
+            android:fontFamily="@font/nunito_extrabold"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            app:drawableTint="@color/red_selector"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="Cianjur" />
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="?selectableItemBackground"
+            android:fontFamily="@font/lato_bold"
+            android:padding="@dimen/p10"
+            android:text="@string/str_cancel"
+            android:textColor="@color/black"
+            android:textSize="@dimen/s18" />
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/m30"
+                android:layout_marginBottom="@dimen/m20"
+                android:fontFamily="@font/lato"
+                android:text="@string/str_nearby"
+                tools:ignore="TextContrastCheck" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_destination_search"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

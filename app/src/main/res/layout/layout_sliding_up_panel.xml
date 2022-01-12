@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="@dimen/p20"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="90dp"
+        android:layout_height="5dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/gray_e5"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_extrabold"
+        android:text="@string/str_title_sliding"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/lato"
+        android:text="@string/str_sliding_description"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tvPassenger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:gravity="center"
+        android:textColor="@color/primary_hover"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:text="@string/str_default_count" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center"
+        android:text="@string/str_passenger"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:thumbTint="@color/primary_hover"
+        android:layout_marginBottom="40dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/nunito_extrabold"
+            android:textStyle="bold"
+            android:textColor="@color/primary_light"
+            android:textSize="@dimen/s12"
+            android:text="@string/str_cancel"
+            android:background="@drawable/selector_btn"
+            app:backgroundTint="@color/gray_e5"
+            style="?android:attr/buttonBarButtonStyle" />
+
+        <Button
+            android:id="@+id/btnSelectedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textSize="@dimen/s12"
+            android:textColor="@color/white"
+            android:text="@string/str_select"
+            android:fontFamily="@font/nunito_extrabold"
+            android:background="@drawable/selector_btn"
+            app:backgroundTint="@null"
+            style="?android:attr/buttonBarButtonStyle" />
+    </LinearLayout>
+</LinearLayout>

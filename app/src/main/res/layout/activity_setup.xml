@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/p30"
+    tools:context=".login.SetupActivity">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/nunito_extrabold"
+        android:text="@string/str_almost_there"
+        android:textColor="@color/black"
+        android:textSize="@dimen/s22"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintStart_toStartOf="@+id/tvDescription"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/lato"
+        android:text="@string/str_setup_description"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/ivIllustrator"
+        app:layout_constraintStart_toStartOf="@+id/ivIllustrator"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <ImageView
+        android:id="@+id/ivIllustrator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m30"
+        android:src="@drawable/ic_illustration_setup"
+        app:layout_constraintEnd_toEndOf="@+id/tvLabel"
+        app:layout_constraintStart_toStartOf="@+id/tvLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescription"
+        android:contentDescription="@string/app_name" />
+
+    <TextView
+        android:id="@+id/tvLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/nunito_extrabold"
+        android:text="@string/str_phone_number"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/etPhoneNumber"
+        app:layout_constraintEnd_toEndOf="@+id/etPhoneNumber"
+        app:layout_constraintStart_toStartOf="@+id/etPhoneNumber" />
+
+    <EditText
+        android:id="@+id/etPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/selector_input"
+        android:drawableStart="@drawable/ic_phone"
+        android:drawablePadding="@dimen/p30"
+        android:fontFamily="@font/nunito_extrabold"
+        android:hint="@string/str_your_phone_numbers_here"
+        android:inputType="phone"
+        android:padding="@dimen/p13"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveNumber"
+        app:layout_constraintEnd_toEndOf="@+id/btnSaveNumber"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="@+id/btnSaveNumber" />
+
+    <Button
+        android:id="@+id/btnSaveNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_btn"
+        android:fontFamily="@font/nunito_extrabold"
+        android:text="@string/str_save_number"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        android:textSize="@dimen/s12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

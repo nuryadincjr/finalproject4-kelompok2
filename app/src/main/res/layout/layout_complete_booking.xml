@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_ed"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/m20"
+                android:layout_marginTop="@dimen/m20"
+                android:layout_marginRight="@dimen/m20"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="@string/str_personal_information"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="@dimen/m20"
+                android:layout_marginRight="@dimen/m20"
+                android:layout_marginBottom="5dp"
+                android:elevation="@dimen/e8"
+                app:cardCornerRadius="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/p20">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:fontFamily="@font/lato"
+                            android:text="@string/str_name"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/s18"
+                            android:textStyle="bold"
+                            tools:text="John Doe, 24" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/gray_ed" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:padding="20dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:fontFamily="@font/lato"
+                                android:text="@string/str_phone_number"
+                                android:textSize="@dimen/s12" />
+
+                            <TextView
+                                android:id="@+id/tvPhoneNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_extrabold"
+                                android:textStyle="bold"
+                                tools:text="08123990823" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:fontFamily="@font/lato"
+                                android:text="@string/str_seats"
+                                android:textSize="@dimen/s12" />
+
+                            <TextView
+                                android:id="@+id/tvSeats"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_extrabold"
+                                android:text="@string/str_default_count"
+                                android:textStyle="bold"
+                                tools:text="2" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/m20"
+                android:layout_marginLeft="@dimen/m20"
+                android:layout_marginRight="@dimen/m20"
+                android:layout_marginBottom="5dp"
+                android:text="@string/str_payment_information"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="@dimen/m20"
+                android:layout_marginRight="@dimen/m20"
+                android:layout_marginBottom="5dp"
+                android:elevation="@dimen/e8"
+                app:cardCornerRadius="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:padding="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_marginBottom="@dimen/p10"
+                                android:padding="2dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato"
+                                    android:text="@string/str_po_name"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tvPOName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/nunito_extrabold"
+                                    android:textColor="@color/primary_light"
+                                    android:textStyle="bold"
+                                    tools:text="Sempati Star" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvDepartureTime"
+                                    android:layout_width="60dp"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="@font/nunito_extrabold"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    tools:text="17:35" />
+
+                                <TextView
+                                    android:id="@+id/tvDeparture"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="@font/nunito_extrabold"
+                                    android:gravity="center|start"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    tools:text="MEDAN" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:padding="2dp">
+
+                                <View
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:background="@drawable/bg_track" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tvTerminalDeparture"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/lato"
+                                        android:textSize="12sp"
+                                        tools:text="Terminal Amplas" />
+
+                                    <TextView
+                                        android:id="@+id/tvDepartureDate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/lato"
+                                        android:textSize="12sp"
+                                        tools:text="23 Jul 2019" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:padding="2dp">
+
+                                <TextView
+                                    android:id="@+id/tvArrivalTime"
+                                    android:layout_width="60dp"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="@font/nunito_extrabold"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    tools:text="09:10" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tvArrival"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/nunito_extrabold"
+                                        android:gravity="center|start"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/s12"
+                                        android:textStyle="bold"
+                                        tools:text="REKANBARU" />
+
+                                    <TextView
+                                        android:id="@+id/tvTerminalArrival"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/lato"
+                                        android:textSize="12sp"
+                                        tools:text="Terminal Bandaraya" />
+
+                                    <TextView
+                                        android:id="@+id/tvArrivalDate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/lato"
+                                        android:paddingTop="5dp"
+                                        android:textSize="12sp"
+                                        tools:text="24 Jul 2019" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato"
+                                android:paddingTop="10dp"
+                                android:text="@string/str_bus_no"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvBusNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_extrabold"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                tools:text="P 9123 NN" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="10dp"
+                                android:text="@string/str_estimated_time"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/lato" />
+
+                            <TextView
+                                android:id="@+id/textV4334iew"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:text="13h45m"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView123321"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato"
+                                android:paddingTop="10dp"
+                                android:text="@string/str_seat_no"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvSeatsNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_extrabold"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                tools:text="9, 10" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="20dp"
+                        android:background="@color/gray_ed"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/lato_bold"
+                                android:text="Tickets"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvTickets"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/lato"
+                                android:gravity="end"
+                                tools:text="2 x Rp166.000,00" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/lato_bold"
+                                android:text="@string/str_unique_code"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvUniqueCode"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/lato"
+                                android:gravity="end"
+                                tools:text="333" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="20dp"
+                        android:background="@color/primary_light"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:text="@string/str_total"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:gravity="end"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="Rp332.333,00" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

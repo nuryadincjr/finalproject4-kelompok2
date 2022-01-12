@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/p30"
+    tools:context=".login.FinishRegistrationActivity">
+
+    <ImageView
+        android:id="@+id/ivBackArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/str_todo_back_button"
+        android:padding="@dimen/p10"
+        android:src="@drawable/ic_back_arrow"
+        app:layout_constraintEnd_toStartOf="@+id/ivBrand"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivBrand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_brand_bar"
+        app:layout_constraintBottom_toTopOf="@+id/ivIllustrator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivIllustrator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m80"
+        android:contentDescription="@string/str_todo_image_illustrator"
+        android:src="@drawable/ic_illustration_finish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivBrand" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m50"
+        android:fontFamily="@font/nunito_extrabold"
+        android:gravity="center"
+        android:text="@string/str_everything_s_up"
+        android:textColor="@color/black"
+        android:textSize="@dimen/s22"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintStart_toStartOf="@+id/tvDescription"
+        app:layout_constraintTop_toBottomOf="@+id/ivIllustrator" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="76dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="76dp"
+        android:fontFamily="@font/lato"
+        android:gravity="center"
+        android:lineHeight="28dp"
+        android:text="@string/str_finish_description"
+        android:textSize="@dimen/s12"
+        app:layout_constraintEnd_toEndOf="@+id/btnTakeHome"
+        app:layout_constraintStart_toStartOf="@+id/btnTakeHome"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <Button
+        android:id="@+id/btnTakeHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_btn"
+        android:fontFamily="@font/nunito_extrabold"
+        android:text="@string/str_take_me_to_e_busantara"
+        android:textSize="@dimen/s12"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

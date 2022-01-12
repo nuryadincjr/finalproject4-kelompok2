@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nuryadincjr.ebusantara">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Ebusantara.NoActionBar">
+        <activity
+            android:name=".dataview.TicketDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".payment.CreditCardVerificationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".payment.RetailPaymentVerificationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".payment.BankTransferVerificationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".payment.BankTransferActivity"
+            android:exported="true" />
+        <activity
+            android:name=".payment.PaymentActivity"
+            android:exported="true" />
+        <activity
+            android:name=".payment.DetailPaymentActivity"
+            android:exported="true" />
+        <activity
+            android:name=".dataview.SeatsChooserActivity"
+            android:exported="true" />
+        <activity
+            android:name=".dataview.BusDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".dataview.BusChooserActivity"
+            android:exported="true" />
+        <activity
+            android:name=".chooser.DatePickerActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Ebusantara.NoActionBar.FullScreen" />
+        <activity
+            android:name=".chooser.DestinationChooserActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Ebusantara.NoActionBar.FullScreen" />
+        <activity
+            android:name=".login.FinishRegistrationActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Ebusantara.NoActionBar.FullScreen" />
+        <activity
+            android:name=".login.SetupActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Ebusantara.NoActionBar.FullScreen" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Ebusantara.NoActionBar.FullScreen" />
+        <activity
+            android:name=".login.SplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Ebusantara.NoActionBar.FullScreen" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

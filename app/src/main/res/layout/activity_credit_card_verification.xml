@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_ed"
+    tools:context=".payment.CreditCardVerificationActivity">
+
+    <include android:id="@+id/appbar"
+        layout="@layout/layout_appbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appbar"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_total_payment" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:elevation="8dp"
+                    app:cardCornerRadius="6dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:text="@string/str_card_number"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/etPhoneNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="24dp"
+                            android:background="@drawable/selector_input"
+                            android:drawableStart="@drawable/ic_cc_visa"
+                            android:drawablePadding="20dp"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:hint="@string/str_hide_number"
+                            android:padding="16dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:text="@string/str_valid_until"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/etMonth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:layout_marginBottom="24dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/selector_input"
+                                android:fontFamily="@font/nunito_extrabold"
+                                android:hint="@string/str_month"
+                                android:inputType="number"
+                                android:padding="16dp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/etYear"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginBottom="24dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/selector_input"
+                                android:drawablePadding="20dp"
+                                android:fontFamily="@font/nunito_extrabold"
+                                android:hint="@string/str_year"
+                                android:inputType="number"
+                                android:minHeight="48dp"
+                                android:padding="16dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:text="@string/str_card_holder"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/etSurname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="24dp"
+                            android:background="@drawable/selector_input"
+                            android:drawablePadding="20dp"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:hint="@string/str_surname"
+                            android:inputType="number"
+                            android:padding="16dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:text="@string/str_vcc"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/etVcc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:layout_marginBottom="24dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/selector_input"
+                                android:fontFamily="@font/nunito_extrabold"
+                                android:hint="@string/str_surname"
+                                android:inputType="number"
+                                android:padding="16dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="5dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/lato"
+                                android:text="@string/str_credit_description" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnVerifyPayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/m20"
+        android:background="@drawable/selector_btn"
+        android:fontFamily="@font/nunito_extrabold"
+        android:text="@string/str_verify_payment"
+        android:textSize="@dimen/s12"
+        app:backgroundTint="@null" />
+</RelativeLayout>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_ed"
+    tools:context=".payment.RetailPaymentVerificationActivity">
+
+    <include android:id="@+id/appbar"
+        layout="@layout/layout_appbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appbar"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_total_payment"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:elevation="8dp"
+                    app:cardCornerRadius="6dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="20dp">
+
+                            <ImageView
+                                android:id="@+id/ivRetail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:padding="2dp"
+                                app:srcCompat="@drawable/ic_alfamart" />
+
+                            <TextView
+                                android:id="@+id/tvRetail"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/lato_bold"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                tools:text="Alfamart" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray_e5" />
+
+                        <TextView
+                            android:id="@+id/tvSteps"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/lato"
+                            android:padding="20dp"
+                            android:text="@string/str_retail_steps" />
+
+                        <TextView
+                            android:id="@+id/tvPaymentNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/gray_ed"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:gravity="center"
+                            android:padding="20dp"
+                            android:textColor="@color/primary_light"
+                            android:textStyle="bold"
+                            app:drawableEndCompat="@drawable/ic_round_qr_code"
+                            tools:ignore="TextContrastCheck"
+                            tools:text="230719-0001" />
+
+                        <TextView
+                            android:id="@+id/tvStepsSecond"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/lato"
+                            android:padding="20dp"
+                            android:text="@string/str_retail_steps_second" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnVerifyPayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/m20"
+        android:fontFamily="@font/nunito_extrabold"
+        android:textSize="@dimen/s12"
+        android:text="@string/str_verify_payment"
+        android:background="@drawable/selector_btn"
+        app:backgroundTint="@null"/>
+</RelativeLayout>
