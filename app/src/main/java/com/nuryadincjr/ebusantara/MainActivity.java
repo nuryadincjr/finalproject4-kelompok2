@@ -3,12 +3,18 @@ package com.nuryadincjr.ebusantara;
 import static com.nuryadincjr.ebusantara.databinding.ActivityMainBinding.*;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationBarView;
 import com.nuryadincjr.ebusantara.databinding.ActivityMainBinding;
@@ -38,12 +44,37 @@ public class MainActivity extends AppCompatActivity
             getFragmentPage(new SearchFragment());
         }
 
+        binding.getRoot().setFadeOnClickListener(view -> {
+            binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+        });
 
-        binding.getRoot().setFadeOnClickListener(view ->
-                binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN));
+        binding.layoutSlidingUp.btnSelectedDate.setOnClickListener(v -> {
+            TextView tvPassengers = findViewById(R.id.tvPassengers);
+            String passenger = binding.layoutSlidingUp.tvPassenger.getText() +" ppl";
+            tvPassengers.setText(passenger);
+            binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+        });
 
-        binding.layoutSlidingUp.btnCancel.setOnClickListener(v ->
-                binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN));
+        binding.layoutSlidingUp.btnCancel.setOnClickListener(v ->{
+            binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+        });
+
+        binding.layoutSlidingUp.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                binding.layoutSlidingUp.tvPassenger.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")

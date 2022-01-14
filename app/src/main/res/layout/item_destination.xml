@@ -231,7 +231,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView18"
+                        android:id="@+id/tvPiece"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -259,6 +259,7 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:text="@string/str_book_now"
                     android:textSize="@dimen/s12"
+                    android:layout_marginStart="5dp"
                     app:backgroundTint="@null" />
             </LinearLayout>
 

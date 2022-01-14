@@ -13,7 +13,7 @@
         android:layout_margin="@dimen/m30"
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/str_todo_back_button"
-        android:padding="@dimen/p10"
+        android:padding="8dp"
         android:src="@drawable/ic_back_arrow"
         app:layout_constraintEnd_toStartOf="@+id/tvLabel"
         app:layout_constraintHorizontal_bias="0.0"
