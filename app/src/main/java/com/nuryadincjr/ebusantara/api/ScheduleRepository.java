@@ -2,53 +2,66 @@ package com.nuryadincjr.ebusantara.api;
 
 import static android.content.ContentValues.TAG;
 
-import android.os.Handler;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.nuryadincjr.ebusantara.models.Buses;
 import com.nuryadincjr.ebusantara.models.Cities;
 import com.nuryadincjr.ebusantara.models.Schedule;
+import com.nuryadincjr.ebusantara.models.ScheduleReference;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ScheduleRepository {
 
-    private FirebaseFirestore db;
+    private final FirebaseFirestore db;
 
     public ScheduleRepository() {
          db = FirebaseFirestore.getInstance();
     }
 
-    public MutableLiveData<ArrayList<Schedule>> getCollectionsBuses(String collection, String departureCity, String arrivalCity) {
-        ArrayList<Schedule> Schedule = new ArrayList<>();
-        final MutableLiveData<ArrayList<Schedule>> ScheduleMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<ArrayList<ScheduleReference>> getCollectionsBuses(
+            String collection, String departureCity, String arrivalCity) {
+
+        MutableLiveData<ArrayList<ScheduleReference>> scheduleMutableLiveData = new MutableLiveData<>();
+        ArrayList<ScheduleReference> scheduleReferences = new ArrayList<>();
 
         CollectionReference collectionReference = db.collection(collection);
-
         collectionReference.get().addOnCompleteListener(task -> {
             if(task.isSuccessful()) {
                 for (QueryDocumentSnapshot  snapshot : task.getResult()) {
                     Schedule data = snapshot.toObject(Schedule.class);
-                    db.document("cities/"+data.getDeparture()).get().addOnCompleteListener(departureTask -> {
+                    db.document(data.getDeparture().getPath()).get().addOnCompleteListener(departureTask -> {
                        if(departureTask.isSuccessful()){
                            Cities departureCities = departureTask.getResult().toObject(Cities.class);
                            if(departureCities != null){
                                if(departureCities.getCity().equals(departureCity)){
-                                   db.document("cities/"+data.getArrival()).get().addOnCompleteListener(arrivalTask -> {
+                                   db.document(data.getArrival().getPath()).get().addOnCompleteListener(arrivalTask -> {
                                        if(arrivalTask.isSuccessful()){
                                            Cities arrivalCities = arrivalTask.getResult().toObject(Cities.class);
                                            if(arrivalCities != null){
                                                if(arrivalCities.getCity().equals(arrivalCity)){
-                                                   Log.d("XXX", snapshot.getId() + " => " + snapshot.getData());
-                                                   Schedule.add(data);
-                                                   ScheduleMutableLiveData.postValue(Schedule);
+                                                   db.document(data.getBus().getPath()).get().addOnCompleteListener(busTask -> {
+                                                      if(busTask.isSuccessful()){
+                                                          Buses buses = busTask.getResult().toObject(Buses.class);
+                                                          ScheduleReference scheduleReference = new ScheduleReference();
+                                                          if(buses != null){
+
+                                                              scheduleReference.setBuses(buses);
+                                                              scheduleReference.setId(data.getId());
+                                                              scheduleReference.setDeparture(departureCities);
+                                                              scheduleReference.setArrival(arrivalCities);
+                                                              scheduleReference.setDepartureTime(data.getDepartureTime());
+                                                              scheduleReference.setArrivalTime(data.getArrivalTime());
+                                                          }
+                                                          scheduleReferences.add(scheduleReference);
+                                                          scheduleMutableLiveData.postValue(scheduleReferences);
+                                                      }
+                                                   });
                                                }
                                            }
                                        }
@@ -57,14 +70,14 @@ public class ScheduleRepository {
                            }
                        }
                     });
-
                 }
+
             } else {
-                ScheduleMutableLiveData.setValue(null);
+                scheduleMutableLiveData.setValue(null);
                 Log.w(TAG, "Error getting documents.", task.getException());
             }
         });
-        return ScheduleMutableLiveData;
+        return scheduleMutableLiveData;
     }
 
     public MutableLiveData<ArrayList<Cities>> getCollectionCities(String document) {

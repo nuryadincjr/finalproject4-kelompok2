@@ -22,7 +22,7 @@ public class MainViewModel extends AndroidViewModel {
     public MutableLiveData<ArrayList<Cities>> getCities(String collection) {
         return scheduleRepository.getCollectionCities(collection);
     }
-    public MutableLiveData<ArrayList<Schedule>> getBuses(String collection, String departureCity, String arrivalCity) {
+    public MutableLiveData<ArrayList<ScheduleReference>> getBuses(String collection, String departureCity, String arrivalCity) {
         return scheduleRepository.getCollectionsBuses(collection, departureCity, arrivalCity);
     }
 }

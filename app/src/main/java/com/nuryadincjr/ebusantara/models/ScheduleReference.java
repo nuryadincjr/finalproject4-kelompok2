@@ -3,30 +3,31 @@ package com.nuryadincjr.ebusantara.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.firebase.firestore.DocumentReference;
-
-public class Schedule implements Parcelable {
+public class ScheduleReference implements Parcelable {
     private String id;
-    private DocumentReference bus;
-    private DocumentReference arrival;
-    private DocumentReference departure;
+    private Buses buses;
+    private Cities arrival;
+    private Cities departure;
     private String arrivalTime;
     private String departureTime;
 
-    public Schedule() {
+    public ScheduleReference() {
     }
 
-    public Schedule(String id, DocumentReference bus, DocumentReference arrival, DocumentReference departure, String arrivalTime, String departureTime) {
+    public ScheduleReference(String id, Buses buses, Cities arrival, Cities departure, String arrivalTime, String departureTime) {
         this.id = id;
-        this.bus = bus;
+        this.buses = buses;
         this.arrival = arrival;
         this.departure = departure;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
     }
 
-    protected Schedule(Parcel in) {
+    protected ScheduleReference(Parcel in) {
         id = in.readString();
+        buses = in.readParcelable(Buses.class.getClassLoader());
+        arrival = in.readParcelable(Cities.class.getClassLoader());
+        departure = in.readParcelable(Cities.class.getClassLoader());
         arrivalTime = in.readString();
         departureTime = in.readString();
     }
@@ -34,6 +35,9 @@ public class Schedule implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
+        dest.writeParcelable(buses, flags);
+        dest.writeParcelable(arrival, flags);
+        dest.writeParcelable(departure, flags);
         dest.writeString(arrivalTime);
         dest.writeString(departureTime);
     }
@@ -43,15 +47,15 @@ public class Schedule implements Parcelable {
         return 0;
     }
 
-    public static final Creator<Schedule> CREATOR = new Creator<Schedule>() {
+    public static final Creator<ScheduleReference> CREATOR = new Creator<ScheduleReference>() {
         @Override
-        public Schedule createFromParcel(Parcel in) {
-            return new Schedule(in);
+        public ScheduleReference createFromParcel(Parcel in) {
+            return new ScheduleReference(in);
         }
 
         @Override
-        public Schedule[] newArray(int size) {
-            return new Schedule[size];
+        public ScheduleReference[] newArray(int size) {
+            return new ScheduleReference[size];
         }
     };
 
@@ -63,27 +67,27 @@ public class Schedule implements Parcelable {
         this.id = id;
     }
 
-    public DocumentReference getBus() {
-        return bus;
+    public Buses getBuses() {
+        return buses;
     }
 
-    public void setBus(DocumentReference bus) {
-        this.bus = bus;
+    public void setBuses(Buses buses) {
+        this.buses = buses;
     }
 
-    public DocumentReference getArrival() {
+    public Cities getArrival() {
         return arrival;
     }
 
-    public void setArrival(DocumentReference arrival) {
+    public void setArrival(Cities arrival) {
         this.arrival = arrival;
     }
 
-    public DocumentReference getDeparture() {
+    public Cities getDeparture() {
         return departure;
     }
 
-    public void setDeparture(DocumentReference departure) {
+    public void setDeparture(Cities departure) {
         this.departure = departure;
     }
 

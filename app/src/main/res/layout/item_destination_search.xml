@@ -4,11 +4,10 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="?selectableItemBackground"
-    android:layout_marginBottom="15dp"
     android:paddingLeft="30dp"
     android:paddingRight="30dp"
-    android:paddingTop="3dp"
-    android:paddingBottom="3dp"
+    android:paddingTop="@dimen/p10"
+    android:paddingBottom="@dimen/p10"
     android:orientation="vertical">
 
     <TextView

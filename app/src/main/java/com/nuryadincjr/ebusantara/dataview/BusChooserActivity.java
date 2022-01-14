@@ -4,7 +4,6 @@ import static com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding.i
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -20,8 +19,8 @@ import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.ScheduleAdapter;
 import com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding;
 import com.nuryadincjr.ebusantara.models.Cities;
-import com.nuryadincjr.ebusantara.models.MainViewModel;
 import com.nuryadincjr.ebusantara.models.Schedule;
+import com.nuryadincjr.ebusantara.models.MainViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

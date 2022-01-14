@@ -43,6 +43,4 @@ public class DatePickerActivity extends AppCompatActivity {
         });
 
     }
-
-
 }

@@ -93,7 +93,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/m20"
                                     android:contentDescription="@string/str_departure_locations"
-                                    android:src="@drawable/ic_round_my_location" />
+                                    android:src="@drawable/ic_round_my_location"
+                                    app:tint="@color/red_selector" />
 
 
                                 <View
@@ -106,7 +107,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:contentDescription="@string/str_arrival_locations"
-                                    android:src="@drawable/ic_location" />
+                                    android:src="@drawable/ic_location"
+                                    app:tint="@color/red_selector"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -187,6 +189,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/p10"
+                                android:layout_gravity="bottom"
                                 android:contentDescription="@string/str_passenger"
                                 android:src="@drawable/ic_round_group" />
 
@@ -224,6 +227,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/p10"
+                                android:layout_gravity="bottom"
                                 android:contentDescription="@string/str_arrival"
                                 android:src="@drawable/ic_calendar" />
 

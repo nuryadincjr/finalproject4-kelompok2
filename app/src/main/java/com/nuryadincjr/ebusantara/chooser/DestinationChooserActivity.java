@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.CitiesAdapter;
-import com.nuryadincjr.ebusantara.adapters.ScheduleAdapter;
 import com.nuryadincjr.ebusantara.databinding.ActivityDestinationChooserBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.models.Cities;

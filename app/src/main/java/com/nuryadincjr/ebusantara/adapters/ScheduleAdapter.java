@@ -8,19 +8,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nuryadincjr.ebusantara.databinding.ItemDestinationBinding;
-import com.nuryadincjr.ebusantara.databinding.ItemDestinationSearchBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
-import com.nuryadincjr.ebusantara.models.Schedule;
+import com.nuryadincjr.ebusantara.models.ScheduleReference;
 
 import java.util.List;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public ItemClickListener itemClickListener;
-    private final List<Schedule> scheduleList;
+    private final List<ScheduleReference> compactScheduleReferenceList;
 
-    public ScheduleAdapter(List<Schedule> scheduleList) {
-        this.scheduleList = scheduleList;
+    public ScheduleAdapter(List<ScheduleReference> compactScheduleReferenceList) {
+        this.compactScheduleReferenceList = compactScheduleReferenceList;
     }
 
     @NonNull
@@ -35,12 +34,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ScheduleViewHolder scheduleViewHolder = (ScheduleViewHolder) holder;
-        scheduleViewHolder.setDataToView(scheduleList.get(position));
+        scheduleViewHolder.setDataToView(compactScheduleReferenceList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return scheduleList.size();
+        return compactScheduleReferenceList.size();
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -58,8 +57,16 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             this.scheduleAdapter = scheduleAdapter;
         }
 
-        public void setDataToView(Schedule citiesList) {
-            binding.tvPiece.setText(citiesList.getId());
+        public void setDataToView(ScheduleReference citiesList) {
+            binding.tvPOName.setText(citiesList.getBuses().getPoName());
+            binding.tvBusNo.setText(citiesList.getBuses().getPrice());
+            binding.tvPiece.setText(citiesList.getBuses().getPrice());
+            binding.tvDeparture.setText(citiesList.getDeparture().getCity());
+            binding.tvArrival.setText(citiesList.getArrival().getCity());
+            binding.tvTerminalDeparture.setText(citiesList.getDeparture().getTerminal());
+            binding.tvTerminalArrival.setText(citiesList.getArrival().getTerminal());
+            binding.tvDepartureTime.setText(citiesList.getDepartureTime());
+            binding.tvArrivalTime.setText(citiesList.getArrivalTime());
 
             binding.getRoot().setOnLongClickListener(this);
             binding.getRoot().setOnClickListener(this);
