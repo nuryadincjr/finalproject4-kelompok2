@@ -173,8 +173,8 @@
                                 android:background="@color/secondary"
                                 android:fontFamily="@font/nunito_extrabold"
                                 android:gravity="center"
-                                android:textStyle="bold"
                                 android:text="@string/str_default_ratings"
+                                android:textStyle="bold"
                                 tools:text="4.9/5" />
 
                             <ImageView
