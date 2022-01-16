@@ -109,4 +109,8 @@
     <string name="str_error">Error</string>
     <string name="str_oops">Oops!</string>
     <string name="str_error_desctiption">You don’t have any ticket yet. Please order first.</string>
+    <string name="str_book_a_trip">Book a trip</string>
+    <string name="str_2_x_2_seats_arrangement">2 x 2 Seats arrangement</string>
+    <string name="str_0_seat_are_available">0 Seat are available</string>
+    <string name="str_schedule">Schedule</string>
 </resources>

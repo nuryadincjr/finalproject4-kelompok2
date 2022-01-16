@@ -19,10 +19,13 @@
             android:layout_height="?attr/actionBarSize">
 
             <ImageView
-                android:id="@+id/ivBrandsd"
+                android:id="@+id/ivBackArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_back_arrow" />
+                android:padding="8dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_back_arrow"
+                android:contentDescription="@string/str_todo_back_button" />
 
             <TextView
                 android:id="@+id/ivBrand"
@@ -30,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:text="Book a trip" />
+                android:text="@string/str_book_a_trip" />
 
         </androidx.appcompat.widget.Toolbar>
 

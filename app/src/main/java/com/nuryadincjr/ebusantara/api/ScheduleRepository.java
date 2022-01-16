@@ -13,6 +13,8 @@ import com.nuryadincjr.ebusantara.models.Buses;
 import com.nuryadincjr.ebusantara.models.Cities;
 import com.nuryadincjr.ebusantara.models.Schedule;
 import com.nuryadincjr.ebusantara.models.ScheduleReference;
+import com.nuryadincjr.ebusantara.models.Seats;
+import com.nuryadincjr.ebusantara.models.Users;
 
 import java.util.ArrayList;
 
@@ -50,7 +52,6 @@ public class ScheduleRepository {
                                                           Buses buses = busTask.getResult().toObject(Buses.class);
                                                           ScheduleReference scheduleReference = new ScheduleReference();
                                                           if(buses != null){
-
                                                               scheduleReference.setBuses(buses);
                                                               scheduleReference.setId(data.getId());
                                                               scheduleReference.setDeparture(departureCities);
@@ -102,4 +103,28 @@ public class ScheduleRepository {
         });
         return ScheduleMutableLiveData;
     }
+
+    public MutableLiveData<ArrayList<Users>> getUsers(String document) {
+        ArrayList<Users> users = new ArrayList<>();
+        final MutableLiveData<ArrayList<Users>> ScheduleMutableLiveData = new MutableLiveData<>();
+
+        CollectionReference collectionReference = db.collection(document);
+
+        collectionReference.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                for (QueryDocumentSnapshot  snapshot : task.getResult()) {
+                    Users data = snapshot.toObject(Users.class);
+
+                    users.add(data);
+                    Log.d(TAG, snapshot.getId() + " => " + snapshot.getData());
+                }
+                ScheduleMutableLiveData.postValue(users);
+            }else{
+                ScheduleMutableLiveData.setValue(null);
+                Log.w(TAG, "Error getting documents.", task.getException());
+            }
+        });
+        return ScheduleMutableLiveData;
+    }
+
 }

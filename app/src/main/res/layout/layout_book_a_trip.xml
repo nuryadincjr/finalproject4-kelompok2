@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_ed"
+    android:paddingBottom="@dimen/m50"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.core.widget.NestedScrollView
@@ -81,7 +83,7 @@
                         android:text="@string/str_default_ratings"
                         app:drawableStartCompat="@drawable/ic_round_star"
                         app:drawableTint="@color/secondary"
-                        tools:text="9/10" />
+                        tools:text="9/5" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -265,12 +267,12 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tvSeatAvilable"
+                        android:id="@+id/tvSeatAvailable"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/lato"
-                        android:text="24 Seat are available"
+                        android:text="@string/str_0_seat_are_available"
                         tools:ignore="TextContrastCheck" />
 
                     <TextView
@@ -279,7 +281,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/lato"
-                        android:text="2 x 2 Seats arrangement"
+                        android:text="@string/str_2_x_2_seats_arrangement"
                         tools:ignore="TextContrastCheck" />
                 </LinearLayout>
             </LinearLayout>
@@ -306,12 +308,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato"
-                    android:text="Economy Bus" />
+                    tools:text="Economy Bus" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:padding="20dp"
                 android:orientation="vertical">
 
@@ -328,65 +330,72 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/tvToiletFacility"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawablePadding="19dp"
                             android:fontFamily="@font/lato"
                             android:text="@string/str_toilet"
+                            android:visibility="gone"
+                            tools:visibility="visible"
                             app:drawableStartCompat="@drawable/ic_toilet" />
 
                         <TextView
                             android:id="@+id/tvRestFacility"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawablePadding="10dp"
                             android:fontFamily="@font/lato"
                             android:text="@string/str_rest_stop"
+                            android:visibility="gone"
+                            tools:visibility="visible"
                             app:drawableStartCompat="@drawable/ic_rest" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/tvLuggageFacility"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawablePadding="20dp"
                             android:fontFamily="@font/lato"
                             android:text="@string/str_luggage"
+                            android:visibility="gone"
                             app:drawableStartCompat="@drawable/ic_luggage"
+                            tools:visibility="visible"
                             tools:ignore="TextContrastCheck" />
 
                         <TextView
                             android:id="@+id/tvACFacility"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawablePadding="20dp"
                             android:fontFamily="@font/lato"
                             android:text="@string/str_ac"
+                            android:visibility="gone"
+                            tools:visibility="visible"
                             app:drawableStartCompat="@drawable/ic_ac" />
                     </LinearLayout>
                 </LinearLayout>
@@ -407,13 +416,13 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:paddingStart="@dimen/p20"
                     android:paddingEnd="@dimen/p20"
-                    android:text="@string/str_facility"
+                    android:text="@string/str_reviews"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvFacility"
+                    android:id="@+id/rvReviews"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

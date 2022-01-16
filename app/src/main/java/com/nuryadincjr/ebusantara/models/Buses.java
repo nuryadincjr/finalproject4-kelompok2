@@ -13,18 +13,9 @@ public class Buses implements Parcelable {
     private List<String> facility;
     private String imageUrl;
     private String price;
+    private Seats seats;
 
     public Buses() {
-    }
-
-    public Buses(String id, String busNo, String poName, String classType, List<String> facility, String imageUrl, String price) {
-        this.id = id;
-        this.busNo = busNo;
-        this.poName = poName;
-        this.classType = classType;
-        this.facility = facility;
-        this.imageUrl = imageUrl;
-        this.price = price;
     }
 
     protected Buses(Parcel in) {
@@ -35,6 +26,7 @@ public class Buses implements Parcelable {
         facility = in.createStringArrayList();
         imageUrl = in.readString();
         price = in.readString();
+        seats = in.readParcelable(Seats.class.getClassLoader());
     }
 
     @Override
@@ -46,6 +38,7 @@ public class Buses implements Parcelable {
         dest.writeStringList(facility);
         dest.writeString(imageUrl);
         dest.writeString(price);
+        dest.writeParcelable(seats, flags);
     }
 
     @Override
@@ -64,6 +57,35 @@ public class Buses implements Parcelable {
             return new Buses[size];
         }
     };
+
+    public Seats getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Seats seats) {
+        this.seats = seats;
+    }
+
+    public Buses(String id, String busNo, String poName, String classType, List<String> facility, String imageUrl, String price, Seats seats) {
+        this.id = id;
+        this.busNo = busNo;
+        this.poName = poName;
+        this.classType = classType;
+        this.facility = facility;
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.seats = seats;
+    }
+
+    public Buses(String id, String busNo, String poName, String classType, List<String> facility, String imageUrl, String price) {
+        this.id = id;
+        this.busNo = busNo;
+        this.poName = poName;
+        this.classType = classType;
+        this.facility = facility;
+        this.imageUrl = imageUrl;
+        this.price = price;
+    }
 
     public String getId() {
         return id;

@@ -42,9 +42,9 @@
                 <TextView
                     android:id="@+id/tvRatings"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/lato_bold"
-                    android:gravity="end"
+                    android:gravity="center|end"
                     android:text="@string/str_default_ratings"
                     app:drawableStartCompat="@drawable/ic_round_star"
                     app:drawableTint="@color/secondary"

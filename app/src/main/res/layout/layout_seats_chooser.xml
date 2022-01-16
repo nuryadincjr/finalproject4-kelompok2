@@ -7,7 +7,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
@@ -109,19 +109,21 @@
                         android:textSize="@dimen/s18"
                         android:textStyle="bold" />
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv1A"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv1B"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -131,19 +133,21 @@
                     android:layout_weight="50"
                     android:gravity="center">
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv1C"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv1D"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -171,19 +175,21 @@
                         android:textSize="@dimen/s18"
                         android:textStyle="bold" />
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv2A"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv2B"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -193,19 +199,21 @@
                     android:layout_weight="50"
                     android:gravity="center">
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv2C"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv2D"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -232,19 +240,21 @@
                         android:textSize="@dimen/s18"
                         android:textStyle="bold" />
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv3A"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv3B"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -254,19 +264,21 @@
                     android:layout_weight="50"
                     android:gravity="center">
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv3C"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv3D"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -293,19 +305,21 @@
                         android:textSize="@dimen/s18"
                         android:textStyle="bold" />
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv4A"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv4B"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -315,19 +329,21 @@
                     android:layout_weight="50"
                     android:gravity="center">
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv4C"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv4D"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -354,19 +370,21 @@
                         android:textSize="@dimen/s18"
                         android:textStyle="bold" />
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv5A"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv5B"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -376,19 +394,21 @@
                     android:layout_weight="50"
                     android:gravity="center">
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv5C"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv5D"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -415,19 +435,21 @@
                         android:textSize="@dimen/s18"
                         android:textStyle="bold" />
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv6A"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv6B"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -437,19 +459,21 @@
                     android:layout_weight="50"
                     android:gravity="center">
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv6C"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv6D"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -476,19 +500,21 @@
                         android:textSize="@dimen/s18"
                         android:textStyle="bold" />
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv7A"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv7B"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -498,19 +524,21 @@
                     android:layout_weight="50"
                     android:gravity="center">
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv7C"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv7D"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -537,17 +565,21 @@
                         android:textSize="@dimen/s18"
                         android:textStyle="bold" />
 
-                    <ImageView
+                    <CheckedTextView
+                        android:id="@+id/iv8A"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
+                        android:id="@+id/iv8B"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -557,19 +589,21 @@
                     android:layout_weight="50"
                     android:gravity="center">
 
-                    <ImageView
-                        android:id="@+id/iv8A"
+                    <CheckedTextView
+                        android:id="@+id/iv8C"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv8D"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -596,19 +630,21 @@
                         android:textSize="@dimen/s18"
                         android:textStyle="bold" />
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv9A"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv9B"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -618,19 +654,21 @@
                     android:layout_weight="50"
                     android:gravity="center">
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv9C"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv9D"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -657,12 +695,13 @@
                         android:textSize="@dimen/s18"
                         android:textStyle="bold" />
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv10B"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
                 </LinearLayout>
 
@@ -672,19 +711,20 @@
                     android:layout_weight="50"
                     android:gravity="center">
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv10C"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"/>
 
-                    <ImageView
+                    <CheckedTextView
                         android:id="@+id/iv10D"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
-                        android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_rectangle" />
+                        android:checked="false"
+                        android:background="@drawable/selector_chooser"  />
 
                 </LinearLayout>
 

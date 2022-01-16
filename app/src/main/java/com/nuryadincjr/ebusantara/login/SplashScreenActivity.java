@@ -6,12 +6,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.nuryadincjr.ebusantara.BuildConfig;
 import com.nuryadincjr.ebusantara.R;
+import com.nuryadincjr.ebusantara.adapters.CitiesAdapter;
 import com.nuryadincjr.ebusantara.databinding.ActivitySplashScreenBinding;
+import com.nuryadincjr.ebusantara.models.MainViewModel;
+import com.nuryadincjr.ebusantara.models.Seats;
+
+import java.util.Arrays;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private ActivitySplashScreenBinding binding;
@@ -26,7 +35,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         String versionName = "Version "+BuildConfig.VERSION_NAME;
         binding.tvVersion.setText(versionName);
-
         transition();
     }
 

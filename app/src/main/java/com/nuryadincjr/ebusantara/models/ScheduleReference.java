@@ -3,6 +3,8 @@ package com.nuryadincjr.ebusantara.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 public class ScheduleReference implements Parcelable {
     private String id;
     private Buses buses;
@@ -10,17 +12,9 @@ public class ScheduleReference implements Parcelable {
     private Cities departure;
     private String arrivalTime;
     private String departureTime;
+    private ReviewersReference reviewers;
 
     public ScheduleReference() {
-    }
-
-    public ScheduleReference(String id, Buses buses, Cities arrival, Cities departure, String arrivalTime, String departureTime) {
-        this.id = id;
-        this.buses = buses;
-        this.arrival = arrival;
-        this.departure = departure;
-        this.arrivalTime = arrivalTime;
-        this.departureTime = departureTime;
     }
 
     protected ScheduleReference(Parcel in) {
@@ -30,6 +24,7 @@ public class ScheduleReference implements Parcelable {
         departure = in.readParcelable(Cities.class.getClassLoader());
         arrivalTime = in.readString();
         departureTime = in.readString();
+        reviewers = in.readParcelable(ReviewersReference.class.getClassLoader());
     }
 
     @Override
@@ -40,6 +35,7 @@ public class ScheduleReference implements Parcelable {
         dest.writeParcelable(departure, flags);
         dest.writeString(arrivalTime);
         dest.writeString(departureTime);
+        dest.writeParcelable(reviewers, flags);
     }
 
     @Override
@@ -106,4 +102,23 @@ public class ScheduleReference implements Parcelable {
     public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
+
+    public ReviewersReference getReviewers() {
+        return reviewers;
+    }
+
+    public void setReviewers(ReviewersReference reviewers) {
+        this.reviewers = reviewers;
+    }
+
+    public ScheduleReference(String id, Buses buses, Cities arrival, Cities departure, String arrivalTime, String departureTime, ReviewersReference reviewers) {
+        this.id = id;
+        this.buses = buses;
+        this.arrival = arrival;
+        this.departure = departure;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.reviewers = reviewers;
+    }
 }
+
