@@ -23,7 +23,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.nuryadincjr.ebusantara.MainActivity;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ActivityLoginBinding;
-import com.nuryadincjr.ebusantara.models.Users;
+import com.nuryadincjr.ebusantara.pojo.Users;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -11,10 +11,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.nuryadincjr.ebusantara.databinding.ItemDestinationBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
-import com.nuryadincjr.ebusantara.models.Reviewers;
-import com.nuryadincjr.ebusantara.models.ReviewersReference;
-import com.nuryadincjr.ebusantara.models.ScheduleReference;
-import com.nuryadincjr.ebusantara.models.Seats;
+import com.nuryadincjr.ebusantara.pojo.Reviewers;
+import com.nuryadincjr.ebusantara.pojo.ReviewersReference;
+import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
+import com.nuryadincjr.ebusantara.pojo.Seats;
 
 import java.util.ArrayList;
 import java.util.List;

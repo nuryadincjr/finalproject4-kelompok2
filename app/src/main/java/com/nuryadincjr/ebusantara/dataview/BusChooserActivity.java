@@ -16,9 +16,9 @@ import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.ScheduleAdapter;
 import com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
-import com.nuryadincjr.ebusantara.models.Cities;
+import com.nuryadincjr.ebusantara.pojo.Cities;
 import com.nuryadincjr.ebusantara.models.MainViewModel;
-import com.nuryadincjr.ebusantara.models.ScheduleReference;
+import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

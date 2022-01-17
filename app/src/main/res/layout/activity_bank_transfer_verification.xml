@@ -25,7 +25,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <include layout="@layout/layout_total_payment" />
+                <include android:id="@+id/layoutTotalPayment"
+                    layout="@layout/layout_total_payment" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"

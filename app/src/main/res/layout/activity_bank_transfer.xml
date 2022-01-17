@@ -25,7 +25,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <include layout="@layout/layout_total_payment"/>
+                <include android:id="@+id/layoutTotalPayment"
+                    layout="@layout/layout_total_payment" />
 
                 <TextView
                     android:id="@+id/textView61"
@@ -72,9 +73,10 @@
                             <TextView
                                 android:id="@+id/tvSelectBNI"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_height="match_parent"
                                 android:gravity="center|end"
+                                android:layout_weight="3"
+                                android:background="?selectableItemBackground"
                                 android:text="@string/str_select_payment"
                                 android:textColor="@color/primary_light"
                                 android:textSize="12sp"
@@ -133,8 +135,9 @@
                             <TextView
                                 android:id="@+id/tvSelectCIMB"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_height="match_parent"
+                                android:layout_weight="3"
+                                android:background="?selectableItemBackground"
                                 android:gravity="center|end"
                                 android:text="@string/str_select_payment"
                                 android:textColor="@color/primary_light"

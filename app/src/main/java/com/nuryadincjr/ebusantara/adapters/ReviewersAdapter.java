@@ -3,16 +3,16 @@ package com.nuryadincjr.ebusantara.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.nuryadincjr.ebusantara.databinding.ItemDestinationBinding;
 import com.nuryadincjr.ebusantara.databinding.ItemReviewsBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
-import com.nuryadincjr.ebusantara.models.Reviewers;
-import com.nuryadincjr.ebusantara.models.Users;
+import com.nuryadincjr.ebusantara.pojo.Reviewers;
+import com.nuryadincjr.ebusantara.pojo.Users;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ScheduleViewHolder scheduleViewHolder = (ScheduleViewHolder) holder;
-        scheduleViewHolder.setDataToView(reviewersList.get(position));
+        scheduleViewHolder.setDataToView(reviewersList.get(position), position);
     }
 
     @Override
@@ -60,7 +60,25 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             this.scheduleAdapter = scheduleAdapter;
         }
 
-        public void setDataToView(Reviewers reviewers) {
+        public void setDataToView(Reviewers reviewers, int position) {
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+
+            if(position == 0){
+                params.setMarginStart(40);
+                params.setMarginEnd(10);
+                binding.getRoot().setLayoutParams(params);
+            }
+
+            if(position == (scheduleAdapter.getItemCount()-1)){
+                params.setMarginStart(10);
+                params.setMarginEnd(40);
+                binding.getRoot().setLayoutParams(params);
+
+            }
+
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.document("users/"+reviewers.getUid()).get().addOnCompleteListener(task -> {
                if(task.isSuccessful()){

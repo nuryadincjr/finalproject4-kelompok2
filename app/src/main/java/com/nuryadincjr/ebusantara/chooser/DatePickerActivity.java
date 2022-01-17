@@ -41,6 +41,17 @@ public class DatePickerActivity extends AppCompatActivity {
             setResult(RESULT_OK, intent);
             onBackPressed();
         });
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
     }
 }

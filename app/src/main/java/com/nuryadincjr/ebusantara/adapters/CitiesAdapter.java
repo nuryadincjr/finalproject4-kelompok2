@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nuryadincjr.ebusantara.databinding.ItemDestinationSearchBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
-import com.nuryadincjr.ebusantara.models.Cities;
+import com.nuryadincjr.ebusantara.pojo.Cities;
 
 import java.util.List;
 

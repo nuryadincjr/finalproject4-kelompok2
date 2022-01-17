@@ -7,7 +7,8 @@
     android:background="@color/gray_ed"
     tools:context=".payment.CreditCardVerificationActivity">
 
-    <include android:id="@+id/appbar"
+    <include
+        android:id="@+id/appbar"
         layout="@layout/layout_appbar"/>
 
     <RelativeLayout
@@ -25,7 +26,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <include layout="@layout/layout_total_payment" />
+                <include
+                    android:id="@+id/layoutTotalPayment"
+                    layout="@layout/layout_total_payment" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -33,7 +36,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="20dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="100dp"
+
                     android:elevation="8dp"
                     app:cardCornerRadius="6dp">
 
@@ -56,7 +60,7 @@
                             android:id="@+id/etPhoneNumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="24dp"
+                            android:layout_marginBottom="20dp"
                             android:background="@drawable/selector_input"
                             android:drawableStart="@drawable/ic_cc_visa"
                             android:drawablePadding="20dp"
@@ -77,6 +81,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginBottom="20dp"
                             android:orientation="horizontal">
 
                             <EditText
@@ -84,7 +89,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="5dp"
-                                android:layout_marginBottom="24dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/selector_input"
                                 android:fontFamily="@font/nunito_extrabold"
@@ -98,7 +102,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
-                                android:layout_marginBottom="24dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/selector_input"
                                 android:drawablePadding="20dp"
@@ -123,7 +126,7 @@
                             android:id="@+id/etSurname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="24dp"
+                            android:layout_marginBottom="20dp"
                             android:background="@drawable/selector_input"
                             android:drawablePadding="20dp"
                             android:fontFamily="@font/nunito_extrabold"
@@ -150,8 +153,6 @@
                                 android:id="@+id/etVcc"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:layout_marginBottom="24dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/selector_input"
                                 android:fontFamily="@font/nunito_extrabold"

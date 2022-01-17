@@ -22,6 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_back_arrow"
+                android:padding="8dp"
                 android:background="?selectableItemBackgroundBorderless"
                 android:contentDescription="@string/str_todo_back_button" />
 

@@ -1,79 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/p10"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="?selectableItemBackground"
-    android:orientation="vertical">
+    android:background="?selectableItemBackground">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="8dp"
-        app:cardCornerRadius="6dp"
-        android:layout_marginLeft="@dimen/p20"
-        android:layout_marginRight="@dimen/p20"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:background="@drawable/bg_rounded"
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="20dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="center_vertical"
-                    android:textStyle="bold"
-                    tools:text="Merry" />
-
-                <TextView
-                    android:id="@+id/tvRatings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/lato_bold"
-                    android:gravity="center|end"
-                    android:text="@string/str_default_ratings"
-                    app:drawableStartCompat="@drawable/ic_round_star"
-                    app:drawableTint="@color/secondary"
-                    tools:text="9/10" />
-            </LinearLayout>
+                android:fontFamily="@font/nunito_extrabold"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                tools:text="Merry" />
 
             <TextView
-                android:id="@+id/tvReviewsContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/lato"
-                android:paddingTop="10dp"
-                android:paddingBottom="20dp"
-                tools:text="pretty good, this bus serve very well. drivers and staffs are friendly." />
-
-            <TextView
-                android:id="@+id/tvReaction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/lato"
-                android:text="@string/str_default_count"
-                app:drawableStartCompat="@drawable/ic_thumbs_up"
-                tools:text="87 user agree with Merry" />
-
+                android:id="@+id/tvRatings"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center|end"
+                android:text="@string/str_default_ratings"
+                app:drawableStartCompat="@drawable/ic_round_star"
+                app:drawableTint="@color/secondary"
+                tools:text="9/10" />
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/tvReviewsContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:fontFamily="@font/lato"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"
+            tools:text="pretty good, this bus serve very well. drivers and staffs are friendly." />
+
+        <TextView
+            android:id="@+id/tvReaction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:gravity="center|start"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:fontFamily="@font/lato"
+            android:text="@string/str_default_count"
+            app:drawableStartCompat="@drawable/ic_thumbs_up"
+            tools:text="87 user agree with Merry" />
+
+    </LinearLayout>
 
 </RelativeLayout>

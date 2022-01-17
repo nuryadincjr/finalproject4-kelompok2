@@ -14,7 +14,7 @@ import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.CitiesAdapter;
 import com.nuryadincjr.ebusantara.databinding.ActivityDestinationChooserBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
-import com.nuryadincjr.ebusantara.models.Cities;
+import com.nuryadincjr.ebusantara.pojo.Cities;
 import com.nuryadincjr.ebusantara.models.MainViewModel;
 
 import java.util.ArrayList;
@@ -61,5 +61,17 @@ public class DestinationChooserActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
     }
 }

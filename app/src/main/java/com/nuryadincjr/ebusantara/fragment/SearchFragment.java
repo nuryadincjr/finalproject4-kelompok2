@@ -1,6 +1,7 @@
 package com.nuryadincjr.ebusantara.fragment;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Intent.*;
 import static com.nuryadincjr.ebusantara.databinding.FragmentSearchBinding.inflate;
 
 import android.annotation.SuppressLint;
@@ -19,7 +20,7 @@ import com.nuryadincjr.ebusantara.chooser.DatePickerActivity;
 import com.nuryadincjr.ebusantara.chooser.DestinationChooserActivity;
 import com.nuryadincjr.ebusantara.databinding.FragmentSearchBinding;
 import com.nuryadincjr.ebusantara.dataview.BusChooserActivity;
-import com.nuryadincjr.ebusantara.models.Cities;
+import com.nuryadincjr.ebusantara.pojo.Cities;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.SimpleDateFormat;

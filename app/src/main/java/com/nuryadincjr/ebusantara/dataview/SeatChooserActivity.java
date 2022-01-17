@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ActivitySeatChooserBinding;
 import com.nuryadincjr.ebusantara.databinding.LayoutSeatsChooserBinding;
-import com.nuryadincjr.ebusantara.models.ScheduleReference;
-import com.nuryadincjr.ebusantara.models.Seats;
+import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
+import com.nuryadincjr.ebusantara.pojo.Seats;
 import com.nuryadincjr.ebusantara.payment.DetailPaymentActivity;
 
 import java.util.ArrayList;

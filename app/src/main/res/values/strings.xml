@@ -103,7 +103,7 @@
     <string name="string_bank_steps">1. Select transfer\n2. In sub menu select virtual account transfer\n3. Type this number in the field</string>
     <string name="str_bank_steps_second">4. After you press continue, input this number to the transfer amount field.</string>
     <string name="str_steps_third">5. Dont forget to keep the receipt for verification process.</string>
-    <string name="str_retail_steps">1. Ask the cashier for Online payment\n2. When you asked what Payment, answer Bux.\n3. The cashier will ask what is your booking code. Here is your booking code</string>
+    <string name="str_retail_steps">1. Ask the cashier for Online payment\n2. When you asked what Payment, answer E-Busantara.\n3. The cashier will ask what is your booking code. Here is your booking code</string>
     <string name="str_retail_steps_second">4. You’re gonna be charged as much as the total payment. (as you can see in this header).\n5. Keep the receipt, in case you’re having problem with payment verification.</string>
     <string name="str_sort_by_best_experience">Sort by Best experience</string>
     <string name="str_error">Error</string>

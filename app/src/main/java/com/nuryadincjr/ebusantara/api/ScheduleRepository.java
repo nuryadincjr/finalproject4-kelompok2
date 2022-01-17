@@ -9,12 +9,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.nuryadincjr.ebusantara.models.Buses;
-import com.nuryadincjr.ebusantara.models.Cities;
-import com.nuryadincjr.ebusantara.models.Schedule;
-import com.nuryadincjr.ebusantara.models.ScheduleReference;
-import com.nuryadincjr.ebusantara.models.Seats;
-import com.nuryadincjr.ebusantara.models.Users;
+import com.nuryadincjr.ebusantara.pojo.Buses;
+import com.nuryadincjr.ebusantara.pojo.Cities;
+import com.nuryadincjr.ebusantara.pojo.Schedule;
+import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
+import com.nuryadincjr.ebusantara.pojo.Users;
 
 import java.util.ArrayList;
 

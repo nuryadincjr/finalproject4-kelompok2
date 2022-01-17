@@ -7,8 +7,9 @@
     android:background="@color/gray_ed"
     tools:context=".payment.PaymentActivity">
 
-    <include android:id="@+id/appbar"
-        layout="@layout/layout_appbar"/>
+    <include
+        android:id="@+id/appbar"
+        layout="@layout/layout_appbar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,7 +26,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <include layout="@layout/layout_total_payment" />
+                <include android:id="@+id/layoutTotalPayment"
+                    layout="@layout/layout_total_payment" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -74,10 +76,11 @@
                                 android:id="@+id/tvSelectCreditCard"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
                                 android:fontFamily="@font/lato"
                                 android:gravity="center|end"
                                 android:text="@string/str_select_payment"
+                                android:background="?selectableItemBackground"
                                 android:textColor="@color/primary_light"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
@@ -136,7 +139,8 @@
                                 android:id="@+id/tvSelectBankTransfer"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
+                                android:background="?selectableItemBackground"
                                 android:fontFamily="@font/lato"
                                 android:gravity="center|end"
                                 android:text="@string/str_select_payment"
@@ -198,7 +202,8 @@
                                 android:id="@+id/tvSelectRetailPayment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
+                                android:background="?selectableItemBackground"
                                 android:fontFamily="@font/lato"
                                 android:gravity="center|end"
                                 android:text="@string/str_select_payment"

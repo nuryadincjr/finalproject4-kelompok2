@@ -17,11 +17,11 @@ import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.ReviewersAdapter;
 import com.nuryadincjr.ebusantara.databinding.ActivityBusDetailsBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
-import com.nuryadincjr.ebusantara.models.Buses;
-import com.nuryadincjr.ebusantara.models.Cities;
-import com.nuryadincjr.ebusantara.models.ReviewersReference;
-import com.nuryadincjr.ebusantara.models.ScheduleReference;
-import com.nuryadincjr.ebusantara.models.Seats;
+import com.nuryadincjr.ebusantara.pojo.Buses;
+import com.nuryadincjr.ebusantara.pojo.Cities;
+import com.nuryadincjr.ebusantara.pojo.ReviewersReference;
+import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
+import com.nuryadincjr.ebusantara.pojo.Seats;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

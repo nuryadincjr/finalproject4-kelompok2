@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.api.UsersRepository;
 import com.nuryadincjr.ebusantara.databinding.ActivitySetupBinding;
-import com.nuryadincjr.ebusantara.models.Users;
+import com.nuryadincjr.ebusantara.pojo.Users;
 
 public class SetupActivity extends AppCompatActivity {
 

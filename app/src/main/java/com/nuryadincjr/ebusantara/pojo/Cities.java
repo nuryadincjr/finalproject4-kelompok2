@@ -1,4 +1,4 @@
-package com.nuryadincjr.ebusantara.models;
+package com.nuryadincjr.ebusantara.pojo;
 
 import android.os.Parcel;
 import android.os.Parcelable;

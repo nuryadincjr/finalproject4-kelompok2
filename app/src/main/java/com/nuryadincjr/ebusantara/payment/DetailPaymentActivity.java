@@ -7,6 +7,7 @@ import static java.text.NumberFormat.getCurrencyInstance;
 import static java.util.Collections.sort;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,11 +18,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ActivityDetailPaymentBinding;
 import com.nuryadincjr.ebusantara.databinding.LayoutCompleteBookingBinding;
-import com.nuryadincjr.ebusantara.models.Buses;
-import com.nuryadincjr.ebusantara.models.Cities;
-import com.nuryadincjr.ebusantara.models.ScheduleReference;
-import com.nuryadincjr.ebusantara.models.Seats;
-import com.nuryadincjr.ebusantara.models.Users;
+import com.nuryadincjr.ebusantara.pojo.Buses;
+import com.nuryadincjr.ebusantara.pojo.Cities;
+import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
+import com.nuryadincjr.ebusantara.pojo.Seats;
+import com.nuryadincjr.ebusantara.pojo.Users;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -46,7 +47,7 @@ public class DetailPaymentActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private Users users;
     private ArrayList<String> seatChooser;
-    LayoutCompleteBookingBinding view;
+    private LayoutCompleteBookingBinding view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,16 @@ public class DetailPaymentActivity extends AppCompatActivity {
         getUsers();
         getEstimatedTimes();
         binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
+        binding.btmContinue.setOnClickListener(v -> {
+            ArrayList<String> seatList = new ArrayList<>(seatChooser);
+            startActivity(new Intent(this,
+                    PaymentActivity.class)
+                    .putExtra("schedule", schedule)
+                    .putExtra("date", calendar)
+                    .putExtra("passengers", passengers)
+                    .putStringArrayListExtra("seats", seatList)
+                    .putExtra("total", view.tvTotal.getText()));
+        });
     }
 
     private void getUsers() {

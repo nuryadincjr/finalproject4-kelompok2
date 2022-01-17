@@ -385,6 +385,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/lato"
                                 android:paddingTop="10dp"
+
                                 android:text="@string/str_seat_no"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
@@ -409,7 +410,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="20dp"
-                    android:background="@color/gray_ed"
+                    android:background="@color/gray_e5"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -423,6 +424,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/lato_bold"
+                            android:textColor="@color/black"
                             android:text="Tickets"
                             android:textStyle="bold" />
 
@@ -448,6 +450,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/lato_bold"
+                            android:textColor="@color/black"
                             android:text="@string/str_unique_code"
                             android:textStyle="bold" />
 
@@ -458,6 +461,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/lato"
                             android:gravity="end"
+                            android:textColor="@color/primary_light"
                             tools:text="333" />
                     </LinearLayout>
                 </LinearLayout>
