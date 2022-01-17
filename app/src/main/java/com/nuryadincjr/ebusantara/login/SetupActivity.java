@@ -48,7 +48,8 @@ public class SetupActivity extends AppCompatActivity {
                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference);
                 Toast.makeText(getApplicationContext(), "Success.", Toast.LENGTH_SHORT).show();
 
-                startActivity(new Intent(this, FinishRegistrationActivity.class));
+                startActivity(new Intent(this, FinishRegistrationActivity.class)
+                        .putExtra("user", user));
 
                 finishAffinity();
             }).addOnFailureListener(e -> {

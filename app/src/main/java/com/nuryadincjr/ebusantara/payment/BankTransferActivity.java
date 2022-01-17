@@ -42,7 +42,7 @@ public class BankTransferActivity extends AppCompatActivity implements View.OnCl
         if(!item.equals("")) {
             startActivity(new Intent(this,
                     BankTransferVerificationActivity.class)
-                    .putExtra("BANK", item)
+                    .putExtra("bank", item)
                     .putExtra("total", view.tvTotal.getText()));
         }
     }

@@ -22,6 +22,7 @@ import com.nuryadincjr.ebusantara.fragment.NotificationsFragment;
 import com.nuryadincjr.ebusantara.fragment.ProfileFragment;
 import com.nuryadincjr.ebusantara.fragment.SearchFragment;
 import com.nuryadincjr.ebusantara.fragment.TicketsFragment;
+import com.nuryadincjr.ebusantara.pojo.Users;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class MainActivity extends AppCompatActivity
@@ -91,9 +92,15 @@ public class MainActivity extends AppCompatActivity
                 fragment = new NotificationsFragment();
                 break;
             case R.id.itemProfile:
+
                 fragment = new ProfileFragment();
                 break;
         }
+
+        Users users = getIntent().getParcelableExtra("user");
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("user", users);
+        fragment.setArguments(bundle);
 
         getFragmentPage(fragment);
         return true;

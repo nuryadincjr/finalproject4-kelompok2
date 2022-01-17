@@ -8,7 +8,9 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ItemReviewsBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.pojo.Reviewers;
@@ -84,6 +86,12 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                if(task.isSuccessful()){
                    Users users = task.getResult().toObject(Users.class);
                    binding.tvName.setText(users.getName());
+
+                   Glide.with(itemView)
+                           .load(users.getPhotoUrl())
+                           .centerCrop()
+                           .placeholder(R.drawable.ic_brand)
+                           .into(binding.ivProfile);
                }
             });
 
@@ -91,6 +99,8 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             String displayRating = reviewers.getRatings()+"/5";
             binding.tvRatings.setText(displayRating);
+
+
 
             binding.getRoot().setOnLongClickListener(this);
             binding.getRoot().setOnClickListener(this);

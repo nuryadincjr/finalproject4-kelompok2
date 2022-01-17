@@ -8,10 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nuryadincjr.ebusantara.R;
+import com.nuryadincjr.ebusantara.databinding.FragmentNotificationsBinding;
 
 public class NotificationsFragment extends Fragment {
 
+    private FragmentNotificationsBinding binding;
     public NotificationsFragment() {
         // Required empty public constructor
     }
@@ -24,7 +25,10 @@ public class NotificationsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notifications, container, false);
+        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+
+        binding.rvNotification.setVisibility(View.GONE);
+        binding.layoutInfo.linearLayout.setVisibility(View.VISIBLE);
+        return binding.getRoot();
     }
 }

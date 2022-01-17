@@ -22,6 +22,24 @@ public class BankTransferVerificationActivity extends AppCompatActivity {
         String total = getIntent().getStringExtra("total");
         binding.layoutTotalPayment.tvTotal.setText(total);
         binding.appbar.ivBackArrow.setOnClickListener(v -> onBackPressed());
+
+        getBank();
+    }
+
+    private void getBank() {
+        String bank = getIntent().getStringExtra("bank");
+        String bankName = bank;
+        int bankLogo = 0;
+        if(bank.equals("BNI")){
+            bankName = getString(R.string.str_bni_mobile_banking);
+            bankLogo = R.drawable.ic_bni;
+
+        }else if(bank.equals("CIMB")){
+            bankName = getString(R.string.str_cimb);
+            bankLogo = R.drawable.ic_cimb_niaga;
+        }
+        binding.tvBankName.setText(bankName);
+        binding.ivBankLogo.setImageResource(bankLogo);
     }
 
     @Override

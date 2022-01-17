@@ -10,9 +10,9 @@ import android.os.Bundle;
 import com.nuryadincjr.ebusantara.MainActivity;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ActivityFinishRegristrationBinding;
+import com.nuryadincjr.ebusantara.pojo.Users;
 
 public class FinishRegistrationActivity extends AppCompatActivity {
-
     private ActivityFinishRegristrationBinding binding;
 
     @Override
@@ -23,7 +23,10 @@ public class FinishRegistrationActivity extends AppCompatActivity {
         binding = inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Users user = getIntent().getParcelableExtra("user");
         binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
-        binding.btnTakeHome.setOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
+        binding.btnTakeHome.setOnClickListener(v ->
+                startActivity(new Intent(this, MainActivity.class)
+                        .putExtra("user", user)));
     }
 }
