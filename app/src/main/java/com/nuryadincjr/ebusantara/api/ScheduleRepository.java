@@ -1,8 +1,6 @@
 package com.nuryadincjr.ebusantara.api;
 
-import static android.content.ContentValues.TAG;
-
-import android.util.Log;
+import android.annotation.SuppressLint;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -13,40 +11,49 @@ import com.nuryadincjr.ebusantara.pojo.Buses;
 import com.nuryadincjr.ebusantara.pojo.Cities;
 import com.nuryadincjr.ebusantara.pojo.Schedule;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
-import com.nuryadincjr.ebusantara.pojo.Users;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ScheduleRepository {
-
     private final FirebaseFirestore db;
+    private final CollectionReference collection;
 
     public ScheduleRepository() {
-         db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
+        collection = db.collection("schedule");
     }
 
+    @SuppressLint("SimpleDateFormat")
     public MutableLiveData<ArrayList<ScheduleReference>> getCollectionsBuses(
-            String collection, String departureCity, String arrivalCity) {
-
+            String departureCity, String arrivalCity, Calendar calendar) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         MutableLiveData<ArrayList<ScheduleReference>> scheduleMutableLiveData = new MutableLiveData<>();
         ArrayList<ScheduleReference> scheduleReferences = new ArrayList<>();
 
-        CollectionReference collectionReference = db.collection(collection);
-        collectionReference.get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()) {
+        String date = format.format(calendar.getTime());
+        collection
+                .whereGreaterThanOrEqualTo("departureTime", date)
+                .whereLessThanOrEqualTo("departureTime",date+"~")
+                .get().addOnCompleteListener(task -> {
+            if(task.isSuccessful() && task.getResult().size()!=0) {
                 for (QueryDocumentSnapshot  snapshot : task.getResult()) {
                     Schedule data = snapshot.toObject(Schedule.class);
-                    db.document(data.getDeparture().getPath()).get().addOnCompleteListener(departureTask -> {
+                    db.document(data.getDeparture().getPath())
+                            .get().addOnCompleteListener(departureTask -> {
                        if(departureTask.isSuccessful()){
                            Cities departureCities = departureTask.getResult().toObject(Cities.class);
                            if(departureCities != null){
                                if(departureCities.getCity().equals(departureCity)){
-                                   db.document(data.getArrival().getPath()).get().addOnCompleteListener(arrivalTask -> {
+                                   db.document(data.getArrival().getPath())
+                                           .get().addOnCompleteListener(arrivalTask -> {
                                        if(arrivalTask.isSuccessful()){
                                            Cities arrivalCities = arrivalTask.getResult().toObject(Cities.class);
                                            if(arrivalCities != null){
                                                if(arrivalCities.getCity().equals(arrivalCity)){
-                                                   db.document(data.getBus().getPath()).get().addOnCompleteListener(busTask -> {
+                                                   db.document(data.getBus().getPath())
+                                                           .get().addOnCompleteListener(busTask -> {
                                                       if(busTask.isSuccessful()){
                                                           Buses buses = busTask.getResult().toObject(Buses.class);
                                                           ScheduleReference scheduleReference = new ScheduleReference();
@@ -71,11 +78,7 @@ public class ScheduleRepository {
                        }
                     });
                 }
-
-            } else {
-                scheduleMutableLiveData.setValue(null);
-                Log.w(TAG, "Error getting documents.", task.getException());
-            }
+            } else scheduleMutableLiveData.setValue(null);
         });
         return scheduleMutableLiveData;
     }
@@ -90,40 +93,11 @@ public class ScheduleRepository {
             if(task.isSuccessful()) {
                 for (QueryDocumentSnapshot  snapshot : task.getResult()) {
                     Cities data = snapshot.toObject(Cities.class);
-
                     Schedule.add(data);
-                    Log.d(TAG, snapshot.getId() + " => " + snapshot.getData());
                 }
                 ScheduleMutableLiveData.postValue(Schedule);
-            }else{
-                ScheduleMutableLiveData.setValue(null);
-                Log.w(TAG, "Error getting documents.", task.getException());
-            }
+            }else ScheduleMutableLiveData.setValue(null);
         });
         return ScheduleMutableLiveData;
     }
-
-    public MutableLiveData<ArrayList<Users>> getUsers(String document) {
-        ArrayList<Users> users = new ArrayList<>();
-        final MutableLiveData<ArrayList<Users>> ScheduleMutableLiveData = new MutableLiveData<>();
-
-        CollectionReference collectionReference = db.collection(document);
-
-        collectionReference.get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()) {
-                for (QueryDocumentSnapshot  snapshot : task.getResult()) {
-                    Users data = snapshot.toObject(Users.class);
-
-                    users.add(data);
-                    Log.d(TAG, snapshot.getId() + " => " + snapshot.getData());
-                }
-                ScheduleMutableLiveData.postValue(users);
-            }else{
-                ScheduleMutableLiveData.setValue(null);
-                Log.w(TAG, "Error getting documents.", task.getException());
-            }
-        });
-        return ScheduleMutableLiveData;
-    }
-
 }

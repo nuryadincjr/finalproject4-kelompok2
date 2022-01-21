@@ -66,7 +66,9 @@ public class Buses implements Parcelable {
         this.seats = seats;
     }
 
-    public Buses(String id, String busNo, String poName, String classType, List<String> facility, String imageUrl, String price, Seats seats) {
+    public Buses(String id, String busNo, String poName,
+                 String classType, List<String> facility,
+                 String imageUrl, String price, Seats seats) {
         this.id = id;
         this.busNo = busNo;
         this.poName = poName;
@@ -77,7 +79,9 @@ public class Buses implements Parcelable {
         this.seats = seats;
     }
 
-    public Buses(String id, String busNo, String poName, String classType, List<String> facility, String imageUrl, String price) {
+    public Buses(String id, String busNo, String poName,
+                 String classType, List<String> facility,
+                 String imageUrl, String price) {
         this.id = id;
         this.busNo = busNo;
         this.poName = poName;

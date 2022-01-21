@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 import com.nuryadincjr.ebusantara.R;
+import com.nuryadincjr.ebusantara.api.UsersRepository;
 import com.nuryadincjr.ebusantara.databinding.ItemReviewsBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.pojo.Reviewers;
@@ -19,7 +21,6 @@ import com.nuryadincjr.ebusantara.pojo.Users;
 import java.util.List;
 
 public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     public ItemClickListener itemClickListener;
     private final List<Reviewers> reviewersList;
 
@@ -78,7 +79,6 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 params.setMarginStart(10);
                 params.setMarginEnd(40);
                 binding.getRoot().setLayoutParams(params);
-
             }
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -95,12 +95,11 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                }
             });
 
+            String rating = reviewers.getRatings();
+            if(rating.equals("NaN")) rating = "0";
             binding.tvReviewsContent.setText(reviewers.getContent());
-
-            String displayRating = reviewers.getRatings()+"/5";
+            String displayRating = rating+"/5";
             binding.tvRatings.setText(displayRating);
-
-
 
             binding.getRoot().setOnLongClickListener(this);
             binding.getRoot().setOnClickListener(this);

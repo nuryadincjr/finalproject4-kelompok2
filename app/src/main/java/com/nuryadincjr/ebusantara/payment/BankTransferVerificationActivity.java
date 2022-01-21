@@ -1,15 +1,25 @@
 package com.nuryadincjr.ebusantara.payment;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static com.nuryadincjr.ebusantara.util.LocalPreference.getInstance;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.nuryadincjr.ebusantara.MainActivity;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ActivityBankTransferVerificationBinding;
+import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
+import com.nuryadincjr.ebusantara.pojo.Transactions;
 
 public class BankTransferVerificationActivity extends AppCompatActivity {
 
     private ActivityBankTransferVerificationBinding binding;
+    private Transactions transactions;
+    private String bank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,15 +29,52 @@ public class BankTransferVerificationActivity extends AppCompatActivity {
         binding = ActivityBankTransferVerificationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        String total = getIntent().getStringExtra("total");
-        binding.layoutTotalPayment.tvTotal.setText(total);
+        transactions = getIntent().getParcelableExtra("transactions");
+        bank = getIntent().getStringExtra("bank");
+
+        binding.layoutTotalPayment.tvTotal.setText(transactions.getTotalPayment());
+        binding.tvPaymentNumber.setText(transactions.getBookNo());
+        binding.tvPaymentNominal.setText(transactions.getTotalPayment());
         binding.appbar.ivBackArrow.setOnClickListener(v -> onBackPressed());
+        binding.btnVerifyPayment.setOnClickListener(v -> onPusData());
 
         getBank();
     }
 
+    private void onPusData() {
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setCancelable(false);
+        dialog.setMessage("Verify payment..");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String id = db.collection("transactions").document().getId();
+        ScheduleReference schedule = getIntent().getParcelableExtra("schedule");
+
+        transactions.setId(id);
+        transactions.setPaymentMethod("credit card");
+        transactions.setPaymentPartner("visa");
+
+        db.collection("seats").document(schedule.getId())
+                .set(schedule.getBuses().getSeats())
+                .addOnCompleteListener(updateTask ->{
+                    if(updateTask.isSuccessful()){
+                        db.collection("transactions")
+                                .document(id).set(transactions)
+                                .addOnCompleteListener(task -> {
+                                    if(task.isSuccessful()){
+                                        dialog.dismiss();
+                                        getInstance(this).getEditor().putBoolean("isRating", true).apply();
+                                        startActivity(new Intent(this, MainActivity.class)
+                                                .putExtra("schedule", schedule)
+                                                .putExtra("transactions", transactions)
+                                                .putExtra("fragment", 1));
+                                        finish();
+                                    }
+                                });
+                    }
+                });
+    }
+
     private void getBank() {
-        String bank = getIntent().getStringExtra("bank");
         String bankName = bank;
         int bankLogo = 0;
         if(bank.equals("BNI")){

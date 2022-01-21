@@ -95,9 +95,10 @@
                             android:padding="20dp"
                             android:textColor="@color/primary_light"
                             android:textStyle="bold"
-                            app:drawableEndCompat="@drawable/ic_round_qr_code"
                             tools:ignore="TextContrastCheck"
-                            tools:text="230719-0001" />
+                            tools:text="230719-0001"
+                            app:drawableEndCompat="@drawable/ic_round_qr_code"
+                            app:drawableTint="@color/primary_light" />
 
                         <TextView
                             android:id="@+id/tvStepsSecond"

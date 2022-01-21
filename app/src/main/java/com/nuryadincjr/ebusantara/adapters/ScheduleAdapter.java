@@ -1,5 +1,10 @@
 package com.nuryadincjr.ebusantara.adapters;
 
+import static java.lang.Double.NaN;
+import static java.lang.String.*;
+
+import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ItemDestinationBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.pojo.Reviewers;
@@ -16,18 +22,20 @@ import com.nuryadincjr.ebusantara.pojo.ReviewersReference;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Seats;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     public ItemClickListener itemClickListener;
-    private final List<ScheduleReference> compactScheduleReferenceList;
-    private int seat;
+    private final List<ScheduleReference> references;
+    private final int seat;
 
-    public ScheduleAdapter(List<ScheduleReference> compactScheduleReferenceList, int seat) {
-        this.compactScheduleReferenceList = compactScheduleReferenceList;
+    public ScheduleAdapter(List<ScheduleReference> references, int seat) {
+        this.references = references;
         this.seat = seat;
     }
 
@@ -43,12 +51,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ScheduleViewHolder scheduleViewHolder = (ScheduleViewHolder) holder;
-        scheduleViewHolder.setDataToView(compactScheduleReferenceList.get(position));
+        scheduleViewHolder.setDataToView(references.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return compactScheduleReferenceList.size();
+        return references.size();
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -68,18 +76,20 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             this.db = FirebaseFirestore.getInstance();
         }
 
+
         public void setDataToView(ScheduleReference dataToView) {
+            String piece = "Rp"+dataToView.getBuses().getPrice();
+
             binding.tvPOName.setText(dataToView.getBuses().getPoName());
             binding.tvBusNo.setText(dataToView.getBuses().getBusNo());
-            binding.tvPiece.setText(dataToView.getBuses().getPrice());
+            binding.tvPiece.setText(piece);
             binding.tvDeparture.setText(dataToView.getDeparture().getCity());
             binding.tvArrival.setText(dataToView.getArrival().getCity());
             binding.tvTerminalDeparture.setText(dataToView.getDeparture().getTerminal());
             binding.tvTerminalArrival.setText(dataToView.getArrival().getTerminal());
-            binding.tvDepartureTime.setText(dataToView.getDepartureTime());
-            binding.tvArrivalTime.setText(dataToView.getArrivalTime());
 
             List<Reviewers> reviewersList = new ArrayList<>();
+            getTime(dataToView);
             getSeats(dataToView);
             getReviews(dataToView, reviewersList);
 
@@ -88,84 +98,108 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             binding.btnBookNow.setOnClickListener(this);
         }
 
+        @SuppressLint("SimpleDateFormat")
+        private void getTime(ScheduleReference dataToView) {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
+
+            Date departureDate = new Date();
+            Date arrivalDate = new Date();
+            try {
+                departureDate = format.parse(dataToView.getDepartureTime());
+                arrivalDate = format.parse(dataToView.getArrivalTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            binding.tvDepartureTime.setText(formatTime.format(departureDate));
+            binding.tvArrivalTime.setText(formatTime.format(arrivalDate));
+        }
+
         private void getReviews(ScheduleReference dataToView, List<Reviewers> reviewersList) {
             db.collection("reviews")
                     .document(dataToView.getId()).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        List<Map<String, Object>> reviewer = (List<Map<String, Object>>) document.get("reviewer");
-                        double ratings = 0;
+                    List<Map<String, Object>> reviewer = (List<Map<String, Object>>) document.get("reviewer");
+                    double ratings = 0;
+                    if(reviewer!=null){
                         for (Map<String, Object> map : reviewer) {
-                            Reviewers reviewers = new Reviewers();
-                            reviewers.setId(String.valueOf(map.get("id")));
-                            reviewers.setUid(String.valueOf(map.get("uid")));
-                            reviewers.setDate(String.valueOf(map.get("date")));
-                            reviewers.setContent(String.valueOf(map.get("content")));
-                            reviewers.setRatings(String.valueOf(map.get("ratings")));
+                           Reviewers reviewers = new Reviewers(
+                                   valueOf(map.get("uid")),
+                                   valueOf(map.get("date")),
+                                   valueOf(map.get("content")),
+                                   valueOf(map.get("ratings")));
 
                             ratings += Double.parseDouble(reviewers.getRatings());
-                            reviewersList.add(reviewers);
+
+                           reviewersList.add(reviewers);
                         }
-
-                        double finalRating = ratings/reviewer.size();
-                        String displayRating = finalRating+"/5";
-                        binding.tvReviews.setText(String.valueOf(reviewer.size()));
-                        binding.tvRatings.setText(displayRating);
-
-                        ReviewersReference reference = new ReviewersReference();
-                        reference.setRatingsCount(displayRating);
-                        reference.setReviewers(reviewersList);
-
-                        dataToView.setReviewers(reference);
+                        ratings /= reviewer.size();
                     }
+
+                    if(valueOf(ratings).equals("NaN")) ratings = 0.0;
+                    String displayRating = ratings +"/5";
+                    binding.tvReviews.setText(valueOf(reviewer.size()));
+                    binding.tvRatings.setText(displayRating);
+
+                    ReviewersReference reference = new ReviewersReference();
+                    reference.setRatingsCount(displayRating);
+                    reference.setReviewers(reviewersList);
+                    dataToView.setReviewers(reference);
                 }
+
             });
         }
 
         private void getSeats(ScheduleReference dataToView) {
-            db.document("seats/"+ dataToView.getBuses().getId())
+            db.document("seats/"+ dataToView.getId())
                     .get().addOnCompleteListener(seatTask -> {
                 if (seatTask.isSuccessful()) {
-                    Map<String, Object> seatsList = seatTask.getResult().getData();
-                    List<Boolean> seatsA = (List<Boolean>) seatsList.get("A");
-                    List<Boolean> seatsB = (List<Boolean>) seatsList.get("B");
-                    List<Boolean> seatsC = (List<Boolean>) seatsList.get("C");
-                    List<Boolean> seatsD = (List<Boolean>) seatsList.get("D");
+                    Seats seatsList = seatTask.getResult().toObject(Seats.class);
+                    List<Boolean> seatsA = seatsList.getA();
+                    List<Boolean> seatsB = seatsList.getB();
+                    List<Boolean> seatsC = seatsList.getC();
+                    List<Boolean> seatsD = seatsList.getD();
                     Seats seats = new Seats();
 
-                    boolean[] arrayA = new boolean[seatsA.size()];
-                    boolean[] arrayB = new boolean[seatsB.size()];
-                    boolean[] arrayC = new boolean[seatsC.size()];
-                    boolean[] arrayD = new boolean[seatsD.size()];
-
                     int counter = 0;
-                    if (arrayA.length != 0 || arrayB.length != 0 || arrayC.length != 0 || arrayD.length != 0) {
-                        counter = getCounter(seatsA, arrayA, counter);
-                        counter = getCounter(seatsB, arrayB, counter);
-                        counter = getCounter(seatsC, arrayC, counter);
-                        counter = getCounter(seatsD, arrayD, counter);
+                    if (seatsA.size() != 0 || seatsB.size() != 0 || seatsC.size() != 0 || seatsD.size() != 0) {
+                        counter = getCounter(seatsA, counter);
+                        counter = getCounter(seatsB, counter);
+                        counter = getCounter(seatsC, counter);
+                        counter = getCounter(seatsD, counter);
 
-                        seats.setA(arrayA);
-                        seats.setB(arrayB);
-                        seats.setC(arrayC);
-                        seats.setD(arrayD);
+                        seats.setA(seatsA);
+                        seats.setB(seatsB);
+                        seats.setC(seatsC);
+                        seats.setD(seatsD);
                         dataToView.getBuses().setSeats(seats);
                     }
 
                     if(scheduleAdapter.seat > counter){
+                        int color = itemView.getResources().getColor(R.color.gray_e5);
+                        int colorBg = itemView.getResources().getColor(R.color.gray_64);
+                        String titleButton = "Sold out";
+
+                        binding.cardView.setCardBackgroundColor(colorBg);
+                        binding.tvRatings.setBackgroundColor(color);
+                        binding.tvPOName.setTextColor(color);
+                        binding.tvPiece.setTextColor(color);
+                        binding.tvDepartureTime.setTextColor(color);
+                        binding.tvArrivalTime.setTextColor(color);
                         binding.cardView.setEnabled(false);
-                        binding.btnBookNow.setText("Sold out");
                         binding.btnBookNow.setEnabled(false);
+                        binding.btnBookNow.setText(titleButton);
                     }
                 }
+
             });
         }
 
-        private int getCounter(List<Boolean> booleanA, boolean[] a, int counter) {
+        private int getCounter(List<Boolean> booleanA, int counter) {
             for (int i = 0; i < booleanA.size(); i++) {
                 boolean bool = booleanA.get(i);
-                a[i] = bool;
+                booleanA.set(i, bool);
                 if(bool) counter += 1;
             }
             return counter;

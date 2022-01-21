@@ -1,32 +1,28 @@
 package com.nuryadincjr.ebusantara.login;
 
-import static com.nuryadincjr.ebusantara.databinding.ActivityFinishRegristrationBinding.*;
-
-import androidx.appcompat.app.AppCompatActivity;
+import static com.nuryadincjr.ebusantara.databinding.ActivityFinishRegristrationBinding.inflate;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.nuryadincjr.ebusantara.MainActivity;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ActivityFinishRegristrationBinding;
-import com.nuryadincjr.ebusantara.pojo.Users;
 
 public class FinishRegistrationActivity extends AppCompatActivity {
-    private ActivityFinishRegristrationBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish_regristration);
 
-        binding = inflate(getLayoutInflater());
+        ActivityFinishRegristrationBinding binding = inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Users user = getIntent().getParcelableExtra("user");
         binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
         binding.btnTakeHome.setOnClickListener(v ->
-                startActivity(new Intent(this, MainActivity.class)
-                        .putExtra("user", user)));
+                startActivity(new Intent(this, MainActivity.class)));
     }
 }

@@ -1,37 +1,45 @@
 package com.nuryadincjr.ebusantara.pojo;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.RequiresApi;
+
+import java.util.List;
+
 public class Seats implements Parcelable {
-    private boolean[] A;
-    private boolean[] B;
-    private boolean[] C;
-    private boolean[] D;
+    private List<Boolean> A;
+    private List<Boolean> B;
+    private List<Boolean> C;
+    private List<Boolean> D;
 
     public Seats() {
     }
 
-    public Seats(boolean[] a, boolean[] b, boolean[] c, boolean[] d) {
+    public Seats(List<Boolean> a, List<Boolean> b,
+                 List<Boolean> c, List<Boolean> d) {
         A = a;
         B = b;
         C = c;
         D = d;
     }
 
+
     protected Seats(Parcel in) {
-        A = in.createBooleanArray();
-        B = in.createBooleanArray();
-        C = in.createBooleanArray();
-        D = in.createBooleanArray();
+        A = (List<Boolean>) in.readValue(getClass().getClassLoader());
+        B = (List<Boolean>) in.readValue(getClass().getClassLoader());
+        C = (List<Boolean>) in.readValue(getClass().getClassLoader());
+        D = (List<Boolean>) in.readValue(getClass().getClassLoader());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeBooleanArray(A);
-        dest.writeBooleanArray(B);
-        dest.writeBooleanArray(C);
-        dest.writeBooleanArray(D);
+        dest.writeValue(A);
+        dest.writeValue(B);
+        dest.writeValue(C);
+        dest.writeValue(D);
     }
 
     @Override
@@ -51,35 +59,35 @@ public class Seats implements Parcelable {
         }
     };
 
-    public boolean[] getA() {
+    public List<Boolean> getA() {
         return A;
     }
 
-    public void setA(boolean[] a) {
+    public void setA(List<Boolean> a) {
         A = a;
     }
 
-    public boolean[] getB() {
+    public List<Boolean> getB() {
         return B;
     }
 
-    public void setB(boolean[] b) {
+    public void setB(List<Boolean> b) {
         B = b;
     }
 
-    public boolean[] getC() {
+    public List<Boolean> getC() {
         return C;
     }
 
-    public void setC(boolean[] c) {
+    public void setC(List<Boolean> c) {
         C = c;
     }
 
-    public boolean[] getD() {
+    public List<Boolean> getD() {
         return D;
     }
 
-    public void setD(boolean[] d) {
+    public void setD(List<Boolean> d) {
         D = d;
     }
 }

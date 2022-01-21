@@ -16,7 +16,8 @@ public class Schedule implements Parcelable {
     public Schedule() {
     }
 
-    public Schedule(String id, DocumentReference bus, DocumentReference arrival, DocumentReference departure, String arrivalTime, String departureTime) {
+    public Schedule(String id, DocumentReference bus, DocumentReference arrival,
+                    DocumentReference departure, String arrivalTime, String departureTime) {
         this.id = id;
         this.bus = bus;
         this.arrival = arrival;

@@ -113,7 +113,9 @@
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/ic_round_keyboard_arrow_right.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/ic_round_my_location.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/ic_round_qr_code.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/ic_round_settings.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/ic_round_star.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/ic_round_star_border.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/ic_search.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/ic_seat.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/ic_seat_individual.xml" value="0.21614583333333334" />
@@ -125,39 +127,46 @@
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/selector_btn_rectangle.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/selector_chooser.xml" value="0.15625" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/selector_input.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/drawable/selector_rating.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/font/lato.xml" value="0.23020833333333332" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/font/lato_bold.xml" value="0.23020833333333332" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/font/nunito_extrabold.xml" value="0.23020833333333332" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_about.xml" value="0.2" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_bank_transfer.xml" value="0.22" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_bank_transfer_verification.xml" value="0.33" />
-        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_bus_chooser.xml" value="0.25" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_bus_chooser.xml" value="0.18" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_bus_details.xml" value="0.33" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_credit_card_verification.xml" value="0.22" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_date_picker.xml" value="0.17" />
-        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_destination_chooser.xml" value="0.18" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_destination_chooser.xml" value="0.25" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_detail_payment.xml" value="0.22" />
-        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_login.xml" value="0.5" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_payment.xml" value="0.25" />
-        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_retail_payment_verification.xml" value="0.10648148148148148" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_retail_payment_verification.xml" value="0.22" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_seat_chooser.xml" value="0.25" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_seats_chooser.xml" value="0.18" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_settings.xml" value="0.22" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_splash_screen.xml" value="0.2" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/activity_ticket_details.xml" value="0.33" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/fragment_notifications.xml" value="0.2" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
-        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/fragment_search.xml" value="0.25" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/fragment_search.xml" value="0.22" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/fragment_tickets.xml" value="0.16" />
-        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/item_destination.xml" value="0.25" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/item_destination.xml" value="0.2" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/item_destination_search.xml" value="0.33" />
-        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/item_order.xml" value="0.2" />
-        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/item_reviews.xml" value="2.0" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/item_order.xml" value="0.25" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/item_reviews.xml" value="0.33" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_appbar.xml" value="0.2" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_book_a_trip.xml" value="0.22" />
-        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_complete_booking.xml" value="0.25" />
-        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_error.xml" value="0.18" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_complete_booking.xml" value="0.22" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_error.xml" value="0.22" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_info.xml" value="0.2" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_qrcode.xml" value="0.22" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_rating.xml" value="0.2" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_seats_chooser.xml" value="0.25" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_sliding_up_panel.xml" value="0.25" />
-        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_total_payment.xml" value="0.1265625" />
+        <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_total_payment.xml" value="0.33" />
       </map>
     </option>
   </component>

@@ -4,6 +4,8 @@ import static com.nuryadincjr.ebusantara.databinding.ActivityDestinationChooserB
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +17,12 @@ import com.nuryadincjr.ebusantara.adapters.CitiesAdapter;
 import com.nuryadincjr.ebusantara.databinding.ActivityDestinationChooserBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.pojo.Cities;
-import com.nuryadincjr.ebusantara.models.MainViewModel;
+import com.nuryadincjr.ebusantara.util.MainViewModel;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class DestinationChooserActivity extends AppCompatActivity {
-
     private ActivityDestinationChooserBinding binding;
 
     @Override
@@ -31,13 +33,44 @@ public class DestinationChooserActivity extends AppCompatActivity {
         binding = inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.tvCancel.setOnClickListener(v -> onBackPressed());
         getData();
+
+        binding.etSearch.setFocusable(true);
+        binding.tvCancel.setOnClickListener(v -> onBackPressed());
+        binding.etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                getData(binding.etSearch.getText()
+                        .toString()
+                        .toLowerCase(Locale.ROOT));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void getData() {
         MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mainViewModel.getCities("cities").observe(this, cities -> {
+            CitiesAdapter citiesAdapter = new CitiesAdapter(cities);
+            binding.rvSearch.setLayoutManager(new LinearLayoutManager(this));
+            binding.rvSearch.setAdapter(citiesAdapter);
+
+            onListener(citiesAdapter, cities);
+        });
+    }
+
+    private void getData(String city) {
+        MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mainViewModel.getSearchCities(city).observe(this, cities -> {
             CitiesAdapter citiesAdapter = new CitiesAdapter(cities);
             binding.rvSearch.setLayoutManager(new LinearLayoutManager(this));
             binding.rvSearch.setAdapter(citiesAdapter);

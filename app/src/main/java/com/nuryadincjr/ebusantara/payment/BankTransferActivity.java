@@ -1,5 +1,7 @@
 package com.nuryadincjr.ebusantara.payment;
 
+import static com.nuryadincjr.ebusantara.databinding.ActivityBankTransferBinding.*;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,24 +10,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ActivityBankTransferBinding;
-import com.nuryadincjr.ebusantara.databinding.LayoutTotalPaymentBinding;
+import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
+import com.nuryadincjr.ebusantara.pojo.Transactions;
 
 public class BankTransferActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private ActivityBankTransferBinding binding;
-    private LayoutTotalPaymentBinding view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_transfer);
 
-        binding = ActivityBankTransferBinding.inflate(getLayoutInflater());
+        ActivityBankTransferBinding binding = inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        view = binding.layoutTotalPayment;
-        String total = getIntent().getStringExtra("total");
-        view.tvTotal.setText(total);
+        Transactions transactions = getIntent().getParcelableExtra("transactions");
+
+        binding.layoutTotalPayment.tvTotal.setText(transactions.getTotalPayment());
         binding.appbar.ivBackArrow.setOnClickListener(v -> onBackPressed());
         binding.tvSelectBNI.setOnClickListener(this);
         binding.tvSelectCIMB.setOnClickListener(this);
@@ -39,11 +39,15 @@ public class BankTransferActivity extends AppCompatActivity implements View.OnCl
         }else if(v.getId()==R.id.tvSelectCIMB){
             item = "CIMB";
         }
+
         if(!item.equals("")) {
+            Transactions transactions = getIntent().getParcelableExtra("transactions");
+            ScheduleReference schedule = getIntent().getParcelableExtra("schedule");
             startActivity(new Intent(this,
                     BankTransferVerificationActivity.class)
                     .putExtra("bank", item)
-                    .putExtra("total", view.tvTotal.getText()));
+                    .putExtra("transactions", transactions)
+                    .putExtra("schedule", schedule));
         }
     }
 

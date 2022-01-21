@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Reviewers implements Parcelable {
-    private String id;
     private String uid;
     private String date;
     private String content;
@@ -13,8 +12,8 @@ public class Reviewers implements Parcelable {
     public Reviewers() {
     }
 
-    public Reviewers(String id, String uid, String date, String content, String ratings) {
-        this.id = id;
+    public Reviewers(String uid, String date,
+                     String content, String ratings) {
         this.uid = uid;
         this.date = date;
         this.content = content;
@@ -22,7 +21,6 @@ public class Reviewers implements Parcelable {
     }
 
     protected Reviewers(Parcel in) {
-        id = in.readString();
         uid = in.readString();
         date = in.readString();
         content = in.readString();
@@ -31,7 +29,6 @@ public class Reviewers implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
         dest.writeString(uid);
         dest.writeString(date);
         dest.writeString(content);
@@ -54,14 +51,6 @@ public class Reviewers implements Parcelable {
             return new Reviewers[size];
         }
     };
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getUid() {
         return uid;

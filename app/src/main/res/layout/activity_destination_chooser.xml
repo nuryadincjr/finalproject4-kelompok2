@@ -30,7 +30,7 @@
             android:textColor="@color/black"
             app:drawableTint="@color/red_selector"
             tools:ignore="TouchTargetSizeCheck"
-            tools:text="Cianjur" />
+            android:hint="@string/str_try_cianjur" />
 
         <TextView
             android:id="@+id/tvCancel"

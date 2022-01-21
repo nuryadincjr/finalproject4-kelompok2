@@ -1,9 +1,6 @@
 package com.nuryadincjr.ebusantara.payment;
 
-import static java.lang.Double.parseDouble;
-import static java.text.NumberFormat.getCurrencyInstance;
-
-import androidx.appcompat.app.AppCompatActivity;
+import static com.nuryadincjr.ebusantara.databinding.ActivityPaymentBinding.*;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,43 +8,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ActivityPaymentBinding;
-import com.nuryadincjr.ebusantara.databinding.LayoutCompleteBookingBinding;
-import com.nuryadincjr.ebusantara.databinding.LayoutTotalPaymentBinding;
-import com.nuryadincjr.ebusantara.pojo.Buses;
-import com.nuryadincjr.ebusantara.pojo.Cities;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
-import com.nuryadincjr.ebusantara.pojo.Seats;
-import com.nuryadincjr.ebusantara.pojo.Users;
+import com.nuryadincjr.ebusantara.pojo.Transactions;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
-import java.util.Calendar;
-
-public class PaymentActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private ActivityPaymentBinding binding;
-    private LayoutTotalPaymentBinding view;
+public class PaymentActivity extends AppCompatActivity
+        implements View.OnClickListener {
+    private Transactions transactions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        binding = ActivityPaymentBinding.inflate(getLayoutInflater());
+        ActivityPaymentBinding binding = inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        view = binding.layoutTotalPayment;
-        String total = getIntent().getStringExtra("total");
-        view.tvTotal.setText(total);
-        binding.appbar.ivBackArrow.setOnClickListener(v -> onBackPressed());
+        transactions = getIntent().getParcelableExtra("transactions");
+
         binding.tvSelectCreditCard.setOnClickListener(this);
         binding.tvSelectBankTransfer.setOnClickListener(this);
         binding.tvSelectRetailPayment.setOnClickListener(this);
+        binding.layoutTotalPayment.tvTotal.setText(transactions.getTotalPayment());
+        binding.appbar.ivBackArrow.setOnClickListener(v -> onBackPressed());
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -65,9 +51,12 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 activity = new RetailPaymentVerificationActivity();
                 break;
         }
+
         if(activity != null) {
+            ScheduleReference schedule = getIntent().getParcelableExtra("schedule");
             startActivity(new Intent(this, activity.getClass())
-                    .putExtra("total", view.tvTotal.getText()));
+                    .putExtra("transactions", transactions)
+                    .putExtra("schedule", schedule));
         }
     }
 }

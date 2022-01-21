@@ -1,7 +1,10 @@
 package com.nuryadincjr.ebusantara.fragment;
 
+import static com.nuryadincjr.ebusantara.databinding.FragmentNotificationsBinding.*;
+
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,7 +15,6 @@ import com.nuryadincjr.ebusantara.databinding.FragmentNotificationsBinding;
 
 public class NotificationsFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
     public NotificationsFragment() {
         // Required empty public constructor
     }
@@ -23,9 +25,9 @@ public class NotificationsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+       FragmentNotificationsBinding binding = inflate(inflater, container, false);
 
         binding.rvNotification.setVisibility(View.GONE);
         binding.layoutInfo.linearLayout.setVisibility(View.VISIBLE);

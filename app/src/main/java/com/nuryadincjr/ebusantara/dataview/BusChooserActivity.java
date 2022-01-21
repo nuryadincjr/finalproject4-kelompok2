@@ -11,28 +11,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.ScheduleAdapter;
 import com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.pojo.Cities;
-import com.nuryadincjr.ebusantara.models.MainViewModel;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
+import com.nuryadincjr.ebusantara.util.MainViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class BusChooserActivity extends AppCompatActivity {
-
     private ActivityBusChooserBinding binding;
     private Cities departureCity;
     private Cities arrivalCity;
     private Calendar calendar;
     private String passengers;
-    private FirebaseFirestore db;
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +39,10 @@ public class BusChooserActivity extends AppCompatActivity {
         binding = inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        db = FirebaseFirestore.getInstance();
-        binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
-
-        departureCity = getIntent().getParcelableExtra("departureCity");
-        arrivalCity = getIntent().getParcelableExtra("arrivalCity");
+        departureCity = getIntent().getParcelableExtra("departure_city");
+        arrivalCity = getIntent().getParcelableExtra("arrival_city");
         passengers = getIntent().getStringExtra("passengers");
         calendar =  (Calendar)getIntent().getSerializableExtra("date");
-        @SuppressLint("SimpleDateFormat")
         SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy");
 
         String displayPassengers = "Seat " +passengers;
@@ -57,18 +51,25 @@ public class BusChooserActivity extends AppCompatActivity {
         binding.tvArrival.setText(arrivalCity.getCity());
         binding.tvDate.setText(format.format(calendar.getTime()));
 
+        binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
         getData();
     }
 
     private void getData() {
         MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mainViewModel.getBuses("schedule", departureCity.getCity(), arrivalCity.getCity()).observe(this, schedules -> {
-
-            ScheduleAdapter scheduleAdapter = new ScheduleAdapter(schedules, Integer.parseInt(passengers));
-            binding.rvBuses.setLayoutManager(new LinearLayoutManager(this));
-            binding.rvBuses.setAdapter(scheduleAdapter);
-
-            onListener(scheduleAdapter, schedules);
+        mainViewModel.getBuses(departureCity.getCity(), arrivalCity.getCity(),
+                calendar).observe(this, schedules -> {
+            if(schedules!=null){
+                ScheduleAdapter scheduleAdapter = new ScheduleAdapter(schedules, Integer.parseInt(passengers));
+                binding.rvBuses.setLayoutManager(new LinearLayoutManager(this));
+                binding.rvBuses.setAdapter(scheduleAdapter);
+                onListener(scheduleAdapter, schedules);
+            }else {
+                binding.rvBuses.setVisibility(View.GONE);
+                binding.layoutError.textView.setText("Sorry!");
+                binding.layoutError.tvMassage.setText("The destination location you selected was not found");
+                binding.layoutError.linearLayout.setVisibility(View.VISIBLE);
+            }
         });
     }
 

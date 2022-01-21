@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/p20"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_extrabold"
+            android:text="@string/str_how_was_your_trip"
+            android:padding="@dimen/p20"
+            android:textColor="@color/black"
+            android:textSize="@dimen/s18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/p20"
+            android:textSize="@dimen/s12"
+            android:ems="2"
+            android:text="@string/str_you_ve_been_complete_your_trip_with_this_detail" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/m20"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/m10"
+                    android:textSize="@dimen/s12"
+                    android:text="@string/str_po_name" />
+
+                <TextView
+                    android:id="@+id/tvPOName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Sempati Star"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/m10"
+                    android:textSize="@dimen/s12"
+                    android:text="@string/str_bus_no" />
+
+                <TextView
+                    android:id="@+id/tvBusNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="P 9123 NN"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/m10"
+                    android:textSize="@dimen/s12"
+                    android:text="@string/str_departure_date" />
+
+                <TextView
+                    android:id="@+id/tvDepartureDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="23 JUL 2019"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/m10"
+                    android:textSize="@dimen/s12"
+                    android:text="@string/str_ticket_status" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    tools:text="Issued"
+                    android:textColor="@color/gren_success"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_success" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/p30"
+            android:textSize="@dimen/s12"
+            android:text="@string/str_please_give_your_rating" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/p20">
+
+            <CheckedTextView
+                android:id="@+id/ctvStar1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:backgroundTint="@color/secondary"
+                android:background="@drawable/selector_rating" />
+
+            <CheckedTextView
+                android:id="@+id/ctvStar2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:backgroundTint="@color/secondary"
+                android:background="@drawable/selector_rating" />
+
+            <CheckedTextView
+                android:id="@+id/ctvStar3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:backgroundTint="@color/secondary"
+                android:background="@drawable/selector_rating" />
+
+            <CheckedTextView
+                android:id="@+id/ctvStar4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:backgroundTint="@color/secondary"
+                android:background="@drawable/selector_rating" />
+
+            <CheckedTextView
+                android:id="@+id/ctvStar5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:backgroundTint="@color/secondary"
+                android:background="@drawable/selector_rating" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

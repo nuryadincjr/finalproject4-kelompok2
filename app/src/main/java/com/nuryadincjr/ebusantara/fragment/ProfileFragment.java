@@ -1,6 +1,10 @@
 package com.nuryadincjr.ebusantara.fragment;
 
+import static com.nuryadincjr.ebusantara.databinding.FragmentProfileBinding.inflate;
+import static com.nuryadincjr.ebusantara.util.LocalPreference.getInstance;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,19 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.FragmentProfileBinding;
-import com.nuryadincjr.ebusantara.login.LoginActivity;
+import com.nuryadincjr.ebusantara.login.SettingsActivity;
 import com.nuryadincjr.ebusantara.pojo.Users;
 
 public class ProfileFragment extends Fragment {
-
-    private FragmentProfileBinding binding;
-    private FirebaseAuth auth;
-    private FirebaseUser currentUser;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -36,10 +33,15 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
-        auth = FirebaseAuth.getInstance();
-        currentUser = auth.getCurrentUser();
-        Users users = getArguments().getParcelable("user");
+        FragmentProfileBinding binding = inflate(inflater, container, false);
+
+        SharedPreferences preference = getInstance(getContext()).getPreferences();
+        String uid = preference.getString("uid", "");
+        String name = preference.getString("name", "");
+        String email = preference.getString("email", "");
+        String phone = preference.getString("phone", "");
+        String photo = preference.getString("photo", "");
+        Users users = new Users(uid, name, phone, email, photo);
 
         binding.tvName.setText(users.getName());
         binding.tvPhoneNumber.setText(users.getPhoneNumber());
@@ -49,12 +51,8 @@ public class ProfileFragment extends Fragment {
                 .placeholder(R.drawable.ic_brand)
                 .into(binding.ivProfile);
 
-        binding.llLogout.setOnClickListener(v -> {
-            auth.signOut();
-            startActivity(new Intent(getContext(), LoginActivity.class));
-            requireActivity().finishAffinity();
-        });
-
+        binding.ivSetting.setOnClickListener(v ->
+                startActivity(new Intent(getContext(), SettingsActivity.class)));
         return binding.getRoot();
     }
 }

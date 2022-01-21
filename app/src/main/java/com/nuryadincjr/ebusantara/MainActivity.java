@@ -1,20 +1,17 @@
 package com.nuryadincjr.ebusantara;
 
-import static com.nuryadincjr.ebusantara.databinding.ActivityMainBinding.*;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+import static com.nuryadincjr.ebusantara.databinding.ActivityMainBinding.inflate;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationBarView;
 import com.nuryadincjr.ebusantara.databinding.ActivityMainBinding;
@@ -22,7 +19,8 @@ import com.nuryadincjr.ebusantara.fragment.NotificationsFragment;
 import com.nuryadincjr.ebusantara.fragment.ProfileFragment;
 import com.nuryadincjr.ebusantara.fragment.SearchFragment;
 import com.nuryadincjr.ebusantara.fragment.TicketsFragment;
-import com.nuryadincjr.ebusantara.pojo.Users;
+import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
+import com.nuryadincjr.ebusantara.pojo.Transactions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class MainActivity extends AppCompatActivity
@@ -30,6 +28,8 @@ public class MainActivity extends AppCompatActivity
 
     private ActivityMainBinding binding;
     private Fragment fragment;
+    private ScheduleReference schedule;
+    private Transactions transactions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +40,17 @@ public class MainActivity extends AppCompatActivity
         setContentView(binding.getRoot());
 
         binding.bottomNavigationView.setOnItemSelectedListener(this);
+        schedule = getIntent().getParcelableExtra("schedule");
+        transactions = getIntent().getParcelableExtra("transactions");
+        int fragment = getIntent().getIntExtra("fragment", 0);
 
-        if(savedInstanceState == null){
-            getFragmentPage(new SearchFragment());
+        if(savedInstanceState == null) this.fragment = new SearchFragment();
+        if(fragment==1) {
+            this.fragment = new TicketsFragment();
+            View view = binding.bottomNavigationView.findViewById(R.id.itemMyTicket);
+            view.performClick();
         }
-
-        binding.getRoot().setFadeOnClickListener(view -> {
-            binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
-        });
+        getFragmentPage(this.fragment);
 
         binding.layoutSlidingUp.btnSelectedDate.setOnClickListener(v -> {
             TextView tvPassengers = findViewById(R.id.tvPassengers);
@@ -56,9 +59,12 @@ public class MainActivity extends AppCompatActivity
             binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
         });
 
-        binding.layoutSlidingUp.btnCancel.setOnClickListener(v ->{
-            binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
-        });
+        binding.getRoot().setFadeOnClickListener(view ->
+                binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN));
+
+
+        binding.layoutSlidingUp.btnCancel.setOnClickListener(v ->
+                binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN));
 
         binding.layoutSlidingUp.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -92,15 +98,9 @@ public class MainActivity extends AppCompatActivity
                 fragment = new NotificationsFragment();
                 break;
             case R.id.itemProfile:
-
                 fragment = new ProfileFragment();
                 break;
         }
-
-        Users users = getIntent().getParcelableExtra("user");
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("user", users);
-        fragment.setArguments(bundle);
 
         getFragmentPage(fragment);
         return true;
@@ -108,6 +108,11 @@ public class MainActivity extends AppCompatActivity
 
     public void getFragmentPage(Fragment fragment) {
         if (fragment != null) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("schedule", schedule);
+            bundle.putParcelable("transactions", transactions);
+            fragment.setArguments(bundle);
+
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragmentContainerView, fragment)

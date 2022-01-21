@@ -14,7 +14,6 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 public class DatePickerActivity extends AppCompatActivity {
-
     private ActivityDatePickerBinding binding;
 
     @Override

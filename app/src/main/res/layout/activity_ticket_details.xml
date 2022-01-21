@@ -19,28 +19,34 @@
             android:layout_height="?attr/actionBarSize">
 
             <ImageView
-                android:id="@+id/ivBrand"
+                android:id="@+id/ivBackArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_back_arrow" />
+                android:contentDescription="@string/str_todo_back_button"
+                android:padding="8dp"
+                android:src="@drawable/ic_back_arrow"
+                tools:ignore="RedundantDescriptionCheck" />
 
             <TextView
-                android:id="@+id/ivBrand234"
+                android:id="@+id/ivBrand"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Ticket Detail" />
+                android:text="@string/str_ticket_detail" />
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/ivQrCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:padding="4dp"
                 android:background="?selectableItemBackgroundBorderless"
                 android:layout_marginEnd="20dp"
-                app:srcCompat="@drawable/ic_round_qr_code" />
+                android:contentDescription="@string/str_unique_code"
+                app:srcCompat="@drawable/ic_round_qr_code"
+                app:tint="@color/primary_light" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -85,21 +91,21 @@
                             android:padding="20dp">
 
                             <TextView
-                                android:id="@+id/textView22"
+                                android:id="@+id/tvDate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="23 JUL 2019. 17:35"
+                                tools:text="23 JUL 2019. 17:35"
                                 android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <TextView
-                                android:id="@+id/textView21"
+                                android:id="@+id/tvBookNo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="end"
-                                android:text="Book No. 230719-0001"
+                                tools:text="Book No. 230719-0001"
                                 android:textColor="@color/white"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -112,24 +118,23 @@
                             android:padding="20dp">
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/textView60"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="5dp"
-                                    android:text="Name"
+                                    android:text="@string/str_name"
                                     android:textSize="12sp" />
 
                                 <TextView
-                                    android:id="@+id/textView24"
+                                    android:id="@+id/tvName"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="John Doe, 24"
+                                    tools:text="John Doe, 24"
                                     android:textColor="@color/black"
                                     android:textStyle="bold" />
                             </LinearLayout>
@@ -144,20 +149,26 @@
                                     android:layout_height="wrap_content">
 
                                     <TextView
-                                        android:id="@+id/textView32123321"
+                                        android:id="@+id/tvRatings"
                                         android:layout_width="46dp"
                                         android:layout_height="46dp"
                                         android:background="@color/secondary"
                                         android:gravity="center"
-                                        android:text="4.9/5"
-                                        android:textStyle="bold" />
+                                        android:text="@string/str_rating"
+                                        android:textStyle="bold"
+                                        tools:ignore="TooDeepLayout"
+                                        tools:text="3/5" />
 
                                     <ImageView
                                         android:id="@+id/imageView5"
                                         android:layout_width="12dp"
                                         android:layout_height="12dp"
-                                        android:layout_margin="2dp"
-                                        app:srcCompat="@drawable/ic_round_star" />
+                                        android:layout_marginStart="2dp"
+                                        android:layout_marginTop="2dp"
+                                        android:layout_marginEnd="2dp"
+                                        android:layout_marginBottom="2dp"
+                                        android:contentDescription="@string/str_default_ratings"
+                                        android:src="@drawable/ic_round_star"/>
                                 </RelativeLayout>
 
                             </androidx.cardview.widget.CardView>
@@ -176,7 +187,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:orientation="horizontal"
-                            android:padding="20dp">
+                            android:padding="20dp"
+                            android:baselineAligned="false">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -185,18 +197,37 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/textView62"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="5dp"
-                                    android:text="Phone number"
+                                    android:text="@string/str_phone_number"
                                     android:textSize="12sp" />
 
                                 <TextView
-                                    android:id="@+id/textView63"
+                                    android:id="@+id/tvPhoneNumber"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="08123990823"
+                                    tools:text="08123990823"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:text="@string/str_seats"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tvSeats"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    tools:text="2"
                                     android:textStyle="bold" />
                             </LinearLayout>
 
@@ -207,44 +238,24 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/tex23tView62"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="5dp"
-                                    android:text="Seats"
+                                    android:gravity="end"
+                                    android:text="@string/str_ticket_status"
                                     android:textSize="12sp" />
 
                                 <TextView
-                                    android:id="@+id/textVie432w63"
-                                    android:layout_width="match_parent"
+                                    android:id="@+id/tvStatus"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="2"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/textVi42ew62"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
-                                    android:text="Ticket Status"
-                                    android:textSize="12sp" />
-
-                                <TextView
-                                    android:id="@+id/textView64"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:drawableStart="@drawable/ic_success"
                                     android:drawablePadding="5dp"
-                                    android:text="Issued"
+                                    android:layout_gravity="end"
+                                    tools:text="Issued"
+                                    android:gravity="end"
                                     android:textColor="@color/gren_success"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    app:drawableStartCompat="@drawable/ic_success" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -272,7 +283,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:orientation="horizontal"
-                            android:padding="20dp">
+                            android:padding="20dp"
+                            android:baselineAligned="false">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -288,19 +300,17 @@
                                     android:padding="2dp">
 
                                     <TextView
-                                        android:id="@+id/tex234tView3"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="PO Name"
+                                        android:text="@string/str_po_name"
                                         android:textSize="12sp" />
 
                                     <TextView
-                                        android:id="@+id/textView15"
-                                        android:layout_width="wrap_content"
+                                        android:id="@+id/tvPOName"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:paddingEnd="10dp"
-                                        android:text="Sempati Star"
-                                        android:textColor="@color/primary"
+                                        tools:text="Sempati Star"
+                                        android:textColor="@color/primary_light"
                                         android:textStyle="bold" />
 
                                 </LinearLayout>
@@ -312,20 +322,21 @@
                                     android:orientation="horizontal">
 
                                     <TextView
-                                        android:id="@+id/textView11"
+                                        android:id="@+id/tvDepartureTime"
                                         android:layout_width="60dp"
                                         android:layout_height="match_parent"
-                                        android:text="17:35"
+                                        tools:text="17:35"
                                         android:textColor="@color/black"
                                         android:textSize="16sp"
                                         android:textStyle="bold" />
 
                                     <TextView
-                                        android:id="@+id/textView13"
+                                        android:id="@+id/tvDeparture"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:text="Terminal Amplas"
-                                        android:textSize="12sp" />
+                                        tools:text="Medan"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
 
 
                                 </LinearLayout>
@@ -338,12 +349,10 @@
                                     android:padding="2dp">
 
                                     <View
-                                        android:id="@+id/view2"
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:layout_marginEnd="20dp"
                                         android:background="@drawable/bg_track" />
-
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -351,17 +360,17 @@
                                         android:orientation="vertical">
 
                                         <TextView
-                                            android:id="@+id/tex234tView2"
+                                            android:id="@+id/tvTerminalDeparture"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="Medan"
+                                            tools:text="Terminal Amplas"
                                             android:textSize="12sp" />
 
                                         <TextView
-                                            android:id="@+id/tex234tView14"
+                                            android:id="@+id/tvDepartureDate"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="23 Jul 2019"
+                                            tools:text="23 Jul 2019"
                                             android:textSize="12sp" />
                                     </LinearLayout>
 
@@ -375,10 +384,10 @@
                                     android:padding="2dp">
 
                                     <TextView
-                                        android:id="@+id/textView12"
+                                        android:id="@+id/tvArrivalTime"
                                         android:layout_width="60dp"
                                         android:layout_height="match_parent"
-                                        android:text="09:10"
+                                        tools:text="09:10"
                                         android:textColor="@color/black"
                                         android:textSize="16sp"
                                         android:textStyle="bold" />
@@ -389,26 +398,27 @@
                                         android:orientation="vertical">
 
                                         <TextView
-                                            android:id="@+id/textView1321"
+                                            android:id="@+id/tvArrival"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Terminal Bandaraya"
-                                            android:textSize="12sp" />
+                                            tools:text="Riau"
+                                            android:textColor="@color/black"
+                                            android:textStyle="bold" />
 
 
                                         <TextView
-                                            android:id="@+id/textView54"
+                                            android:id="@+id/tvTerminalArrival"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="24 Jul 2019"
+                                            tools:text="Terminal Bandaraya"
                                             android:textSize="12sp" />
 
                                         <TextView
-                                            android:id="@+id/textV43iew12"
+                                            android:id="@+id/tvArrivalDate"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:paddingTop="5dp"
-                                            android:text="Riau"
+                                            tools:text="24 Jul 2019"
                                             android:textSize="12sp" />
                                     </LinearLayout>
 
@@ -423,55 +433,49 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/textView53"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:paddingTop="10dp"
-                                    android:text="Bus no."
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
+                                    android:text="@string/str_bus_no"
+                                    android:textSize="12sp" />
 
                                 <TextView
-                                    android:id="@+id/textV4334iew2"
+                                    android:id="@+id/tvBusNo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="P 9123 NN"
+                                    tools:text="P 9123 NN"
                                     android:textColor="@color/black"
                                     android:textSize="12sp"
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/textView48"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:paddingTop="10dp"
-                                    android:text="Estimated time"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
+                                    android:text="@string/str_estimated_time"
+                                    android:textSize="12sp" />
 
                                 <TextView
-                                    android:id="@+id/textV4334iew"
+                                    android:id="@+id/tvEstimation"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="13h45m"
+                                    tools:text="13h45m"
                                     android:textColor="@color/black"
                                     android:textSize="12sp"
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/textView123321"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:paddingTop="10dp"
-                                    android:text="Seat no."
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
+                                    android:text="@string/str_seat_no"
+                                    android:textSize="12sp" />
 
                                 <TextView
-                                    android:id="@+id/textV4334iew12"
+                                    android:id="@+id/tvSeatsNo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="9, 10"
+                                    tools:text="A9, B10"
                                     android:textColor="@color/black"
                                     android:textSize="12sp"
                                     android:textStyle="bold" />
@@ -487,21 +491,19 @@
                             android:padding="20dp">
 
                             <TextView
-                                android:id="@+id/textView58"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Total"
+                                android:text="@string/str_total"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/textView57"
-                                android:layout_width="wrap_content"
+                                android:id="@+id/tvTotal"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="end"
-                                android:text="Rp332.333,00"
+                                tools:text="Rp332.333"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
                         </LinearLayout>

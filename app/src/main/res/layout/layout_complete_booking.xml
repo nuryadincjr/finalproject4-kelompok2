@@ -172,7 +172,7 @@
                             android:padding="2dp">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/lato"
                                 android:text="@string/str_po_name"
@@ -180,7 +180,7 @@
 
                             <TextView
                                 android:id="@+id/tvPOName"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/nunito_extrabold"
                                 android:textColor="@color/primary_light"
@@ -343,8 +343,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/lato"
                                 android:text="@string/str_bus_no"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/tvBusNo"
@@ -367,8 +366,7 @@
                                 android:fontFamily="@font/lato"
                                 android:paddingTop="10dp"
                                 android:text="@string/str_estimated_time"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/tvEstimation"
@@ -385,10 +383,8 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/lato"
                                 android:paddingTop="10dp"
-
                                 android:text="@string/str_seat_no"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/tvSeatsNo"

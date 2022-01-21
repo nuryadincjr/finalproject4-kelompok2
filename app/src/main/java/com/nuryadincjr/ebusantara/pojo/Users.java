@@ -13,7 +13,8 @@ public class Users implements Parcelable {
     public Users() {
     }
 
-    public Users(String uid, String name, String phoneNumber, String email, String photoUrl) {
+    public Users(String uid, String name, String phoneNumber,
+                 String email, String photoUrl) {
         this.uid = uid;
         this.name = name;
         this.phoneNumber = phoneNumber;

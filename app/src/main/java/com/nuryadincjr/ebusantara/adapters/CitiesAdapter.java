@@ -14,7 +14,6 @@ import com.nuryadincjr.ebusantara.pojo.Cities;
 import java.util.List;
 
 public class CitiesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     public ItemClickListener itemClickListener;
     private final List<Cities> citiesList;
 
@@ -49,7 +48,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public static class ScheduleViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnLongClickListener {
         private final ItemDestinationSearchBinding binding;
-        private CitiesAdapter scheduleAdapter;
+        private final CitiesAdapter scheduleAdapter;
 
         public ScheduleViewHolder(ItemDestinationSearchBinding binding, CitiesAdapter scheduleAdapter) {
             super(binding.getRoot());

@@ -109,7 +109,8 @@ public class ScheduleReference implements Parcelable {
         this.reviewers = reviewers;
     }
 
-    public ScheduleReference(String id, Buses buses, Cities arrival, Cities departure, String arrivalTime, String departureTime, ReviewersReference reviewers) {
+    public ScheduleReference(String id, Buses buses, Cities arrival, Cities departure,
+                             String arrivalTime, String departureTime, ReviewersReference reviewers) {
         this.id = id;
         this.buses = buses;
         this.arrival = arrival;
