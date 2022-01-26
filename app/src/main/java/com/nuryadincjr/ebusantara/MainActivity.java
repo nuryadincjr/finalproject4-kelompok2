@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         }
         getFragmentPage(this.fragment);
 
-        binding.layoutSlidingUp.btnSelectedDate.setOnClickListener(v -> {
+        binding.layoutSlidingUp.btnSelected.setOnClickListener(v -> {
             TextView tvPassengers = findViewById(R.id.tvPassengers);
             String passenger = binding.layoutSlidingUp.tvPassenger.getText() +" ppl";
             tvPassengers.setText(passenger);

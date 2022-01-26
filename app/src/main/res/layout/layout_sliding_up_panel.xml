@@ -108,7 +108,7 @@
             style="?android:attr/buttonBarButtonStyle" />
 
         <Button
-            android:id="@+id/btnSelectedDate"
+            android:id="@+id/btnSelected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"

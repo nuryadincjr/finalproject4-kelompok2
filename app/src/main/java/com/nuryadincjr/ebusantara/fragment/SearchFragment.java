@@ -32,7 +32,7 @@ public class SearchFragment extends Fragment
     private SlidingUpPanelLayout sliding;
     private Cities departureCity;
     private Cities arrivalCity;
-    private Calendar date;
+    private Calendar calendar;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -58,14 +58,9 @@ public class SearchFragment extends Fragment
 
         return binding.getRoot();
     }
-
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        onGetListener(v);
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    private void onGetListener(View v) {
         Intent intent = new Intent(getContext(), DestinationChooserActivity.class);
         switch (v.getId()){
             case R.id.llDeparture:
@@ -96,7 +91,7 @@ public class SearchFragment extends Fragment
             startActivity(new Intent(getContext(), BusChooserActivity.class)
                     .putExtra("departure_city", departureCity)
                     .putExtra("arrival_city", arrivalCity)
-                    .putExtra("date", date)
+                    .putExtra("date", calendar)
                     .putExtra("passengers", binding.tvPassengers.getText()
                             .toString().replace(" ppl", "")));
 
@@ -134,9 +129,9 @@ public class SearchFragment extends Fragment
                 break;
             case 3:
                 if (data != null && resultCode == RESULT_OK) {
-                    date = (Calendar) data.getSerializableExtra("date");
+                    calendar = (Calendar) data.getSerializableExtra("date");
                     SimpleDateFormat format = new SimpleDateFormat("dd MMM");
-                    binding.tvDate.setText(format.format(date.getTime()));
+                    binding.tvDate.setText(format.format(calendar.getTime()));
                 }
                 break;
         }

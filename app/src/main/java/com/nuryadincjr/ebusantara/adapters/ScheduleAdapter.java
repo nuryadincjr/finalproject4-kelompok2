@@ -147,7 +147,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     reference.setReviewers(reviewersList);
                     dataToView.setReviewers(reference);
                 }
-
             });
         }
 

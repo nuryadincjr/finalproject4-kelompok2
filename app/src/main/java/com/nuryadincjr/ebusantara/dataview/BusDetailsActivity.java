@@ -1,6 +1,7 @@
 package com.nuryadincjr.ebusantara.dataview;
 
 import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
+import static com.nuryadincjr.ebusantara.util.Constant.getQrCode;
 import static java.lang.Double.parseDouble;
 import static java.text.DecimalFormat.getCurrencyInstance;
 
@@ -8,11 +9,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.ReviewersAdapter;
 import com.nuryadincjr.ebusantara.databinding.ActivityBusDetailsBinding;
@@ -79,6 +82,17 @@ public class BusDetailsActivity extends AppCompatActivity {
 
         binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
         binding.btnBookNow.setOnClickListener(v -> onStartActivity(calendar));
+        binding.layoutBookATrip.tvSeePicture.setOnClickListener(v->{
+            View inflatedView = getLayoutInflater().inflate(R.layout.layout_image_viewer, null);
+            ImageView imageView = inflatedView.findViewById(R.id.ivViewer);
+            Glide.with(this)
+                    .load(buses.getImageUrl())
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_brand)
+                    .into(imageView);
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+            builder.setView(inflatedView).show();
+        });
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -201,10 +215,13 @@ public class BusDetailsActivity extends AppCompatActivity {
             millisTime = departureDate.getTime() - arrivalDate.getTime();
         }
 
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisTime);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisTime) % 60;
         long hours = TimeUnit.MILLISECONDS.toHours(millisTime);
+        String estimatedTime;
+        if (hours > 0) {
+            estimatedTime = hours+"h"+minutes+"m";
+        } else estimatedTime = minutes+"m";
 
-        String estimatedTime = hours+"h"+minutes+"m";
         binding.layoutBookATrip.tvEstimation.setText(estimatedTime);
     }
 

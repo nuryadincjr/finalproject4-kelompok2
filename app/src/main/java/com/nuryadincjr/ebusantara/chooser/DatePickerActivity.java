@@ -40,6 +40,7 @@ public class DatePickerActivity extends AppCompatActivity {
             setResult(RESULT_OK, intent);
             onBackPressed();
         });
+
     }
 
     @Override

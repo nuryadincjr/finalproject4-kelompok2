@@ -79,6 +79,8 @@ public class TicketsFragment extends Fragment {
         mainViewModel.getTransactions(users.getUid()).observe(getViewLifecycleOwner(), ticket -> {
             TicketsAdapter citiesAdapter = new TicketsAdapter(ticket);
             if(ticket != null){
+                binding.rvTickets.setVisibility(View.VISIBLE);
+                binding.layoutError.linearLayout.setVisibility(View.GONE);
                 binding.rvTickets.setLayoutManager(new LinearLayoutManager(getContext()));
                 binding.rvTickets.setAdapter(citiesAdapter);
             }else {

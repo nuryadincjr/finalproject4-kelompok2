@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="time">
+        <item>Morning</item>
+        <item>Noon</item>
+        <item>Evening</item>
+        <item>Night</item>
+    </array>
+
+    <array name="type">
+        <item>Ac</item>
+        <item>Non-Ac</item>
+        <item>Seater</item>
+        <item>Sleeper</item>
+    </array>
+
+    <array name="sort">
+        <item>Best experience</item>
+        <item>Estimate time</item>
+        <item>Highest price</item>
+        <item>Lowest price</item>
+    </array>
+
+</resources>
