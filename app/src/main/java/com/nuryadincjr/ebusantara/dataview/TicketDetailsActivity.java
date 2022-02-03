@@ -1,6 +1,6 @@
 package com.nuryadincjr.ebusantara.dataview;
 
-import static com.nuryadincjr.ebusantara.util.Constant.*;
+import static com.nuryadincjr.ebusantara.util.Constant.getQrCode;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -117,10 +117,13 @@ public class TicketDetailsActivity extends AppCompatActivity {
             millisTime = departureDate.getTime() - arrivalDate.getTime();
         }
 
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisTime);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisTime) % 60;
         long hours = TimeUnit.MILLISECONDS.toHours(millisTime);
+        String estimatedTime;
+        if (hours > 0) {
+            estimatedTime = hours+"h"+minutes+"m";
+        } else estimatedTime = minutes+"m";
 
-        String estimatedTime = hours+"h"+minutes+"m";
         binding.tvEstimation.setText(estimatedTime);
     }
 }

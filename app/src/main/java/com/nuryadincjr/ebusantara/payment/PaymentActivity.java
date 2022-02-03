@@ -29,9 +29,9 @@ public class PaymentActivity extends AppCompatActivity
 
         transactions = getIntent().getParcelableExtra("transactions");
 
-        binding.tvSelectCreditCard.setOnClickListener(this);
-        binding.tvSelectBankTransfer.setOnClickListener(this);
-        binding.tvSelectRetailPayment.setOnClickListener(this);
+        binding.llCreditCard.setOnClickListener(this);
+        binding.llBankTransfer.setOnClickListener(this);
+        binding.llRetailPayment.setOnClickListener(this);
         binding.layoutTotalPayment.tvTotal.setText(transactions.getTotalPayment());
         binding.appbar.ivBackArrow.setOnClickListener(v -> onBackPressed());
     }
@@ -41,13 +41,13 @@ public class PaymentActivity extends AppCompatActivity
     public void onClick(View v) {
         Activity activity = null;
         switch (v.getId()){
-            case R.id.tvSelectCreditCard:
+            case R.id.llCreditCard:
                 activity = new CreditCardVerificationActivity();
                 break;
-            case R.id.tvSelectBankTransfer:
+            case R.id.llBankTransfer:
                 activity = new BankTransferActivity();
                 break;
-            case R.id.tvSelectRetailPayment:
+            case R.id.llRetailPayment:
                 activity = new RetailPaymentVerificationActivity();
                 break;
         }

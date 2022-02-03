@@ -1,29 +1,30 @@
 package com.nuryadincjr.ebusantara.dataview;
 
 import static com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding.inflate;
-
-import static java.lang.Double.*;
-import static java.lang.String.CASE_INSENSITIVE_ORDER;
+import static java.lang.Double.compare;
+import static java.lang.Double.parseDouble;
+import static java.lang.String.format;
+import static java.lang.String.valueOf;
+import static java.util.Collections.sort;
+import static java.util.Comparator.comparingDouble;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.ScheduleAdapter;
-import com.nuryadincjr.ebusantara.adapters.SpinnersAdapter;
 import com.nuryadincjr.ebusantara.chooser.DatePickerActivity;
 import com.nuryadincjr.ebusantara.chooser.DestinationChooserActivity;
 import com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding;
@@ -33,14 +34,15 @@ import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.util.MainViewModel;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
-public class BusChooserActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class BusChooserActivity extends AppCompatActivity
+        implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private ActivityBusChooserBinding binding;
     private Cities departureCity;
     private Cities arrivalCity;
@@ -48,6 +50,7 @@ public class BusChooserActivity extends AppCompatActivity implements View.OnClic
     private String passengers;
     private SimpleDateFormat format;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +94,7 @@ public class BusChooserActivity extends AppCompatActivity implements View.OnClic
         binding.layoutSlidingUp.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                binding.layoutSlidingUp.tvPassenger.setText(String.valueOf(progress));
+                binding.layoutSlidingUp.tvPassenger.setText(valueOf(progress));
             }
 
             @Override
@@ -106,6 +109,7 @@ public class BusChooserActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void getData() {
         MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mainViewModel.getBuses(departureCity.getCity(), arrivalCity.getCity(),
@@ -113,17 +117,27 @@ public class BusChooserActivity extends AppCompatActivity implements View.OnClic
             if(schedules!=null){
                 binding.rvBuses.setVisibility(View.VISIBLE);
                 binding.layoutError.linearLayout.setVisibility(View.GONE);
-                if(binding.tvFilters.getSelectedItem().toString().equals("Lowest price")){
-                    Collections.sort(schedules, (o1, o2) ->
-                            compare(parseDouble(o1.getBuses().getPrice()),
-                            parseDouble(o2.getBuses().getPrice())));
-                }else if(binding.tvFilters.getSelectedItem().toString().equals("Highest price")){
-                    Collections.sort(schedules, (o1, o2) ->
+
+                boolean isLowestPiece = binding.tvFilters.getSelectedItem().toString().equals("Lowest price");
+                boolean isHighestPiece = binding.tvFilters.getSelectedItem().toString().equals("Highest price");
+                boolean isEstimation = binding.tvFilters.getSelectedItem().toString().equals("Estimate time");
+
+                if(isLowestPiece){
+                    sort(schedules, comparingDouble(o -> parseDouble(o.getBuses().getPrice())));
+                }else if(isHighestPiece){
+                    sort(schedules, (o1, o2) ->
                             compare(parseDouble(o2.getBuses().getPrice()),
                             parseDouble(o1.getBuses().getPrice())));
+                }else if(isEstimation){
+                    sort(schedules, comparingDouble(this::getEstimatedTimes));
+                }else {
+                    sort(schedules, (o1, o2) ->
+                            o2.getReviewers().getRatingsCount()
+                                    .compareTo(o1.getReviewers().getRatingsCount()));
                 }
 
-                ScheduleAdapter scheduleAdapter = new ScheduleAdapter(schedules, Integer.parseInt(passengers));
+                String seat = binding.tvSeats.getText().toString().replace("Seat ", "");
+                ScheduleAdapter scheduleAdapter = new ScheduleAdapter(schedules, Integer.parseInt(seat));
                 binding.rvBuses.setLayoutManager(new LinearLayoutManager(this));
                 binding.rvBuses.setAdapter(scheduleAdapter);
                 onListener(scheduleAdapter, schedules);
@@ -134,6 +148,31 @@ public class BusChooserActivity extends AppCompatActivity implements View.OnClic
                 binding.layoutError.linearLayout.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    @SuppressLint("SimpleDateFormat, DefaultLocale")
+    private int getEstimatedTimes(ScheduleReference schedule) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        Date departureDate = new Date();
+        Date arrivalDate = new Date();
+        try {
+            departureDate = format.parse(schedule.getDepartureTime());
+            arrivalDate = format.parse(schedule.getArrivalTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long millisTime = arrivalDate.getTime() - departureDate.getTime();
+        if(departureDate.getTime() > arrivalDate.getTime()){
+            millisTime = departureDate.getTime() - arrivalDate.getTime();
+        }
+
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisTime) % 60;
+        long hours = TimeUnit.MILLISECONDS.toHours(millisTime);
+        String estimatedTime = format("%s%d", hours, minutes);
+
+       return Integer.parseInt(estimatedTime);
     }
 
     private void onListener(ScheduleAdapter scheduleAdapter, ArrayList<ScheduleReference> schedules) {
@@ -213,6 +252,7 @@ public class BusChooserActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         getData();

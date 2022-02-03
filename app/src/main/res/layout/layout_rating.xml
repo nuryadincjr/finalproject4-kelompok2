@@ -192,6 +192,28 @@
                 android:background="@drawable/selector_rating" />
         </LinearLayout>
 
+        <EditText
+            android:id="@+id/etContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/str_describe"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:textSize="@dimen/s12"
+            android:background="@drawable/bg_rounded"
+            android:padding="20dp"
+            android:maxLength="500"
+            android:autofillHints="" />
+
+        <TextView
+            android:id="@+id/tvMaxLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="0/500" />
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

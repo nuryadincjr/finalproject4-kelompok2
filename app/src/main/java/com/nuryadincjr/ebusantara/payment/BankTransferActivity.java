@@ -27,16 +27,16 @@ public class BankTransferActivity extends AppCompatActivity implements View.OnCl
 
         binding.layoutTotalPayment.tvTotal.setText(transactions.getTotalPayment());
         binding.appbar.ivBackArrow.setOnClickListener(v -> onBackPressed());
-        binding.tvSelectBNI.setOnClickListener(this);
-        binding.tvSelectCIMB.setOnClickListener(this);
+        binding.llBankBni.setOnClickListener(this);
+        binding.llBankCimb.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         String item = "";
-        if(v.getId()==R.id.tvSelectBNI){
+        if(v.getId()==R.id.llBankBni){
             item = "BNI";
-        }else if(v.getId()==R.id.tvSelectCIMB){
+        }else if(v.getId()==R.id.llBankCimb){
             item = "CIMB";
         }
 

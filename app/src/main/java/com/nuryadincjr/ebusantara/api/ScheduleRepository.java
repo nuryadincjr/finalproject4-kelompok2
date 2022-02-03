@@ -1,20 +1,27 @@
 package com.nuryadincjr.ebusantara.api;
 
+import static java.lang.String.valueOf;
+
 import android.annotation.SuppressLint;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.nuryadincjr.ebusantara.pojo.Buses;
 import com.nuryadincjr.ebusantara.pojo.Cities;
+import com.nuryadincjr.ebusantara.pojo.Reviewers;
+import com.nuryadincjr.ebusantara.pojo.ReviewersReference;
 import com.nuryadincjr.ebusantara.pojo.Schedule;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 public class ScheduleRepository {
     private final FirebaseFirestore db;
@@ -58,15 +65,48 @@ public class ScheduleRepository {
                                                           Buses buses = busTask.getResult().toObject(Buses.class);
                                                           ScheduleReference scheduleReference = new ScheduleReference();
                                                           if(buses != null){
-                                                              scheduleReference.setBuses(buses);
                                                               scheduleReference.setId(data.getId());
+                                                              scheduleReference.setBuses(buses);
                                                               scheduleReference.setDeparture(departureCities);
                                                               scheduleReference.setArrival(arrivalCities);
                                                               scheduleReference.setDepartureTime(data.getDepartureTime());
                                                               scheduleReference.setArrivalTime(data.getArrivalTime());
+
+                                                              db.collection("reviews")
+                                                                      .document(buses.getId()).get().addOnCompleteListener(reviewsTask -> {
+                                                                  if (reviewsTask.isSuccessful()) {
+                                                                      DocumentSnapshot document = reviewsTask.getResult();
+                                                                      List<Map<String, Object>> reviewer = (List<Map<String, Object>>) document.get("reviewer");
+                                                                      double ratings = 0;
+                                                                      List<Reviewers> reviewersList = new ArrayList<>();
+                                                                      if(reviewer!=null){
+                                                                          for (Map<String, Object> map : reviewer) {
+                                                                              Reviewers reviewers = new Reviewers(
+                                                                                      valueOf(map.get("uid")),
+                                                                                      valueOf(map.get("date")),
+                                                                                      valueOf(map.get("content")),
+                                                                                      valueOf(map.get("ratings")));
+
+                                                                              ratings += Double.parseDouble(reviewers.getRatings());
+
+                                                                              reviewersList.add(reviewers);
+                                                                          }
+                                                                          ratings /= reviewer.size();
+                                                                      }
+
+                                                                      if(valueOf(ratings).equals("NaN")) ratings = 0.0;
+                                                                      String displayRating = ratings +"/5";
+
+                                                                      ReviewersReference reviewersReference = new ReviewersReference();
+                                                                      reviewersReference.setRatingsCount(displayRating);
+                                                                      reviewersReference.setReviewers(reviewersList);
+                                                                      scheduleReference.setReviewers(reviewersReference);
+
+                                                                  }
+                                                                  scheduleReferences.add(scheduleReference);
+                                                                  scheduleMutableLiveData.postValue(scheduleReferences);
+                                                              });
                                                           }
-                                                          scheduleReferences.add(scheduleReference);
-                                                          scheduleMutableLiveData.postValue(scheduleReferences);
                                                       }
                                                    });
                                                }

@@ -23,10 +23,10 @@ public class ReviewsRepository {
         collection = db.collection(COLLECTION_USER);
     }
 
-    public MutableLiveData<ArrayList<Reviewers>> getReviewer(String scheduleId, Users users) {
+    public MutableLiveData<ArrayList<Reviewers>> getReviewer(String busId, Users users) {
         ArrayList<Reviewers> citiesArrayList = new ArrayList<>();
         MutableLiveData<ArrayList<Reviewers>> productsMutableLiveData = new MutableLiveData<>();
-        collection.document(scheduleId).get().addOnCompleteListener(task -> {
+        collection.document(busId).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
@@ -42,27 +42,21 @@ public class ReviewsRepository {
                                 citiesArrayList.add(reviewer);
                             }
                         }
-                    }else {
-                        reviewer.setContent("");
-                        reviewer.setDate("");
-                        reviewer.setRatings("0");
-                        reviewer.setUid(users.getUid());
-                        citiesArrayList.add(reviewer);
-                    }
-                    productsMutableLiveData.postValue(citiesArrayList);
+                        productsMutableLiveData.postValue(citiesArrayList);
+                    } else productsMutableLiveData.setValue(null);
                 }
             } else productsMutableLiveData.setValue(null);
         });
         return productsMutableLiveData;
     }
 
-    public void deleteReview(String scheduleId, Reviewers reviewer){
-        DocumentReference document = collection.document(scheduleId);
+    public void deleteReview(String busId, Reviewers reviewer){
+        DocumentReference document = collection.document(busId);
         document.update("reviewer", FieldValue.arrayRemove(reviewer));
     }
 
-    public void updateReview(String scheduleId, Reviewers reviewer){
-        DocumentReference document = collection.document(scheduleId);
+    public void updateReview(String busId, Reviewers reviewer){
+        DocumentReference document = collection.document(busId);
         document.update("reviewer", FieldValue.arrayUnion(reviewer));
     }
 }

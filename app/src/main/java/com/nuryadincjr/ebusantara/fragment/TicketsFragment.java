@@ -7,10 +7,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +36,7 @@ import com.nuryadincjr.ebusantara.pojo.TransactionsReference;
 import com.nuryadincjr.ebusantara.pojo.Users;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TicketsFragment extends Fragment {
     private FragmentTicketsBinding binding;
@@ -100,6 +104,8 @@ public class TicketsFragment extends Fragment {
         TextView busNo = inflatedView.findViewById(R.id.tvBusNo);
         TextView departureDate = inflatedView.findViewById(R.id.tvDepartureDate);
         TextView status = inflatedView.findViewById(R.id.tvStatus);
+        TextView maxLine = inflatedView.findViewById(R.id.tvMaxLine);
+        EditText content = inflatedView.findViewById(R.id.etContent);
         CheckedTextView star1 = inflatedView.findViewById(R.id.ctvStar1);
         CheckedTextView star2 = inflatedView.findViewById(R.id.ctvStar2);
         CheckedTextView star3 = inflatedView.findViewById(R.id.ctvStar3);
@@ -126,6 +132,61 @@ public class TicketsFragment extends Fragment {
         star5.setOnClickListener(v -> getSelected(star1, star2, star3, star4, star5,
                 true, true, true, true, true));
 
+        content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(count<=500){
+                    maxLine.setText(s.length()+"/500");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        String id = schedule.getBuses().getId();
+        ReviewsRepository repository = new ReviewsRepository();
+        AtomicReference<Reviewers> reviewer = new AtomicReference<>(new Reviewers());
+        repository.getReviewer(id, users).observe(getViewLifecycleOwner(), reviewers -> {
+            if(reviewers!=null) {
+                reviewer.set(reviewers.get(0));
+                content.setText(reviewer.get().getContent());
+
+                switch (reviewer.get().getRatings()){
+                    case "1":
+                        getSelected(star1, star2, star3, star4, star5,
+                                !star1.isChecked(), false, false, false, false);
+                        break;
+                    case "2":
+                        getSelected(star1, star2, star3, star4, star5,
+                                true, true, false, false, false);
+                        break;
+                    case "3":
+                        getSelected(star1, star2, star3, star4, star5,
+                                true, true, true, false, false);
+                        break;
+                    case "4":
+                        getSelected(star1, star2, star3, star4, star5,
+                                true, true, true, true, false);
+                        break;
+                    case "5":
+                        getSelected(star1, star2, star3, star4, star5,
+                                true, true, true, true, true);
+                        break;
+                }
+            }
+
+            getInstance(getContext()).getEditor()
+                    .putBoolean("isRating", false).apply();
+        });
+
         builder.setPositiveButton("Rate This Trip", (dialog, which) -> {
             int rating = 0;
             if(star1.isChecked() && star2.isChecked() && star3.isChecked() && star4.isChecked() && star5.isChecked()) rating =5;
@@ -134,19 +195,15 @@ public class TicketsFragment extends Fragment {
             else if(star1.isChecked() && star2.isChecked()) rating =2;
             else if(star1.isChecked()) rating =1;
 
-            ReviewsRepository repository = new ReviewsRepository();
             int finalRating = rating;
-            repository.getReviewer(schedule.getId(), users).observe(getViewLifecycleOwner(), reviewers -> {
-                Reviewers reviewer = reviewers.get(0);
+            Reviewers postReview = new Reviewers(users.getUid(), transactions.getDate(),
+                    content.getText().toString(), valueOf(finalRating));
 
-                Reviewers postReview = new Reviewers(users.getUid(), transactions.getDate(),
-                        reviewer.getContent(), valueOf(finalRating));
-                repository.updateReview(schedule.getId(), postReview);
-                repository.deleteReview(schedule.getId(), reviewer);
+            repository.updateReview(id, postReview);
+            repository.deleteReview(id, reviewer.get());
 
-                getInstance(getContext()).getEditor()
+            getInstance(getContext()).getEditor()
                         .putBoolean("isRating", false).apply();
-            });
         });
 
         builder.show();
@@ -163,12 +220,12 @@ public class TicketsFragment extends Fragment {
         star5.setChecked(b5);
     }
 
-    private void onListener(TicketsAdapter productsAdapter, ArrayList<TransactionsReference> citiesList, Users users) {
+    private void onListener(TicketsAdapter productsAdapter, ArrayList<TransactionsReference> ticket, Users users) {
         productsAdapter.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
                startActivity(new Intent(getContext(), TicketDetailsActivity.class)
-                       .putExtra("transaction", citiesList.get(position))
+                       .putExtra("transaction", ticket.get(position))
                        .putExtra("user", users));
             }
 

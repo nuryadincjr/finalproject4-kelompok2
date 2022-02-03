@@ -137,4 +137,5 @@
     <string name="str_how_was_your_trip">How was your trip?</string>
     <string name="str_you_ve_been_complete_your_trip_with_this_detail">You\'ve been complete your trip with this detail</string>
     <string name="str_please_give_your_rating">Please give your rating</string>
+    <string name="str_describe">Describe your experience (optional)</string>
 </resources>

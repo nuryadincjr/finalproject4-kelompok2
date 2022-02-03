@@ -1,10 +1,8 @@
 package com.nuryadincjr.ebusantara.adapters;
 
-import static java.lang.Double.NaN;
-import static java.lang.String.*;
+import static java.lang.String.valueOf;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,22 +10,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ItemDestinationBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.pojo.Reviewers;
-import com.nuryadincjr.ebusantara.pojo.ReviewersReference;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Seats;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public ItemClickListener itemClickListener;
@@ -88,10 +82,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             binding.tvTerminalDeparture.setText(dataToView.getDeparture().getTerminal());
             binding.tvTerminalArrival.setText(dataToView.getArrival().getTerminal());
 
-            List<Reviewers> reviewersList = new ArrayList<>();
+            List<Reviewers> reviewersList = dataToView.getReviewers().getReviewers();
+            binding.tvReviews.setText(valueOf(reviewersList.size()));
+            binding.tvRatings.setText(dataToView.getReviewers().getRatingsCount());
+
             getTime(dataToView);
             getSeats(dataToView);
-            getReviews(dataToView, reviewersList);
 
             binding.getRoot().setOnLongClickListener(this);
             binding.getRoot().setOnClickListener(this);
@@ -113,41 +109,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
             binding.tvDepartureTime.setText(formatTime.format(departureDate));
             binding.tvArrivalTime.setText(formatTime.format(arrivalDate));
-        }
-
-        private void getReviews(ScheduleReference dataToView, List<Reviewers> reviewersList) {
-            db.collection("reviews")
-                    .document(dataToView.getId()).get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    List<Map<String, Object>> reviewer = (List<Map<String, Object>>) document.get("reviewer");
-                    double ratings = 0;
-                    if(reviewer!=null){
-                        for (Map<String, Object> map : reviewer) {
-                           Reviewers reviewers = new Reviewers(
-                                   valueOf(map.get("uid")),
-                                   valueOf(map.get("date")),
-                                   valueOf(map.get("content")),
-                                   valueOf(map.get("ratings")));
-
-                            ratings += Double.parseDouble(reviewers.getRatings());
-
-                           reviewersList.add(reviewers);
-                        }
-                        ratings /= reviewer.size();
-                    }
-
-                    if(valueOf(ratings).equals("NaN")) ratings = 0.0;
-                    String displayRating = ratings +"/5";
-                    binding.tvReviews.setText(valueOf(reviewer.size()));
-                    binding.tvRatings.setText(displayRating);
-
-                    ReviewersReference reference = new ReviewersReference();
-                    reference.setRatingsCount(displayRating);
-                    reference.setReviewers(reviewersList);
-                    dataToView.setReviewers(reference);
-                }
-            });
         }
 
         private void getSeats(ScheduleReference dataToView) {
@@ -175,7 +136,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         dataToView.getBuses().setSeats(seats);
                     }
 
-                    if(scheduleAdapter.seat > counter){
+                    if(counter==0){
                         int color = itemView.getResources().getColor(R.color.gray_e5);
                         int colorBg = itemView.getResources().getColor(R.color.gray_64);
                         String titleButton = "Sold out";
@@ -188,6 +149,18 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         binding.tvArrivalTime.setTextColor(color);
                         binding.cardView.setEnabled(false);
                         binding.btnBookNow.setEnabled(false);
+                        binding.btnBookNow.setText(titleButton);
+                    } else if(counter < scheduleAdapter.seat){
+                        int color = itemView.getResources().getColor(R.color.gray_e5);
+                        int colorBg = itemView.getResources().getColor(R.color.gray_64);
+                        String titleButton = "seats available "+counter;
+
+                        binding.cardView.setCardBackgroundColor(colorBg);
+                        binding.tvRatings.setBackgroundColor(color);
+                        binding.tvPOName.setTextColor(color);
+                        binding.tvPiece.setTextColor(color);
+                        binding.tvDepartureTime.setTextColor(color);
+                        binding.tvArrivalTime.setTextColor(color);
                         binding.btnBookNow.setText(titleButton);
                     }
                 }

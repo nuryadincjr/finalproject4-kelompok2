@@ -1,7 +1,6 @@
 package com.nuryadincjr.ebusantara.dataview;
 
 import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
-import static com.nuryadincjr.ebusantara.util.Constant.getQrCode;
 import static java.lang.Double.parseDouble;
 import static java.text.DecimalFormat.getCurrencyInstance;
 
@@ -134,6 +133,9 @@ public class BusDetailsActivity extends AppCompatActivity {
                 counter = getCounter(seatsC, counter);
                 counter = getCounter(seatsD, counter);
 
+                if(counter < Integer.parseInt(passengers)){
+                    passengers = String.valueOf(counter);
+                }
                 String displaySeats = counter + " Seat are available";
                 binding.layoutBookATrip.tvSeatAvailable.setText(displaySeats);
             }

@@ -56,9 +56,11 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:id="@+id/llBankBni"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            android:background="?selectableItemBackground"
                             android:padding="20dp">
 
                             <TextView
@@ -117,9 +119,11 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:id="@+id/llBankCimb"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            android:background="?selectableItemBackground"
                             android:padding="20dp">
 
                             <TextView
