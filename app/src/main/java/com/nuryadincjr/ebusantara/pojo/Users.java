@@ -13,8 +13,7 @@ public class Users implements Parcelable {
     public Users() {
     }
 
-    public Users(String uid, String name, String phoneNumber,
-                 String email, String photoUrl) {
+    public Users(String uid, String name, String phoneNumber, String email, String photoUrl) {
         this.uid = uid;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -28,6 +27,20 @@ public class Users implements Parcelable {
         phoneNumber = in.readString();
         email = in.readString();
         photoUrl = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(uid);
+        dest.writeString(name);
+        dest.writeString(phoneNumber);
+        dest.writeString(email);
+        dest.writeString(photoUrl);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Users> CREATOR = new Creator<Users>() {
@@ -80,19 +93,5 @@ public class Users implements Parcelable {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(uid);
-        dest.writeString(name);
-        dest.writeString(phoneNumber);
-        dest.writeString(email);
-        dest.writeString(photoUrl);
     }
 }

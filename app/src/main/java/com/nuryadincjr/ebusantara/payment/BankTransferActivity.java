@@ -13,7 +13,8 @@ import com.nuryadincjr.ebusantara.databinding.ActivityBankTransferBinding;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Transactions;
 
-public class BankTransferActivity extends AppCompatActivity implements View.OnClickListener {
+public class BankTransferActivity extends AppCompatActivity
+        implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -18,6 +18,18 @@ public class Buses implements Parcelable {
     public Buses() {
     }
 
+    public Buses(String id, String busNo, String poName, String classType,
+                 List<String> facility, String imageUrl, String price, Seats seats) {
+        this.id = id;
+        this.busNo = busNo;
+        this.poName = poName;
+        this.classType = classType;
+        this.facility = facility;
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.seats = seats;
+    }
+
     protected Buses(Parcel in) {
         id = in.readString();
         busNo = in.readString();
@@ -57,39 +69,6 @@ public class Buses implements Parcelable {
             return new Buses[size];
         }
     };
-
-    public Seats getSeats() {
-        return seats;
-    }
-
-    public void setSeats(Seats seats) {
-        this.seats = seats;
-    }
-
-    public Buses(String id, String busNo, String poName,
-                 String classType, List<String> facility,
-                 String imageUrl, String price, Seats seats) {
-        this.id = id;
-        this.busNo = busNo;
-        this.poName = poName;
-        this.classType = classType;
-        this.facility = facility;
-        this.imageUrl = imageUrl;
-        this.price = price;
-        this.seats = seats;
-    }
-
-    public Buses(String id, String busNo, String poName,
-                 String classType, List<String> facility,
-                 String imageUrl, String price) {
-        this.id = id;
-        this.busNo = busNo;
-        this.poName = poName;
-        this.classType = classType;
-        this.facility = facility;
-        this.imageUrl = imageUrl;
-        this.price = price;
-    }
 
     public String getId() {
         return id;
@@ -145,5 +124,13 @@ public class Buses implements Parcelable {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public Seats getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Seats seats) {
+        this.seats = seats;
     }
 }

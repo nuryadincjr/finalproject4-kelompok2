@@ -24,6 +24,7 @@ import java.util.Locale;
 
 public class DestinationChooserActivity extends AppCompatActivity {
     private ActivityDestinationChooserBinding binding;
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,9 @@ public class DestinationChooserActivity extends AppCompatActivity {
         binding = inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        getHint();
         getData();
 
         binding.etSearch.setFocusable(true);
@@ -57,26 +61,20 @@ public class DestinationChooserActivity extends AppCompatActivity {
         });
     }
 
-    private void getData() {
-        MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mainViewModel.getCities("cities").observe(this, cities -> {
-            CitiesAdapter citiesAdapter = new CitiesAdapter(cities);
-            binding.rvSearch.setLayoutManager(new LinearLayoutManager(this));
-            binding.rvSearch.setAdapter(citiesAdapter);
+    private void getHint() {
+        String hint = getIntent().getStringExtra("hint");
+        if(!hint.contains("Try")){
+            hint = "Try \""+hint+"\"";
+        }
+        binding.etSearch.setHint(hint);
+    }
 
-            onListener(citiesAdapter, cities);
-        });
+    private void getData() {
+        mainViewModel.getCities().observe(this, this::onDataChanged);
     }
 
     private void getData(String city) {
-        MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mainViewModel.getSearchCities(city).observe(this, cities -> {
-            CitiesAdapter citiesAdapter = new CitiesAdapter(cities);
-            binding.rvSearch.setLayoutManager(new LinearLayoutManager(this));
-            binding.rvSearch.setAdapter(citiesAdapter);
-
-            onListener(citiesAdapter, cities);
-        });
+        mainViewModel.getCities("city", city).observe(this, this::onDataChanged);
     }
 
     private void onListener(CitiesAdapter productsAdapter, ArrayList<Cities> citiesList) {
@@ -106,5 +104,14 @@ public class DestinationChooserActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(0, 0);
+    }
+
+    private void onDataChanged(ArrayList<Cities> cities) {
+        CitiesAdapter citiesAdapter = new CitiesAdapter(cities);
+        binding.rvSearch.showShimmerAdapter();
+        binding.rvSearch.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvSearch.setAdapter(citiesAdapter);
+
+        onListener(citiesAdapter, cities);
     }
 }

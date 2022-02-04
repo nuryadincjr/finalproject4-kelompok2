@@ -167,14 +167,41 @@
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_seats_chooser.xml" value="0.25" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_sliding_up_panel.xml" value="0.25" />
         <entry key="..\:/Users/nurya/Desktop/finalproject4-kelompok2/app/src/main/res/layout/layout_total_payment.xml" value="0.33" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/drawable/bg_rounded.xml" value="0.231" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/drawable/bg_rounded_demo.xml" value="0.231" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/drawable/bg_rounded_fill.xml" value="0.231" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/drawable/selector_btn.xml" value="0.231" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/drawable/selector_btn_google.xml" value="0.231" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/drawable/selector_btn_oval.xml" value="0.231" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/drawable/selector_btn_rectangle.xml" value="0.231" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/drawable/selector_chooser.xml" value="0.231" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/drawable/selector_drawable.xml" value="0.231" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/drawable/selector_filter.xml" value="0.231" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/drawable/selector_input.xml" value="0.231" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/drawable/selector_rating.xml" value="0.231" />
         <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/activity_bank_transfer.xml" value="0.22447916666666667" />
         <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/activity_bank_transfer_verification.xml" value="0.22447916666666667" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/activity_bus_chooser.xml" value="0.22" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/activity_destination_chooser.xml" value="0.22" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/activity_detail_payment.xml" value="0.22447916666666667" />
         <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/activity_payment.xml" value="0.22447916666666667" />
         <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/activity_retail_payment_verification.xml" value="0.22447916666666667" />
         <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/activity_ticket_details.xml" value="0.33" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/fragment_search.xml" value="0.25" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/fragment_tickets.xml" value="0.22447916666666667" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/item_destination.xml" value="0.33" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/item_destination_search.xml" value="0.5" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/item_order.xml" value="0.33" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/item_reviews.xml" value="0.22447916666666667" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/layout_complete_booking.xml" value="0.22447916666666667" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/layout_demo_grid.xml" value="0.33" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/layout_demo_grid_ticket.xml" value="0.22" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/layout_demo_list.xml" value="0.22" />
         <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/layout_info.xml" value="0.1" />
-        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/layout_qrcode.xml" value="0.11481481481481481" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/layout_qrcode.xml" value="0.33" />
         <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/layout_rating.xml" value="0.25" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/layout_seats_chooser.xml" value="0.22447916666666667" />
+        <entry key="..\:/finalproject4-kelompok2/app/src/main/res/layout/layout_sliding_up_panel.xml" value="0.22447916666666667" />
       </map>
     </option>
   </component>

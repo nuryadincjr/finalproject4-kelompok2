@@ -35,7 +35,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class DetailPaymentActivity extends AppCompatActivity {
-    private LayoutCompleteBookingBinding view;
+    private LayoutCompleteBookingBinding bookingBinding;
     private ArrayList<String> seatChooser;
     private ScheduleReference schedule;
     private String passengers;
@@ -58,28 +58,28 @@ public class DetailPaymentActivity extends AppCompatActivity {
         buses = schedule.getBuses();
         sort(seatChooser, CASE_INSENSITIVE_ORDER);
 
-        view = binding.layoutCompleteBooking;
-        view.tvSeatsNo.setText(valueOf(seatChooser));
-        view.tvSeats.setText(passengers);
-        view.tvPOName.setText(buses.getPoName());
-        view.tvBusNo.setText(buses.getBusNo());
-        view.tvDeparture.setText(departureCity.getCity());
-        view.tvTerminalDeparture.setText(departureCity.getTerminal());
-        view.tvArrival.setText(arrivalCity.getCity());
-        view.tvTerminalArrival.setText(arrivalCity.getTerminal());
+        bookingBinding = binding.layoutCompleteBooking;
+        bookingBinding.tvSeatsNo.setText(valueOf(seatChooser));
+        bookingBinding.tvSeats.setText(passengers);
+        bookingBinding.tvPOName.setText(buses.getPoName());
+        bookingBinding.tvBusNo.setText(buses.getBusNo());
+        bookingBinding.tvDeparture.setText(departureCity.getCity());
+        bookingBinding.tvTerminalDeparture.setText(departureCity.getTerminal());
+        bookingBinding.tvArrival.setText(arrivalCity.getCity());
+        bookingBinding.tvTerminalArrival.setText(arrivalCity.getTerminal());
 
-        Random rand = new Random();
-        int firstCode = rand.nextInt(999999);
-        int secondCode = rand.nextInt(9999);
+        Random random = new Random();
+        int firstCode = random.nextInt(999999);
+        int secondCode = random.nextInt(9999);
         String uniqueCode = firstCode+"-"+secondCode;
-        view.tvUniqueCode.setText(uniqueCode);
+        bookingBinding.tvUniqueCode.setText(uniqueCode);
 
         getPieces();
         getUsers();
         getTime();
         getEstimatedTimes();
         binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
-        binding.btmContinue.setOnClickListener(this::onClick);
+        binding.btmContinue.setOnClickListener(this::onClickContinue);
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -97,11 +97,11 @@ public class DetailPaymentActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        view.tvDepartureDate.setText(formatDate.format(departureDate));
-        view.tvArrivalDate.setText(formatDate.format(arrivalDate));
+        bookingBinding.tvDepartureDate.setText(formatDate.format(departureDate));
+        bookingBinding.tvArrivalDate.setText(formatDate.format(arrivalDate));
 
-        view.tvDepartureTime.setText(formatTime.format(departureDate));
-        view.tvArrivalTime.setText(formatTime.format(arrivalDate));
+        bookingBinding.tvDepartureTime.setText(formatTime.format(departureDate));
+        bookingBinding.tvArrivalTime.setText(formatTime.format(arrivalDate));
     }
 
     private void getUsers() {
@@ -113,8 +113,8 @@ public class DetailPaymentActivity extends AppCompatActivity {
         String photo = preference.getString("photo", "");
         users = new Users(uid, name, phone, email, photo);
 
-       view.tvName.setText(users.getName());
-       view.tvPhoneNumber.setText(users.getPhoneNumber());
+       bookingBinding.tvName.setText(users.getName());
+       bookingBinding.tvPhoneNumber.setText(users.getPhoneNumber());
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -142,7 +142,7 @@ public class DetailPaymentActivity extends AppCompatActivity {
             estimatedTime = hours+"h"+minutes+"m";
         } else estimatedTime = minutes+"m";
 
-        view.tvEstimation.setText(estimatedTime);
+        bookingBinding.tvEstimation.setText(estimatedTime);
     }
 
     private void getPieces() {
@@ -157,16 +157,16 @@ public class DetailPaymentActivity extends AppCompatActivity {
         format.setDecimalFormatSymbols(symbols);
 
         String displaySubTotal = passengers+"x"+format.format(parseDouble(piece));
-        view.tvTickets.setText(displaySubTotal);
-        view.tvTotal.setText(format.format(subTotal));
+        bookingBinding.tvTickets.setText(displaySubTotal);
+        bookingBinding.tvTotal.setText(format.format(subTotal));
     }
 
     @SuppressLint("SimpleDateFormat")
-    private void onClick(View v) {
+    private void onClickContinue(View v) {
         SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
         Date date = new Date();
         Transactions transactions = new Transactions();
-        String uniqueCode = view.tvUniqueCode.getText().toString();
+        String uniqueCode = bookingBinding.tvUniqueCode.getText().toString();
 
         transactions.setDate(valueOf(format.format(date.getTime())));
         transactions.setUid(users.getUid());
@@ -174,7 +174,7 @@ public class DetailPaymentActivity extends AppCompatActivity {
         transactions.setSeatNo(seatChooser);
         transactions.setStatus("issued");
         transactions.setBookNo(uniqueCode);
-        transactions.setTotalPayment(view.tvTotal.getText().toString());
+        transactions.setTotalPayment(bookingBinding.tvTotal.getText().toString());
 
         startActivity(new Intent(this,
                 PaymentActivity.class)

@@ -1,6 +1,8 @@
 package com.nuryadincjr.ebusantara;
 
+import static android.widget.SeekBar.*;
 import static com.nuryadincjr.ebusantara.databinding.ActivityMainBinding.inflate;
+import static com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState.*;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -21,11 +23,9 @@ import com.nuryadincjr.ebusantara.fragment.SearchFragment;
 import com.nuryadincjr.ebusantara.fragment.TicketsFragment;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Transactions;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationBarView.OnItemSelectedListener {
-
     private ActivityMainBinding binding;
     private Fragment fragment;
     private ScheduleReference schedule;
@@ -44,29 +44,21 @@ public class MainActivity extends AppCompatActivity
         transactions = getIntent().getParcelableExtra("transactions");
         int fragment = getIntent().getIntExtra("fragment", 0);
 
-        if(savedInstanceState == null) this.fragment = new SearchFragment();
+        if(savedInstanceState == null) {
+            this.fragment = new SearchFragment();
+        }
+
         if(fragment==1) {
             this.fragment = new TicketsFragment();
             View view = binding.bottomNavigationView.findViewById(R.id.itemMyTicket);
             view.performClick();
         }
+
         getFragmentPage(this.fragment);
-
-        binding.layoutSlidingUp.btnSelected.setOnClickListener(v -> {
-            TextView tvPassengers = findViewById(R.id.tvPassengers);
-            String passenger = binding.layoutSlidingUp.tvPassenger.getText() +" ppl";
-            tvPassengers.setText(passenger);
-            binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
-        });
-
-        binding.getRoot().setFadeOnClickListener(view ->
-                binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN));
-
-
-        binding.layoutSlidingUp.btnCancel.setOnClickListener(v ->
-                binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN));
-
-        binding.layoutSlidingUp.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        binding.layoutSlidingUp.btnSelected.setOnClickListener(this::onSetPassengers);
+        binding.getRoot().setFadeOnClickListener(view -> binding.getRoot().setPanelState(HIDDEN));
+        binding.layoutSlidingUp.btnCancel.setOnClickListener(v -> binding.getRoot().setPanelState(HIDDEN));
+        binding.layoutSlidingUp.seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 binding.layoutSlidingUp.tvPassenger.setText(String.valueOf(progress));
@@ -118,5 +110,12 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.fragmentContainerView, fragment)
                     .commit();
         }
+    }
+
+    private void onSetPassengers(View v) {
+        TextView tvPassengers = findViewById(R.id.tvPassengers);
+        String passenger = binding.layoutSlidingUp.tvPassenger.getText() + " ppl";
+        tvPassengers.setText(passenger);
+        binding.getRoot().setPanelState(HIDDEN);
     }
 }

@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainViewModel extends AndroidViewModel {
-
     private final ScheduleRepository scheduleRepository;
     private final CitiesRepository citiesRepository;
     private final TransactionsRepository transactionsRepository;
@@ -29,20 +28,20 @@ public class MainViewModel extends AndroidViewModel {
         this.transactionsRepository = new TransactionsRepository();
     }
 
-    public MutableLiveData<ArrayList<Cities>> getCities(String collection) {
-        return scheduleRepository.getCollectionCities(collection);
+    public MutableLiveData<ArrayList<Cities>> getCities() {
+        return citiesRepository.getCities();
     }
 
-    public MutableLiveData<ArrayList<TransactionsReference>> getTransactions(String collection) {
-        return transactionsRepository.getTransactions(collection);
+    public MutableLiveData<ArrayList<Cities>> getCities(String field, String value) {
+        return citiesRepository.getCities(field, value);
     }
 
-    public MutableLiveData<ArrayList<Cities>> getSearchCities(String collection) {
-        return citiesRepository.getSearchCities(collection);
+    public MutableLiveData<ArrayList<TransactionsReference>> getTransactions(String value) {
+        return transactionsRepository.getTransactions(value);
     }
 
     public MutableLiveData<ArrayList<ScheduleReference>> getBuses(
             String departureCity, String arrivalCity, Calendar calendar) {
-        return scheduleRepository.getCollectionsBuses(departureCity, arrivalCity, calendar);
+        return scheduleRepository.getBus(departureCity, arrivalCity, calendar);
     }
 }

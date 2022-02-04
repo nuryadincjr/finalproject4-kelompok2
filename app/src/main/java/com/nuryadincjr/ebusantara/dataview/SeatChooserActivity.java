@@ -49,58 +49,58 @@ public class SeatChooserActivity extends AppCompatActivity
         calendar =  (Calendar)getIntent().getSerializableExtra("date");
         buses = schedule.getBuses();
         seats = buses.getSeats();
-        seatsA = seats.getA();
-        seatsB = seats.getB();
-        seatsC = seats.getC();
-        seatsD = seats.getD();
+        seatsA = seats.getSeatsA();
+        seatsB = seats.getSeatsB();
+        seatsC = seats.getSeatsC();
+        seatsD = seats.getSeatsD();
 
         seatChooser = new HashSet<>();
         String displayStatus = "Selected: "+ seatChooser.size()+"/"+passengers;
         binding.tvStatus.setText(displayStatus);
 
         LayoutSeatsChooserBinding view = binding.layoutSeatChooser;
-        view.iv1A.setOnClickListener(this);
-        view.iv2A.setOnClickListener(this);
-        view.iv3A.setOnClickListener(this);
-        view.iv4A.setOnClickListener(this);
-        view.iv5A.setOnClickListener(this);
-        view.iv6A.setOnClickListener(this);
-        view.iv7A.setOnClickListener(this);
-        view.iv8A.setOnClickListener(this);
-        view.iv9A.setOnClickListener(this);
+        view.ivSeatA1.setOnClickListener(this);
+        view.ivSeatA2.setOnClickListener(this);
+        view.ivSeatA3.setOnClickListener(this);
+        view.ivSeatA4.setOnClickListener(this);
+        view.ivSeatA5.setOnClickListener(this);
+        view.ivSeatA6.setOnClickListener(this);
+        view.ivSeatA7.setOnClickListener(this);
+        view.ivSeatA8.setOnClickListener(this);
+        view.ivSeatA9.setOnClickListener(this);
 
-        view.iv1B.setOnClickListener(this);
-        view.iv2B.setOnClickListener(this);
-        view.iv3B.setOnClickListener(this);
-        view.iv4B.setOnClickListener(this);
-        view.iv5B.setOnClickListener(this);
-        view.iv6B.setOnClickListener(this);
-        view.iv7B.setOnClickListener(this);
-        view.iv8B.setOnClickListener(this);
-        view.iv9B.setOnClickListener(this);
-        view.iv10B.setOnClickListener(this);
+        view.ivSeatB1.setOnClickListener(this);
+        view.ivSeatB2.setOnClickListener(this);
+        view.ivSeatB3.setOnClickListener(this);
+        view.ivSeatB4.setOnClickListener(this);
+        view.ivSeatB5.setOnClickListener(this);
+        view.ivSeatB6.setOnClickListener(this);
+        view.ivSeatB7.setOnClickListener(this);
+        view.ivSeatB8.setOnClickListener(this);
+        view.ivSeatB9.setOnClickListener(this);
+        view.ivSeatB10.setOnClickListener(this);
 
-        view.iv1C.setOnClickListener(this);
-        view.iv2C.setOnClickListener(this);
-        view.iv3C.setOnClickListener(this);
-        view.iv4C.setOnClickListener(this);
-        view.iv5C.setOnClickListener(this);
-        view.iv6C.setOnClickListener(this);
-        view.iv7C.setOnClickListener(this);
-        view.iv8C.setOnClickListener(this);
-        view.iv9C.setOnClickListener(this);
-        view.iv10C.setOnClickListener(this);
+        view.ivSeatC1.setOnClickListener(this);
+        view.ivSeatC2.setOnClickListener(this);
+        view.ivSeatC3.setOnClickListener(this);
+        view.ivSeatC4.setOnClickListener(this);
+        view.ivSeatC5.setOnClickListener(this);
+        view.ivSeatC6.setOnClickListener(this);
+        view.ivSeatC7.setOnClickListener(this);
+        view.ivSeatC8.setOnClickListener(this);
+        view.ivSeatC9.setOnClickListener(this);
+        view.ivSeatC10.setOnClickListener(this);
 
-        view.iv1D.setOnClickListener(this);
-        view.iv2D.setOnClickListener(this);
-        view.iv3D.setOnClickListener(this);
-        view.iv4D.setOnClickListener(this);
-        view.iv5D.setOnClickListener(this);
-        view.iv6D.setOnClickListener(this);
-        view.iv7D.setOnClickListener(this);
-        view.iv8D.setOnClickListener(this);
-        view.iv9D.setOnClickListener(this);
-        view.iv10D.setOnClickListener(this);
+        view.ivSeatD1.setOnClickListener(this);
+        view.ivSeatD2.setOnClickListener(this);
+        view.ivSeatD3.setOnClickListener(this);
+        view.ivSeatD4.setOnClickListener(this);
+        view.ivSeatD5.setOnClickListener(this);
+        view.ivSeatD6.setOnClickListener(this);
+        view.ivSeatD7.setOnClickListener(this);
+        view.ivSeatD8.setOnClickListener(this);
+        view.ivSeatD9.setOnClickListener(this);
+        view.ivSeatD10.setOnClickListener(this);
 
         getSeats();
 
@@ -112,21 +112,21 @@ public class SeatChooserActivity extends AppCompatActivity
         if (seatsA != null || seatsB != null || seatsC != null || seatsD != null) {
             LayoutSeatsChooserBinding view = binding.layoutSeatChooser;
 
-            getSelected(seatsA, view.iv1A, view.iv2A,
-                    view.iv3A, view.iv4A, view.iv5A, view.iv6A,
-                    view.iv7A, view.iv8A, view.iv9A, null);
+            getSelected(seatsA, view.ivSeatA1, view.ivSeatA2,
+                    view.ivSeatA3, view.ivSeatA4, view.ivSeatA5, view.ivSeatA6,
+                    view.ivSeatA7, view.ivSeatA8, view.ivSeatA9, null);
 
-            getSelected(seatsB, view.iv1B, view.iv2B,
-                    view.iv3B, view.iv4B, view.iv5B, view.iv6B,
-                    view.iv7B, view.iv8B, view.iv9B, view.iv10B);
+            getSelected(seatsB, view.ivSeatB1, view.ivSeatB2,
+                    view.ivSeatB3, view.ivSeatB4, view.ivSeatB5, view.ivSeatB6,
+                    view.ivSeatB7, view.ivSeatB8, view.ivSeatB9, view.ivSeatB10);
 
-            getSelected(seatsC, view.iv1C, view.iv2C,
-                    view.iv3C, view.iv4C, view.iv5C, view.iv6C,
-                    view.iv7C, view.iv8C, view.iv9C, view.iv10C);
+            getSelected(seatsC, view.ivSeatC1, view.ivSeatC2,
+                    view.ivSeatC3, view.ivSeatC4, view.ivSeatC5, view.ivSeatC6,
+                    view.ivSeatC7, view.ivSeatC8, view.ivSeatC9, view.ivSeatC10);
 
-            getSelected(seatsD, view.iv1D, view.iv2D,
-                    view.iv3D, view.iv4D, view.iv5D, view.iv6D,
-                    view.iv7D, view.iv8D, view.iv9D, view.iv10D);
+            getSelected(seatsD, view.ivSeatD1, view.ivSeatD2,
+                    view.ivSeatD3, view.ivSeatD4, view.ivSeatD5, view.ivSeatD6,
+                    view.ivSeatD7, view.ivSeatD8, view.ivSeatD9, view.ivSeatD10);
         }
     }
 
@@ -179,127 +179,127 @@ public class SeatChooserActivity extends AppCompatActivity
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        LayoutSeatsChooserBinding view = binding.layoutSeatChooser;
+        LayoutSeatsChooserBinding layoutSeatChooser = binding.layoutSeatChooser;
         switch (v.getId()) {
-            case R.id.iv1A:
-                getChooserListener(view.iv1A, "A", 1);
+            case R.id.ivSeatA1:
+                getChooserListener(layoutSeatChooser.ivSeatA1, "A", 1);
                 break;
-            case R.id.iv2A:
-                getChooserListener(view.iv2A, "A", 2);
+            case R.id.ivSeatA2:
+                getChooserListener(layoutSeatChooser.ivSeatA2, "A", 2);
                 break;
-            case R.id.iv3A:
-                getChooserListener(view.iv3A, "A", 3);
+            case R.id.ivSeatA3:
+                getChooserListener(layoutSeatChooser.ivSeatA3, "A", 3);
                 break;
-            case R.id.iv4A:
-                getChooserListener(view.iv4A, "A", 4);
+            case R.id.ivSeatA4:
+                getChooserListener(layoutSeatChooser.ivSeatA4, "A", 4);
                 break;
-            case R.id.iv5A:
-                getChooserListener(view.iv5A, "A", 5);
+            case R.id.ivSeatA5:
+                getChooserListener(layoutSeatChooser.ivSeatA5, "A", 5);
                 break;
-            case R.id.iv6A:
-                getChooserListener(view.iv6A, "A", 6);
+            case R.id.ivSeatA6:
+                getChooserListener(layoutSeatChooser.ivSeatA6, "A", 6);
                 break;
-            case R.id.iv7A:
-                getChooserListener(view.iv7A, "A", 7);
+            case R.id.ivSeatA7:
+                getChooserListener(layoutSeatChooser.ivSeatA7, "A", 7);
                 break;
-            case R.id.iv8A:
-                getChooserListener(view.iv8A, "A", 8);
+            case R.id.ivSeatA8:
+                getChooserListener(layoutSeatChooser.ivSeatA8, "A", 8);
                 break;
-            case R.id.iv9A:
-                getChooserListener(view.iv9A, "A", 9);
-                break;
-
-            case R.id.iv1B:
-                getChooserListener(view.iv1B, "B", 1);
-                break;
-            case R.id.iv2B:
-                getChooserListener(view.iv2B, "B", 2);
-                break;
-            case R.id.iv3B:
-                getChooserListener(view.iv3B, "B", 3);
-                break;
-            case R.id.iv4B:
-                getChooserListener(view.iv4B, "B", 4);
-                break;
-            case R.id.iv5B:
-                getChooserListener(view.iv5B, "B", 5);
-                break;
-            case R.id.iv6B:
-                getChooserListener(view.iv6B, "B", 6);
-                break;
-            case R.id.iv7B:
-                getChooserListener(view.iv7B, "B", 7);
-                break;
-            case R.id.iv8B:
-                getChooserListener(view.iv8B, "B", 8);
-                break;
-            case R.id.iv9B:
-                getChooserListener(view.iv9B, "B", 9);
-                break;
-            case R.id.iv10B:
-                getChooserListener(view.iv10B, "B", 10);
+            case R.id.ivSeatA9:
+                getChooserListener(layoutSeatChooser.ivSeatA9, "A", 9);
                 break;
 
-            case R.id.iv1C:
-                getChooserListener(view.iv1C, "C", 1);
+            case R.id.ivSeatB1:
+                getChooserListener(layoutSeatChooser.ivSeatB1, "B", 1);
                 break;
-            case R.id.iv2C:
-                getChooserListener(view.iv2C, "C", 2);
+            case R.id.ivSeatB2:
+                getChooserListener(layoutSeatChooser.ivSeatB2, "B", 2);
                 break;
-            case R.id.iv3C:
-                getChooserListener(view.iv3C, "C", 3);
+            case R.id.ivSeatB3:
+                getChooserListener(layoutSeatChooser.ivSeatB3, "B", 3);
                 break;
-            case R.id.iv4C:
-                getChooserListener(view.iv4C, "C", 4);
+            case R.id.ivSeatB4:
+                getChooserListener(layoutSeatChooser.ivSeatB4, "B", 4);
                 break;
-            case R.id.iv5C:
-                getChooserListener(view.iv5C, "C", 5);
+            case R.id.ivSeatB5:
+                getChooserListener(layoutSeatChooser.ivSeatB5, "B", 5);
                 break;
-            case R.id.iv6C:
-                getChooserListener(view.iv6C, "C",6);
+            case R.id.ivSeatB6:
+                getChooserListener(layoutSeatChooser.ivSeatB6, "B", 6);
                 break;
-            case R.id.iv7C:
-                getChooserListener(view.iv7C, "C", 7);
+            case R.id.ivSeatB7:
+                getChooserListener(layoutSeatChooser.ivSeatB7, "B", 7);
                 break;
-            case R.id.iv8C:
-                getChooserListener(view.iv8C, "C", 8);
+            case R.id.ivSeatB8:
+                getChooserListener(layoutSeatChooser.ivSeatB8, "B", 8);
                 break;
-            case R.id.iv9C:
-                getChooserListener(view.iv9C, "C", 9);
+            case R.id.ivSeatB9:
+                getChooserListener(layoutSeatChooser.ivSeatB9, "B", 9);
                 break;
-            case R.id.iv10C:
-                getChooserListener(view.iv10C, "C", 10);
+            case R.id.ivSeatB10:
+                getChooserListener(layoutSeatChooser.ivSeatB10, "B", 10);
                 break;
 
-            case R.id.iv1D:
-                getChooserListener(view.iv1D, "D", 1);
+            case R.id.ivSeatC1:
+                getChooserListener(layoutSeatChooser.ivSeatC1, "C", 1);
                 break;
-            case R.id.iv2D:
-                getChooserListener(view.iv2D, "D", 2);
+            case R.id.ivSeatC2:
+                getChooserListener(layoutSeatChooser.ivSeatC2, "C", 2);
                 break;
-            case R.id.iv3D:
-                getChooserListener(view.iv3D, "D", 3);
+            case R.id.ivSeatC3:
+                getChooserListener(layoutSeatChooser.ivSeatC3, "C", 3);
                 break;
-            case R.id.iv4D:
-                getChooserListener(view.iv4D, "D", 4);
+            case R.id.ivSeatC4:
+                getChooserListener(layoutSeatChooser.ivSeatC4, "C", 4);
                 break;
-            case R.id.iv5D:
-                getChooserListener(view.iv5D, "D", 5);
+            case R.id.ivSeatC5:
+                getChooserListener(layoutSeatChooser.ivSeatC5, "C", 5);
                 break;
-            case R.id.iv6D:
-                getChooserListener(view.iv6D, "D", 6);
+            case R.id.ivSeatC6:
+                getChooserListener(layoutSeatChooser.ivSeatC6, "C",6);
                 break;
-            case R.id.iv7D:
-                getChooserListener(view.iv7D, "D", 7);
+            case R.id.ivSeatC7:
+                getChooserListener(layoutSeatChooser.ivSeatC7, "C", 7);
                 break;
-            case R.id.iv8D:
-                getChooserListener(view.iv8D, "D",8);
+            case R.id.ivSeatC8:
+                getChooserListener(layoutSeatChooser.ivSeatC8, "C", 8);
                 break;
-            case R.id.iv9D:
-                getChooserListener(view.iv9D, "D", 9);
+            case R.id.ivSeatC9:
+                getChooserListener(layoutSeatChooser.ivSeatC9, "C", 9);
                 break;
-            case R.id.iv10D:
-                getChooserListener(view.iv10D, "D", 10);
+            case R.id.ivSeatC10:
+                getChooserListener(layoutSeatChooser.ivSeatC10, "C", 10);
+                break;
+
+            case R.id.ivSeatD1:
+                getChooserListener(layoutSeatChooser.ivSeatD1, "D", 1);
+                break;
+            case R.id.ivSeatD2:
+                getChooserListener(layoutSeatChooser.ivSeatD2, "D", 2);
+                break;
+            case R.id.ivSeatD3:
+                getChooserListener(layoutSeatChooser.ivSeatD3, "D", 3);
+                break;
+            case R.id.ivSeatD4:
+                getChooserListener(layoutSeatChooser.ivSeatD4, "D", 4);
+                break;
+            case R.id.ivSeatD5:
+                getChooserListener(layoutSeatChooser.ivSeatD5, "D", 5);
+                break;
+            case R.id.ivSeatD6:
+                getChooserListener(layoutSeatChooser.ivSeatD6, "D", 6);
+                break;
+            case R.id.ivSeatD7:
+                getChooserListener(layoutSeatChooser.ivSeatD7, "D", 7);
+                break;
+            case R.id.ivSeatD8:
+                getChooserListener(layoutSeatChooser.ivSeatD8, "D",8);
+                break;
+            case R.id.ivSeatD9:
+                getChooserListener(layoutSeatChooser.ivSeatD9, "D", 9);
+                break;
+            case R.id.ivSeatD10:
+                getChooserListener(layoutSeatChooser.ivSeatD10, "D", 10);
                 break;
         }
     }
@@ -311,18 +311,18 @@ public class SeatChooserActivity extends AppCompatActivity
             else seatChooser.add(seatNo);
 
             view.setChecked(!view.isChecked());
-            getSeatBoolean(itemX, itemY, !view.isChecked());
+            onSeatSelected(itemX, itemY, !view.isChecked());
         }else {
             view.setChecked(false);
             seatChooser.remove(seatNo);
-            getSeatBoolean(itemX, itemY, false);
+            onSeatSelected(itemX, itemY, false);
         }
 
         String displayStatus = "Selected: "+ seatChooser.size()+"/"+passengers;
         binding.tvStatus.setText(displayStatus);
     }
 
-    private void getSeatBoolean(String itemX, int itemY, boolean isSelected) {
+    private void onSeatSelected(String itemX, int itemY, boolean isSelected) {
         int index = itemY-1;
         switch (itemX) {
             case "A":
@@ -343,10 +343,10 @@ public class SeatChooserActivity extends AppCompatActivity
     private void onStartActivity() {
         if(seatChooser.size()==Integer.parseInt(passengers)){
             ArrayList<String> seatList = new ArrayList<>(seatChooser);
-            seats.setA(seatsA);
-            seats.setB(seatsB);
-            seats.setC(seatsC);
-            seats.setD(seatsD);
+            seats.setSeatsA(seatsA);
+            seats.setSeatsB(seatsB);
+            seats.setSeatsC(seatsC);
+            seats.setSeatsD(seatsD);
             buses.setSeats(seats);
             schedule.setBuses(buses);
 

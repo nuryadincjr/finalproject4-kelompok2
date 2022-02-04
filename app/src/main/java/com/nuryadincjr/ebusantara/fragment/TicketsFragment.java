@@ -1,7 +1,7 @@
 package com.nuryadincjr.ebusantara.fragment;
 
 import static com.nuryadincjr.ebusantara.util.LocalPreference.getInstance;
-import static java.lang.String.*;
+import static java.lang.String.valueOf;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -28,15 +28,14 @@ import com.nuryadincjr.ebusantara.api.ReviewsRepository;
 import com.nuryadincjr.ebusantara.databinding.FragmentTicketsBinding;
 import com.nuryadincjr.ebusantara.dataview.TicketDetailsActivity;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
-import com.nuryadincjr.ebusantara.util.MainViewModel;
 import com.nuryadincjr.ebusantara.pojo.Reviewers;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Transactions;
 import com.nuryadincjr.ebusantara.pojo.TransactionsReference;
 import com.nuryadincjr.ebusantara.pojo.Users;
+import com.nuryadincjr.ebusantara.util.MainViewModel;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class TicketsFragment extends Fragment {
     private FragmentTicketsBinding binding;
@@ -62,7 +61,7 @@ public class TicketsFragment extends Fragment {
         boolean isRating = getInstance(getContext())
                 .getPreferences()
                 .getBoolean("isRating", false);
-        if(isRating) onShowPopup(schedule, transactions, users);
+        if(isRating) getPopup(schedule, transactions, users);
 
         getData(users);
         return binding.getRoot();
@@ -85,6 +84,7 @@ public class TicketsFragment extends Fragment {
             if(ticket != null){
                 binding.rvTickets.setVisibility(View.VISIBLE);
                 binding.layoutError.linearLayout.setVisibility(View.GONE);
+                binding.rvTickets.showShimmerAdapter();
                 binding.rvTickets.setLayoutManager(new LinearLayoutManager(getContext()));
                 binding.rvTickets.setAdapter(citiesAdapter);
             }else {
@@ -97,7 +97,7 @@ public class TicketsFragment extends Fragment {
     }
 
     @SuppressLint("InflateParams")
-    public void onShowPopup(ScheduleReference schedule, Transactions transactions, Users users) {
+    public void getPopup(ScheduleReference schedule, Transactions transactions, Users users) {
 
         View inflatedView = getLayoutInflater().inflate(R.layout.layout_rating, null);
         TextView poName = inflatedView.findViewById(R.id.tvPOName);
@@ -111,13 +111,32 @@ public class TicketsFragment extends Fragment {
         CheckedTextView star3 = inflatedView.findViewById(R.id.ctvStar3);
         CheckedTextView star4 = inflatedView.findViewById(R.id.ctvStar4);
         CheckedTextView star5 = inflatedView.findViewById(R.id.ctvStar5);
+        String id = schedule.getBuses().getId();
 
         poName.setText(schedule.getBuses().getPoName());
         busNo.setText(schedule.getBuses().getBusNo());
         departureDate.setText(schedule.getDepartureTime());
         status.setText(transactions.getStatus());
 
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+        ReviewsRepository repository = new ReviewsRepository();
+        repository.getReviewers(id, users).observe(getViewLifecycleOwner(), reviewers -> {
+            if(reviewers==null) {
+                onShowPopup(transactions, users, inflatedView, maxLine,
+                        content, star1, star2, star3, star4, star5, id, repository);
+            }
+
+            getInstance(getContext()).getEditor()
+                    .putBoolean("isRating", false)
+                    .apply();
+        });
+    }
+
+    private void onShowPopup(Transactions transactions, Users users, View inflatedView,
+                             TextView maxLine, EditText content, CheckedTextView star1,
+                             CheckedTextView star2, CheckedTextView star3, CheckedTextView star4,
+                             CheckedTextView star5, String id, ReviewsRepository repository) {
+
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setView(inflatedView);
         builder.setCancelable(false);
 
@@ -141,7 +160,8 @@ public class TicketsFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(count<=500){
-                    maxLine.setText(s.length()+"/500");
+                    String indicator = s.length()+"/500";
+                    maxLine.setText(indicator);
                 }
             }
 
@@ -151,46 +171,12 @@ public class TicketsFragment extends Fragment {
             }
         });
 
-        String id = schedule.getBuses().getId();
-        ReviewsRepository repository = new ReviewsRepository();
-        AtomicReference<Reviewers> reviewer = new AtomicReference<>(new Reviewers());
-        repository.getReviewer(id, users).observe(getViewLifecycleOwner(), reviewers -> {
-            if(reviewers!=null) {
-                reviewer.set(reviewers.get(0));
-                content.setText(reviewer.get().getContent());
-
-                switch (reviewer.get().getRatings()){
-                    case "1":
-                        getSelected(star1, star2, star3, star4, star5,
-                                !star1.isChecked(), false, false, false, false);
-                        break;
-                    case "2":
-                        getSelected(star1, star2, star3, star4, star5,
-                                true, true, false, false, false);
-                        break;
-                    case "3":
-                        getSelected(star1, star2, star3, star4, star5,
-                                true, true, true, false, false);
-                        break;
-                    case "4":
-                        getSelected(star1, star2, star3, star4, star5,
-                                true, true, true, true, false);
-                        break;
-                    case "5":
-                        getSelected(star1, star2, star3, star4, star5,
-                                true, true, true, true, true);
-                        break;
-                }
-            }
-
-            getInstance(getContext()).getEditor()
-                    .putBoolean("isRating", false).apply();
-        });
-
         builder.setPositiveButton("Rate This Trip", (dialog, which) -> {
             int rating = 0;
-            if(star1.isChecked() && star2.isChecked() && star3.isChecked() && star4.isChecked() && star5.isChecked()) rating =5;
-            else if(star1.isChecked() && star2.isChecked() && star3.isChecked() && star4.isChecked()) rating =4;
+            if(star1.isChecked() && star2.isChecked() && star3.isChecked() &&
+                    star4.isChecked() && star5.isChecked()) rating =5;
+            else if(star1.isChecked() && star2.isChecked() &&
+                    star3.isChecked() && star4.isChecked()) rating =4;
             else if(star1.isChecked() && star2.isChecked() && star3.isChecked()) rating =3;
             else if(star1.isChecked() && star2.isChecked()) rating =2;
             else if(star1.isChecked()) rating =1;
@@ -200,10 +186,6 @@ public class TicketsFragment extends Fragment {
                     content.getText().toString(), valueOf(finalRating));
 
             repository.updateReview(id, postReview);
-            repository.deleteReview(id, reviewer.get());
-
-            getInstance(getContext()).getEditor()
-                        .putBoolean("isRating", false).apply();
         });
 
         builder.show();
@@ -211,16 +193,17 @@ public class TicketsFragment extends Fragment {
 
     private void getSelected(CheckedTextView star1, CheckedTextView star2,
                              CheckedTextView star3, CheckedTextView star4,
-                             CheckedTextView star5, boolean b, boolean b2,
-                             boolean b3, boolean b4, boolean b5) {
-        star1.setChecked(b);
-        star2.setChecked(b2);
-        star3.setChecked(b3);
-        star4.setChecked(b4);
-        star5.setChecked(b5);
+                             CheckedTextView star5, boolean isChecked1, boolean isChecked2,
+                             boolean isChecked3, boolean isChecked4, boolean isChecked5) {
+        star1.setChecked(isChecked1);
+        star2.setChecked(isChecked2);
+        star3.setChecked(isChecked3);
+        star4.setChecked(isChecked4);
+        star5.setChecked(isChecked5);
     }
 
-    private void onListener(TicketsAdapter productsAdapter, ArrayList<TransactionsReference> ticket, Users users) {
+    private void onListener(TicketsAdapter productsAdapter,
+                            ArrayList<TransactionsReference> ticket, Users users) {
         productsAdapter.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {

@@ -36,9 +36,8 @@ public class RetailPaymentVerificationActivity extends AppCompatActivity {
 
         binding.layoutTotalPayment.tvTotal.setText(transactions.getTotalPayment());
         binding.tvPaymentNumber.setText(transactions.getBookNo());
-
         binding.tvPaymentNumber.setOnClickListener(this::onShowPopup);
-        binding.btnVerifyPayment.setOnClickListener(v -> onPusData());
+        binding.btnVerifyPayment.setOnClickListener(v -> onPushData());
         binding.appbar.ivBackArrow.setOnClickListener(v -> onBackPressed());
     }
 
@@ -52,7 +51,7 @@ public class RetailPaymentVerificationActivity extends AppCompatActivity {
         builder.setView(inflatedView).show();
     }
 
-    private void onPusData() {
+    private void onPushData() {
         ProgressDialog dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
         dialog.setMessage("Verify payment..");
@@ -69,21 +68,27 @@ public class RetailPaymentVerificationActivity extends AppCompatActivity {
                 .set(schedule.getBuses().getSeats())
                 .addOnCompleteListener(updateTask ->{
                     if(updateTask.isSuccessful()){
-                        db.collection("transactions")
-                                .document(id).set(transactions)
-                                .addOnCompleteListener(task -> {
-                                    if(task.isSuccessful()){
-                                        dialog.dismiss();
-                                        getInstance(this).getEditor().putBoolean("isRating", true).apply();
-                                        startActivity(new Intent(this, MainActivity.class)
-                                                .putExtra("schedule", schedule)
-                                                .putExtra("transactions", transactions)
-                                                .putExtra("fragment", 1));
-                                        finish();
-                                    }
-                                });
+                        onDataChanged(dialog, db, id, schedule);
                     }
                 });
+    }
+
+    private void onDataChanged(ProgressDialog dialog, FirebaseFirestore db,
+                               String id, ScheduleReference schedule) {
+        db.collection("transactions")
+                .document(id).set(transactions)
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        dialog.dismiss();
+                        getInstance(this).getEditor().putBoolean("isRating", true).apply();
+                        startActivity(new Intent(this, MainActivity.class)
+                                .putExtra("schedule", schedule)
+                                .putExtra("transactions", transactions)
+                                .putExtra("fragment", 1));
+                        finish();
+                    }
+                });
+
     }
 
     @Override

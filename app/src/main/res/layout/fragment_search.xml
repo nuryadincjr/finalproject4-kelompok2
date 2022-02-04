@@ -121,6 +121,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_marginBottom="@dimen/m30"
+                                    android:background="?selectableItemBackground"
                                     android:orientation="vertical">
 
                                     <TextView
@@ -133,7 +134,7 @@
                                         android:id="@+id/tvDeparture"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/str_try_pekanbaru"
+                                        android:text="@string/str_try_departure"
                                         android:textColor="@color/primary_light"
                                         android:textSize="16sp"
                                         android:textStyle="bold"
@@ -150,6 +151,7 @@
                                     android:id="@+id/llArrival"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:background="?selectableItemBackground"
                                     android:orientation="vertical">
 
                                     <TextView
@@ -161,7 +163,7 @@
                                         android:id="@+id/tvArrival"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/str_try_cianjur"
+                                        android:text="@string/str_try_arrival"
                                         android:textColor="@color/primary_light"
                                         android:textSize="16sp"
                                         android:textStyle="bold"
@@ -198,6 +200,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
+                                android:background="?selectableItemBackground"
                                 tools:ignore="NestedWeights">
 
                                 <TextView
@@ -235,6 +238,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:background="?selectableItemBackground"
                                 android:orientation="vertical">
 
                                 <TextView

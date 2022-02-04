@@ -10,7 +10,12 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class Constant {
+    public static final String COLLECTION_TRANSACTIONS = "transactions";
+    public static final String COLLECTION_SCHEDULE = "schedule";
+    public static final String COLLECTION_REVIEWS = "reviews";
+    public static final String COLLECTION_CITIES = "cities";
     public static final String TITLE_VIW_ONLY = "View only";
+    public static final String COLLECTION_USER = "users";
     public static final int RC_SIGN_IN = 0;
 
     public static Bitmap getQrCode(String code){

@@ -13,6 +13,7 @@
     <color name="gray_ed">#EDEDED</color>
     <color name="primary">#0000FF</color>
     <color name="secondary">#FFD03D</color>
+    <color name="secondary_hover">#ECB100</color>
     <color name="primary_hover">#0505D4</color>
     <color name="primary_pressed">#3939FF</color>
     <color name="primary_light">#569CE0</color>

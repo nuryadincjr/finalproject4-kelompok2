@@ -81,17 +81,7 @@ public class BusDetailsActivity extends AppCompatActivity {
 
         binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
         binding.btnBookNow.setOnClickListener(v -> onStartActivity(calendar));
-        binding.layoutBookATrip.tvSeePicture.setOnClickListener(v->{
-            View inflatedView = getLayoutInflater().inflate(R.layout.layout_image_viewer, null);
-            ImageView imageView = inflatedView.findViewById(R.id.ivViewer);
-            Glide.with(this)
-                    .load(buses.getImageUrl())
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_brand)
-                    .into(imageView);
-            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
-            builder.setView(inflatedView).show();
-        });
+        binding.layoutBookATrip.tvSeePicture.setOnClickListener(this::onImageShow);
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -121,10 +111,10 @@ public class BusDetailsActivity extends AppCompatActivity {
 
     private void getSeats() {
         if(seats!=null){
-            List<Boolean> seatsA = seats.getA();
-            List<Boolean> seatsB = seats.getB();
-            List<Boolean> seatsC = seats.getC();
-            List<Boolean> seatsD = seats.getD();
+            List<Boolean> seatsA = seats.getSeatsA();
+            List<Boolean> seatsB = seats.getSeatsB();
+            List<Boolean> seatsC = seats.getSeatsC();
+            List<Boolean> seatsD = seats.getSeatsD();
 
             if (seatsA != null || seatsB != null || seatsC != null || seatsD != null) {
                 int counter = 0;
@@ -232,5 +222,17 @@ public class BusDetailsActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, HORIZONTAL, false);
         binding.layoutBookATrip.rvReviews.setLayoutManager(layoutManager);
         binding.layoutBookATrip.rvReviews.setAdapter(reviewersAdapter);
+    }
+
+    private void onImageShow(View v) {
+        View inflatedView = getLayoutInflater().inflate(R.layout.layout_image_viewer, null);
+        ImageView imageView = inflatedView.findViewById(R.id.ivViewer);
+        Glide.with(this)
+                .load(buses.getImageUrl())
+                .centerCrop()
+                .placeholder(R.drawable.ic_brand)
+                .into(imageView);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setView(inflatedView).show();
     }
 }

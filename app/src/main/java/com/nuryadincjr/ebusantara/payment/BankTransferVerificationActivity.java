@@ -16,7 +16,6 @@ import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Transactions;
 
 public class BankTransferVerificationActivity extends AppCompatActivity {
-
     private ActivityBankTransferVerificationBinding binding;
     private Transactions transactions;
     private String bank;
@@ -57,19 +56,24 @@ public class BankTransferVerificationActivity extends AppCompatActivity {
                 .set(schedule.getBuses().getSeats())
                 .addOnCompleteListener(updateTask ->{
                     if(updateTask.isSuccessful()){
-                        db.collection("transactions")
-                                .document(id).set(transactions)
-                                .addOnCompleteListener(task -> {
-                                    if(task.isSuccessful()){
-                                        dialog.dismiss();
-                                        getInstance(this).getEditor().putBoolean("isRating", true).apply();
-                                        startActivity(new Intent(this, MainActivity.class)
-                                                .putExtra("schedule", schedule)
-                                                .putExtra("transactions", transactions)
-                                                .putExtra("fragment", 1));
-                                        finish();
-                                    }
-                                });
+                        onDataChanged(dialog, db, id, schedule);
+                    }
+                });
+    }
+
+    private void onDataChanged(ProgressDialog dialog, FirebaseFirestore db,
+                               String id, ScheduleReference schedule) {
+        db.collection("transactions")
+                .document(id).set(transactions)
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        dialog.dismiss();
+                        getInstance(this).getEditor().putBoolean("isRating", true).apply();
+                        startActivity(new Intent(this, MainActivity.class)
+                                .putExtra("schedule", schedule)
+                                .putExtra("transactions", transactions)
+                                .putExtra("fragment", 1));
+                        finish();
                     }
                 });
     }

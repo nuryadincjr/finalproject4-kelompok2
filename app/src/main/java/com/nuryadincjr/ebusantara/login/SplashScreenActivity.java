@@ -29,7 +29,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
         String versionName = "Version "+BuildConfig.VERSION_NAME;
         binding.tvVersion.setText(versionName);
         transition();

@@ -30,7 +30,7 @@
             android:textColor="@color/black"
             app:drawableTint="@color/red_selector"
             tools:ignore="TouchTargetSizeCheck"
-            android:hint="@string/str_try_cianjur" />
+            android:hint="@string/str_try_arrival" />
 
         <TextView
             android:id="@+id/tvCancel"
@@ -64,10 +64,15 @@
                 android:text="@string/str_nearby"
                 tools:ignore="TextContrastCheck" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView
                 android:id="@+id/rvSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:shimmer_demo_child_count="5"
+                app:shimmer_demo_grid_child_count="1"
+                app:shimmer_demo_layout="@layout/layout_demo_list"
+                app:shimmer_demo_layout_manager_type="linear_vertical"
+                app:shimmer_demo_angle="20"
                 tools:listitem="@layout/item_destination_search"/>
 
         </LinearLayout>

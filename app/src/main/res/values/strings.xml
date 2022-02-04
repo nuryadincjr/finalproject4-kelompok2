@@ -28,8 +28,8 @@
     <string name="str_search_bus">Search Bus</string>
     <string name="str_nearby">Nearby</string>
     <string name="str_departure_date">Departure date</string>
-    <string name="str_try_pekanbaru">Try “Pekanbaru”</string>
-    <string name="str_try_cianjur">Try “Cianjur”</string>
+    <string name="str_try_departure">Try “Jakarta”</string>
+    <string name="str_try_arrival">Try “Cianjur”</string>
     <string name="str_ppl">1 ppl</string>
     <string name="str_select_date">Select date</string>
     <string name="str_departure_locations">Departure Locations</string>

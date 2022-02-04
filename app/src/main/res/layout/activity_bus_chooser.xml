@@ -15,32 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <include
-                    android:id="@+id/layoutError"
-                    layout="@layout/layout_error"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvBuses"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_destination" />
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
@@ -74,33 +48,33 @@
             </androidx.appcompat.widget.Toolbar>
 
             <LinearLayout
+                android:id="@+id/llTabFilter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:tabMode="scrollable">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:baselineAligned="false"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp">
 
                     <LinearLayout
                         android:id="@+id/llDeparture"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_rounded_fill"
+                        android:background="@drawable/selector_filter"
                         android:drawablePadding="16dp"
                         android:orientation="vertical"
                         android:padding="@dimen/p10">
 
                         <TextView
-                            android:id="@+id/textView2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/lato"
@@ -122,9 +96,8 @@
                         android:id="@+id/llArrival"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_rounded_fill"
+                        android:background="@drawable/selector_filter"
                         android:drawablePadding="16dp"
                         android:orientation="vertical"
                         android:padding="@dimen/p10">
@@ -150,53 +123,104 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:paddingBottom="5dp">
 
-                    <TextView
-                        android:id="@+id/tvDate"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_rounded_fill"
-                        android:fontFamily="@font/lato"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        tools:ignore="TextContrastCheck"
-                        tools:text="Fri, 23 Jul 2019" />
+                        android:layout_height="30dp"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tvSeats"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/bg_rounded_fill"
-                        android:fontFamily="@font/lato"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        tools:ignore="TextContrastCheck"
-                        tools:text="Seat 2" />
+                        <TextView
+                            android:id="@+id/tvDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/m20"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/selector_filter"
+                            android:fontFamily="@font/lato"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            tools:ignore="TextContrastCheck"
+                            tools:text="Fri, 23 Jul 2019" />
 
-                    <Spinner
-                        android:id="@+id/tvFilters"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:layout_weight="3"
-                        android:background="@drawable/bg_rounded_fill"
-                        android:fontFamily="@font/lato_bold"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:text="@string/str_sort_by_best_experience" />
+                        <TextView
+                            android:id="@+id/tvSeats"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/selector_filter"
+                            android:fontFamily="@font/lato"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            tools:ignore="TextContrastCheck"
+                            tools:text="Seat 2" />
 
-                </LinearLayout>
+                        <Spinner
+                            android:id="@+id/tvFilters"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/selector_filter"
+                            android:fontFamily="@font/lato_bold"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="@string/str_sort_by_best_experience"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                        <TextView
+                            android:id="@+id/tvApply"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="20dp"
+                            android:background="@drawable/selector_btn"
+                            android:fontFamily="@font/lato"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Apply"
+                            android:textColor="@color/white"
+                            tools:ignore="TextContrastCheck" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
 
             </LinearLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/layoutError"
+                    layout="@layout/layout_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+                    android:id="@+id/rvBuses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:shimmer_demo_child_count="2"
+                    app:shimmer_demo_grid_child_count="1"
+                    app:shimmer_demo_layout="@layout/layout_demo_grid"
+                    app:shimmer_demo_layout_manager_type="linear_vertical"
+                    app:shimmer_demo_angle="20"
+                    tools:listitem="@layout/item_destination" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -205,8 +229,9 @@
         android:layout_height="wrap_content"
         android:gravity="center|top">
 
-        <include android:id="@+id/layoutSlidingUp"
-            layout="@layout/layout_sliding_up_panel"/>
+        <include
+            android:id="@+id/layoutSlidingUp"
+            layout="@layout/layout_sliding_up_panel" />
 
     </RelativeLayout>
 

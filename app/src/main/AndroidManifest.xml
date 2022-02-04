@@ -47,12 +47,10 @@
             android:exported="true" />
         <activity
             android:name=".chooser.DatePickerActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Ebusantara.NoActionBar.FullScreen" />
+            android:exported="true" />
         <activity
             android:name=".chooser.DestinationChooserActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Ebusantara.NoActionBar.FullScreen" />
+            android:exported="true" />
         <activity
             android:name=".login.FinishRegistrationActivity"
             android:exported="true"

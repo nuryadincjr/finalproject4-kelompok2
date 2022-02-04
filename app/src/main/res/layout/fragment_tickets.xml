@@ -44,10 +44,15 @@
             android:layout_height="match_parent"
             android:visibility="gone" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.cooltechworks.views.shimmer.ShimmerRecyclerView
             android:id="@+id/rvTickets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:shimmer_demo_child_count="5"
+            app:shimmer_demo_grid_child_count="1"
+            app:shimmer_demo_layout="@layout/layout_demo_grid_ticket"
+            app:shimmer_demo_layout_manager_type="linear_vertical"
+            app:shimmer_demo_angle="20"
             tools:listitem="@layout/item_order" />
 
     </LinearLayout>

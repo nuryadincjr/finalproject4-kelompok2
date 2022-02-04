@@ -1,5 +1,8 @@
 package com.nuryadincjr.ebusantara.util;
 
+import static android.content.Context.*;
+import static com.nuryadincjr.ebusantara.util.Constant.*;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -9,7 +12,7 @@ public class LocalPreference {
     private final SharedPreferences.Editor editor;
 
     public LocalPreference(Context context) {
-        preferences = context.getSharedPreferences(Constant.TITLE_VIW_ONLY, Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences(TITLE_VIW_ONLY, MODE_PRIVATE);
         editor = preferences.edit();
     }
 

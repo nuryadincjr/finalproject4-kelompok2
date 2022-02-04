@@ -15,6 +15,18 @@ public class ScheduleReference implements Parcelable {
     public ScheduleReference() {
     }
 
+    public ScheduleReference(String id, Buses buses, Cities arrival,
+                             Cities departure, String arrivalTime,
+                             String departureTime, ReviewersReference reviewers) {
+        this.id = id;
+        this.buses = buses;
+        this.arrival = arrival;
+        this.departure = departure;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.reviewers = reviewers;
+    }
+
     protected ScheduleReference(Parcel in) {
         id = in.readString();
         buses = in.readParcelable(Buses.class.getClassLoader());
@@ -106,17 +118,6 @@ public class ScheduleReference implements Parcelable {
     }
 
     public void setReviewers(ReviewersReference reviewers) {
-        this.reviewers = reviewers;
-    }
-
-    public ScheduleReference(String id, Buses buses, Cities arrival, Cities departure,
-                             String arrivalTime, String departureTime, ReviewersReference reviewers) {
-        this.id = id;
-        this.buses = buses;
-        this.arrival = arrival;
-        this.departure = departure;
-        this.arrivalTime = arrivalTime;
-        this.departureTime = departureTime;
         this.reviewers = reviewers;
     }
 }

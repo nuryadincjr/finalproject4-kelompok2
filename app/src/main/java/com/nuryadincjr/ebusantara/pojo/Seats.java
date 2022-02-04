@@ -9,37 +9,36 @@ import androidx.annotation.RequiresApi;
 import java.util.List;
 
 public class Seats implements Parcelable {
-    private List<Boolean> A;
-    private List<Boolean> B;
-    private List<Boolean> C;
-    private List<Boolean> D;
+    private List<Boolean> seatsA;
+    private List<Boolean> seatsB;
+    private List<Boolean> seatsC;
+    private List<Boolean> seatsD;
 
     public Seats() {
     }
 
-    public Seats(List<Boolean> a, List<Boolean> b,
-                 List<Boolean> c, List<Boolean> d) {
-        A = a;
-        B = b;
-        C = c;
-        D = d;
+    public Seats(List<Boolean> seatsA, List<Boolean> seatsB,
+                 List<Boolean> seatsC, List<Boolean> seatsD) {
+        this.seatsA = seatsA;
+        this.seatsB = seatsB;
+        this.seatsC = seatsC;
+        this.seatsD = seatsD;
     }
 
-
     protected Seats(Parcel in) {
-        A = (List<Boolean>) in.readValue(getClass().getClassLoader());
-        B = (List<Boolean>) in.readValue(getClass().getClassLoader());
-        C = (List<Boolean>) in.readValue(getClass().getClassLoader());
-        D = (List<Boolean>) in.readValue(getClass().getClassLoader());
+        seatsA = (List<Boolean>) in.readValue(getClass().getClassLoader());
+        seatsB = (List<Boolean>) in.readValue(getClass().getClassLoader());
+        seatsC = (List<Boolean>) in.readValue(getClass().getClassLoader());
+        seatsD = (List<Boolean>) in.readValue(getClass().getClassLoader());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(A);
-        dest.writeValue(B);
-        dest.writeValue(C);
-        dest.writeValue(D);
+        dest.writeValue(seatsA);
+        dest.writeValue(seatsB);
+        dest.writeValue(seatsC);
+        dest.writeValue(seatsD);
     }
 
     @Override
@@ -59,35 +58,35 @@ public class Seats implements Parcelable {
         }
     };
 
-    public List<Boolean> getA() {
-        return A;
+    public List<Boolean> getSeatsA() {
+        return seatsA;
     }
 
-    public void setA(List<Boolean> a) {
-        A = a;
+    public void setSeatsA(List<Boolean> seatsA) {
+        this.seatsA = seatsA;
     }
 
-    public List<Boolean> getB() {
-        return B;
+    public List<Boolean> getSeatsB() {
+        return seatsB;
     }
 
-    public void setB(List<Boolean> b) {
-        B = b;
+    public void setSeatsB(List<Boolean> seatsB) {
+        this.seatsB = seatsB;
     }
 
-    public List<Boolean> getC() {
-        return C;
+    public List<Boolean> getSeatsC() {
+        return seatsC;
     }
 
-    public void setC(List<Boolean> c) {
-        C = c;
+    public void setSeatsC(List<Boolean> seatsC) {
+        this.seatsC = seatsC;
     }
 
-    public List<Boolean> getD() {
-        return D;
+    public List<Boolean> getSeatsD() {
+        return seatsD;
     }
 
-    public void setD(List<Boolean> d) {
-        D = d;
+    public void setSeatsD(List<Boolean> seatsD) {
+        this.seatsD = seatsD;
     }
 }

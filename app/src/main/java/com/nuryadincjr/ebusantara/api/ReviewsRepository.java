@@ -1,5 +1,9 @@
 package com.nuryadincjr.ebusantara.api;
 
+import static com.google.firebase.firestore.FieldValue.arrayRemove;
+import static com.google.firebase.firestore.FieldValue.arrayUnion;
+import static com.nuryadincjr.ebusantara.util.Constant.COLLECTION_REVIEWS;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.firestore.CollectionReference;
@@ -15,15 +19,14 @@ import java.util.List;
 import java.util.Map;
 
 public class ReviewsRepository {
-    private static final String COLLECTION_USER = "reviews";
     private final CollectionReference collection;
 
     public ReviewsRepository() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        collection = db.collection(COLLECTION_USER);
+        collection = db.collection(COLLECTION_REVIEWS);
     }
 
-    public MutableLiveData<ArrayList<Reviewers>> getReviewer(String busId, Users users) {
+    public MutableLiveData<ArrayList<Reviewers>> getReviewers(String busId, Users users) {
         ArrayList<Reviewers> citiesArrayList = new ArrayList<>();
         MutableLiveData<ArrayList<Reviewers>> productsMutableLiveData = new MutableLiveData<>();
         collection.document(busId).get().addOnCompleteListener(task -> {
@@ -51,12 +54,15 @@ public class ReviewsRepository {
     }
 
     public void deleteReview(String busId, Reviewers reviewer){
-        DocumentReference document = collection.document(busId);
-        document.update("reviewer", FieldValue.arrayRemove(reviewer));
+        onDataChanged(busId, arrayRemove(reviewer));
     }
 
     public void updateReview(String busId, Reviewers reviewer){
+        onDataChanged(busId, arrayUnion(reviewer));
+    }
+
+    private void onDataChanged(String busId, FieldValue fieldValue) {
         DocumentReference document = collection.document(busId);
-        document.update("reviewer", FieldValue.arrayUnion(reviewer));
+        document.update("reviewer", fieldValue);
     }
 }

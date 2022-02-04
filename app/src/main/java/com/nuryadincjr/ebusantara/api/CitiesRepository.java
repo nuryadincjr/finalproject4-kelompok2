@@ -1,5 +1,6 @@
 package com.nuryadincjr.ebusantara.api;
 
+import static com.nuryadincjr.ebusantara.util.Constant.COLLECTION_CITIES;
 import static java.util.Objects.requireNonNull;
 
 import androidx.lifecycle.MutableLiveData;
@@ -12,30 +13,45 @@ import com.nuryadincjr.ebusantara.pojo.Cities;
 import java.util.ArrayList;
 
 public class CitiesRepository {
-    private static final String COLLECTION_CITIES = "cities";
-    private final CollectionReference collectionReference;
+    private final CollectionReference collection;
 
     public CitiesRepository() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        collectionReference = db.collection(COLLECTION_CITIES);
+        collection = db.collection(COLLECTION_CITIES);
     }
 
-    public MutableLiveData<ArrayList<Cities>> getSearchCities(String value) {
-        ArrayList<Cities> citiesArrayList = new ArrayList<>();
-        final MutableLiveData<ArrayList<Cities>> productsMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<ArrayList<Cities>> getCities() {
+        ArrayList<Cities> Schedule = new ArrayList<>();
+        final MutableLiveData<ArrayList<Cities>> ScheduleMutableLiveData = new MutableLiveData<>();
 
-        collectionReference
-                .whereGreaterThanOrEqualTo("city", value)
-                .whereLessThanOrEqualTo("city",value+"~")
+        collection.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                for (QueryDocumentSnapshot  snapshot : task.getResult()) {
+                    Cities data = snapshot.toObject(Cities.class);
+                    Schedule.add(data);
+                }
+                ScheduleMutableLiveData.postValue(Schedule);
+            }else ScheduleMutableLiveData.setValue(null);
+        });
+        return ScheduleMutableLiveData;
+    }
+
+    public MutableLiveData<ArrayList<Cities>> getCities(String field, String value) {
+        ArrayList<Cities> citiesArrayList = new ArrayList<>();
+        final MutableLiveData<ArrayList<Cities>> citiesListMutableLiveData = new MutableLiveData<>();
+
+        collection
+                .whereGreaterThanOrEqualTo(field, value)
+                .whereLessThanOrEqualTo(field,value+"~")
                 .get().addOnCompleteListener(task -> {
             if(task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : requireNonNull(task.getResult())) {
                     Cities cities = document.toObject(Cities.class);
                     citiesArrayList.add(cities);
                 }
-                productsMutableLiveData.postValue(citiesArrayList);
-            } else productsMutableLiveData.setValue(null);
+                citiesListMutableLiveData.postValue(citiesArrayList);
+            } else citiesListMutableLiveData.setValue(null);
         });
-        return productsMutableLiveData;
+        return citiesListMutableLiveData;
     }
 }

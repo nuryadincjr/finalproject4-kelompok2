@@ -1,5 +1,6 @@
 package com.nuryadincjr.ebusantara.api;
 
+import static com.nuryadincjr.ebusantara.util.Constant.COLLECTION_SCHEDULE;
 import static java.lang.String.valueOf;
 
 import android.annotation.SuppressLint;
@@ -29,11 +30,11 @@ public class ScheduleRepository {
 
     public ScheduleRepository() {
         db = FirebaseFirestore.getInstance();
-        collection = db.collection("schedule");
+        collection = db.collection(COLLECTION_SCHEDULE);
     }
 
     @SuppressLint("SimpleDateFormat")
-    public MutableLiveData<ArrayList<ScheduleReference>> getCollectionsBuses(
+    public MutableLiveData<ArrayList<ScheduleReference>> getBus(
             String departureCity, String arrivalCity, Calendar calendar) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         MutableLiveData<ArrayList<ScheduleReference>> scheduleMutableLiveData = new MutableLiveData<>();
@@ -121,23 +122,5 @@ public class ScheduleRepository {
             } else scheduleMutableLiveData.setValue(null);
         });
         return scheduleMutableLiveData;
-    }
-
-    public MutableLiveData<ArrayList<Cities>> getCollectionCities(String document) {
-        ArrayList<Cities> Schedule = new ArrayList<>();
-        final MutableLiveData<ArrayList<Cities>> ScheduleMutableLiveData = new MutableLiveData<>();
-
-        CollectionReference collectionReference = db.collection(document);
-
-        collectionReference.get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()) {
-                for (QueryDocumentSnapshot  snapshot : task.getResult()) {
-                    Cities data = snapshot.toObject(Cities.class);
-                    Schedule.add(data);
-                }
-                ScheduleMutableLiveData.postValue(Schedule);
-            }else ScheduleMutableLiveData.setValue(null);
-        });
-        return ScheduleMutableLiveData;
     }
 }

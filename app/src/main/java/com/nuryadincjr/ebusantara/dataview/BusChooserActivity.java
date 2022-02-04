@@ -1,8 +1,12 @@
 package com.nuryadincjr.ebusantara.dataview;
 
+import static android.widget.SeekBar.OnSeekBarChangeListener;
 import static com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding.inflate;
+import static com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState.EXPANDED;
+import static com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState.HIDDEN;
 import static java.lang.Double.compare;
 import static java.lang.Double.parseDouble;
+import static java.lang.Integer.*;
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static java.util.Collections.sort;
@@ -17,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.SeekBar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +37,6 @@ import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.pojo.Cities;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.util.MainViewModel;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,6 +53,7 @@ public class BusChooserActivity extends AppCompatActivity
     private Calendar calendar;
     private String passengers;
     private SimpleDateFormat format;
+    private ArrayList<ScheduleReference> scheduleReferences;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("SimpleDateFormat")
@@ -65,6 +70,7 @@ public class BusChooserActivity extends AppCompatActivity
         passengers = getIntent().getStringExtra("passengers");
         calendar =  (Calendar)getIntent().getSerializableExtra("date");
         format = new SimpleDateFormat("EEE, d MMM yyyy");
+        scheduleReferences = new ArrayList<>();
 
         String displayPassengers = "Seat " +passengers;
         binding.tvSeats.setText(displayPassengers);
@@ -72,26 +78,23 @@ public class BusChooserActivity extends AppCompatActivity
         binding.tvArrival.setText(arrivalCity.getCity());
         binding.tvDate.setText(format.format(calendar.getTime()));
 
-        getData();
-
         binding.ivBackArrow.setOnClickListener(this);
-        binding.tvDeparture.setOnClickListener(this);
-        binding.tvArrival.setOnClickListener(this);
+        binding.llDeparture.setOnClickListener(this);
+        binding.llArrival.setOnClickListener(this);
         binding.tvSeats.setOnClickListener(this);
         binding.tvDate.setOnClickListener(this);
         binding.layoutSlidingUp.btnSelected.setOnClickListener(this);
         binding.layoutSlidingUp.btnCancel.setOnClickListener(this);
-
-
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sort,
                 android.R.layout.simple_spinner_dropdown_item);
         binding.tvFilters.setAdapter(adapter);
         binding.tvFilters.setOnItemSelectedListener(this);
 
+        binding.tvApply.setOnClickListener(v -> getData());
         binding.getRoot().setFadeOnClickListener(view ->
-                binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN));
+                binding.getRoot().setPanelState(HIDDEN));
 
-        binding.layoutSlidingUp.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        binding.layoutSlidingUp.seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 binding.layoutSlidingUp.tvPassenger.setText(valueOf(progress));
@@ -107,6 +110,57 @@ public class BusChooserActivity extends AppCompatActivity
 
             }
         });
+
+        if(savedInstanceState != null) {
+            onStateData(savedInstanceState);
+        }else {
+            getData();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelableArrayList("schedule", scheduleReferences);
+        super.onSaveInstanceState(outState);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void onStateData(Bundle savedInstanceState) {
+        scheduleReferences = savedInstanceState.getParcelableArrayList("schedule");
+        if(scheduleReferences!=null){
+            binding.rvBuses.setVisibility(View.VISIBLE);
+            binding.layoutError.linearLayout.setVisibility(View.GONE);
+
+            boolean isLowestPiece = binding.tvFilters.getSelectedItem().toString().equals("Lowest price");
+            boolean isHighestPiece = binding.tvFilters.getSelectedItem().toString().equals("Highest price");
+            boolean isEstimation = binding.tvFilters.getSelectedItem().toString().equals("Estimate time");
+
+            if(isLowestPiece){
+                sort(scheduleReferences, comparingDouble(o -> parseDouble(o.getBuses().getPrice())));
+            }else if(isHighestPiece){
+                sort(scheduleReferences, (o1, o2) ->
+                        compare(parseDouble(o2.getBuses().getPrice()),
+                                parseDouble(o1.getBuses().getPrice())));
+            }else if(isEstimation){
+                sort(scheduleReferences, comparingDouble(this::getEstimatedTimes));
+            }else {
+                sort(scheduleReferences, (o1, o2) ->
+                        o2.getReviewers().getRatingsCount()
+                                .compareTo(o1.getReviewers().getRatingsCount()));
+            }
+
+            String seat = binding.tvSeats.getText().toString().replace("Seat ", "");
+            binding.rvBuses.showShimmerAdapter();
+            ScheduleAdapter scheduleAdapter = new ScheduleAdapter(scheduleReferences, parseInt(seat));
+            binding.rvBuses.setLayoutManager(new LinearLayoutManager(this));
+            binding.rvBuses.setAdapter(scheduleAdapter);
+            onListener(scheduleAdapter, scheduleReferences);
+        }else {
+            binding.rvBuses.setVisibility(View.GONE);
+            binding.layoutError.textView.setText("Sorry!");
+            binding.layoutError.tvMassage.setText("The destination location you selected was not found");
+            binding.layoutError.linearLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -115,6 +169,9 @@ public class BusChooserActivity extends AppCompatActivity
         mainViewModel.getBuses(departureCity.getCity(), arrivalCity.getCity(),
                 calendar).observe(this, schedules -> {
             if(schedules!=null){
+
+                scheduleReferences = schedules;
+
                 binding.rvBuses.setVisibility(View.VISIBLE);
                 binding.layoutError.linearLayout.setVisibility(View.GONE);
 
@@ -137,7 +194,8 @@ public class BusChooserActivity extends AppCompatActivity
                 }
 
                 String seat = binding.tvSeats.getText().toString().replace("Seat ", "");
-                ScheduleAdapter scheduleAdapter = new ScheduleAdapter(schedules, Integer.parseInt(seat));
+                binding.rvBuses.showShimmerAdapter();
+                ScheduleAdapter scheduleAdapter = new ScheduleAdapter(schedules, parseInt(seat));
                 binding.rvBuses.setLayoutManager(new LinearLayoutManager(this));
                 binding.rvBuses.setAdapter(scheduleAdapter);
                 onListener(scheduleAdapter, schedules);
@@ -172,7 +230,7 @@ public class BusChooserActivity extends AppCompatActivity
         long hours = TimeUnit.MILLISECONDS.toHours(millisTime);
         String estimatedTime = format("%s%d", hours, minutes);
 
-       return Integer.parseInt(estimatedTime);
+       return parseInt(estimatedTime);
     }
 
     private void onListener(ScheduleAdapter scheduleAdapter, ArrayList<ScheduleReference> schedules) {
@@ -203,25 +261,27 @@ public class BusChooserActivity extends AppCompatActivity
             case R.id.ivBackArrow:
                 onBackPressed();
                 break;
-            case R.id.tvDeparture:
+            case R.id.llDeparture:
+                intent.putExtra("hint", binding.tvDeparture.getText().toString());
                 startActivityForResult(intent, 1);
                 break;
-            case R.id.tvArrival:
+            case R.id.llArrival:
+                intent.putExtra("hint", binding.tvArrival.getText().toString());
                 startActivityForResult(intent, 2);
                 break;
             case R.id.tvDate:
                 startActivityForResult(new Intent(this, DatePickerActivity.class), 3);
                 break;
             case R.id.tvSeats:
-                binding.slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                binding.slidingLayout.setPanelState(EXPANDED);
                 break;
             case R.id.btnSelected:
                 String passenger = "Seat "+binding.layoutSlidingUp.tvPassenger.getText();
                 binding.tvSeats.setText(passenger);
-                binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+                binding.getRoot().setPanelState(HIDDEN);
                 break;
             case R.id.btnCancel:
-                binding.getRoot().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+                binding.getRoot().setPanelState(HIDDEN);
                 break;
         }
     }

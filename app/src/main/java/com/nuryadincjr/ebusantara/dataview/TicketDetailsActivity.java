@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -70,8 +71,12 @@ public class TicketDetailsActivity extends AppCompatActivity {
     @SuppressLint("InflateParams")
     public void onShowPopup(View view) {
         View inflatedView = getLayoutInflater().inflate(R.layout.layout_qrcode, null);
-        ImageView imageView = inflatedView.findViewById(R.id.ivQrCode);
-        imageView.setImageBitmap(getQrCode(transactions.getBookNo()));
+        ImageView imageQr = inflatedView.findViewById(R.id.ivQrCode);
+        TextView  titleQr = inflatedView.findViewById(R.id.tvTitle);
+        String title = "Book Number";
+
+        titleQr.setText(title);
+        imageQr.setImageBitmap(getQrCode(transactions.getBookNo()));
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         builder.setView(inflatedView);
         builder.show();

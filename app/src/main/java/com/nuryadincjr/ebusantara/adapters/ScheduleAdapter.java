@@ -116,10 +116,10 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .get().addOnCompleteListener(seatTask -> {
                 if (seatTask.isSuccessful()) {
                     Seats seatsList = seatTask.getResult().toObject(Seats.class);
-                    List<Boolean> seatsA = seatsList.getA();
-                    List<Boolean> seatsB = seatsList.getB();
-                    List<Boolean> seatsC = seatsList.getC();
-                    List<Boolean> seatsD = seatsList.getD();
+                    List<Boolean> seatsA = seatsList.getSeatsA();
+                    List<Boolean> seatsB = seatsList.getSeatsB();
+                    List<Boolean> seatsC = seatsList.getSeatsC();
+                    List<Boolean> seatsD = seatsList.getSeatsD();
                     Seats seats = new Seats();
 
                     int counter = 0;
@@ -129,10 +129,10 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         counter = getCounter(seatsC, counter);
                         counter = getCounter(seatsD, counter);
 
-                        seats.setA(seatsA);
-                        seats.setB(seatsB);
-                        seats.setC(seatsC);
-                        seats.setD(seatsD);
+                        seats.setSeatsA(seatsA);
+                        seats.setSeatsB(seatsB);
+                        seats.setSeatsC(seatsC);
+                        seats.setSeatsD(seatsD);
                         dataToView.getBuses().setSeats(seats);
                     }
 

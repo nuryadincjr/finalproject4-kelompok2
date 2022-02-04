@@ -12,6 +12,11 @@ public class ReviewersReference implements Parcelable {
     public ReviewersReference() {
     }
 
+    public ReviewersReference(List<Reviewers> reviewers, String ratingsCount) {
+        this.reviewers = reviewers;
+        this.ratingsCount = ratingsCount;
+    }
+
     protected ReviewersReference(Parcel in) {
         reviewers = in.createTypedArrayList(Reviewers.CREATOR);
         ratingsCount = in.readString();
@@ -53,11 +58,6 @@ public class ReviewersReference implements Parcelable {
     }
 
     public void setRatingsCount(String ratingsCount) {
-        this.ratingsCount = ratingsCount;
-    }
-
-    public ReviewersReference(List<Reviewers> reviewers, String ratingsCount) {
-        this.reviewers = reviewers;
         this.ratingsCount = ratingsCount;
     }
 }
