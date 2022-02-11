@@ -120,71 +120,66 @@
                             tools:text="Cianjur" />
                     </LinearLayout>
 
-
                 </LinearLayout>
 
-                <HorizontalScrollView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingBottom="5dp">
+                    android:layout_height="40dp"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingBottom="8dp"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tvDate"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/selector_filter"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="Fri, 23 Jul 2019" />
 
-                        <TextView
-                            android:id="@+id/tvDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/m20"
-                            android:layout_marginEnd="5dp"
-                            android:background="@drawable/selector_filter"
-                            android:fontFamily="@font/lato"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            tools:ignore="TextContrastCheck"
-                            tools:text="Fri, 23 Jul 2019" />
+                    <TextView
+                        android:id="@+id/tvSeats"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/selector_filter"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="Seat 2" />
 
-                        <TextView
-                            android:id="@+id/tvSeats"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="5dp"
-                            android:background="@drawable/selector_filter"
-                            android:fontFamily="@font/lato"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            tools:ignore="TextContrastCheck"
-                            tools:text="Seat 2" />
+                    <Spinner
+                        android:id="@+id/tvFilters"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/selector_filter"
+                        android:fontFamily="@font/lato_bold"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/str_sort_by_best_experience"
+                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-                        <Spinner
-                            android:id="@+id/tvFilters"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="5dp"
-                            android:background="@drawable/selector_filter"
-                            android:fontFamily="@font/lato_bold"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            android:text="@string/str_sort_by_best_experience"
-                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                    <TextView
+                        android:id="@+id/tvApply"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_btn"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Apply"
+                        android:textColor="@color/white"
+                        tools:ignore="TextContrastCheck" />
 
-                        <TextView
-                            android:id="@+id/tvApply"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="20dp"
-                            android:background="@drawable/selector_btn"
-                            android:fontFamily="@font/lato"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            android:text="Apply"
-                            android:textColor="@color/white"
-                            tools:ignore="TextContrastCheck" />
-
-                    </LinearLayout>
-                </HorizontalScrollView>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -197,7 +192,7 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 

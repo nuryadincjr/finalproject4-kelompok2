@@ -88,7 +88,6 @@ public class RetailPaymentVerificationActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-
     }
 
     @Override

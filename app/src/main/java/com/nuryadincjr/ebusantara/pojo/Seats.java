@@ -1,10 +1,7 @@
 package com.nuryadincjr.ebusantara.pojo;
 
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import androidx.annotation.RequiresApi;
 
 import java.util.List;
 
@@ -32,7 +29,6 @@ public class Seats implements Parcelable {
         seatsD = (List<Boolean>) in.readValue(getClass().getClassLoader());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(seatsA);

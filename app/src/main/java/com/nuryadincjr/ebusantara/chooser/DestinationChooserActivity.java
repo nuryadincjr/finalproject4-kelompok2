@@ -81,9 +81,8 @@ public class DestinationChooserActivity extends AppCompatActivity {
         productsAdapter.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Intent intent = new Intent();
-                intent.putExtra("city", citiesList.get(position));
-                setResult(RESULT_OK, intent);
+                setResult(RESULT_OK, new Intent()
+                        .putExtra("city", citiesList.get(position)));
                 onBackPressed();
             }
 

@@ -1,14 +1,19 @@
 package com.nuryadincjr.ebusantara.fragment;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static com.nuryadincjr.ebusantara.util.Constant.getUsers;
 import static com.nuryadincjr.ebusantara.util.LocalPreference.getInstance;
 import static java.lang.String.valueOf;
+import static java.util.Collections.sort;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +44,6 @@ import java.util.ArrayList;
 
 public class TicketsFragment extends Fragment {
     private FragmentTicketsBinding binding;
-    private Users users ;
 
     public TicketsFragment() {
         // Required empty public constructor
@@ -54,7 +58,7 @@ public class TicketsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentTicketsBinding.inflate(inflater, container, false);
-        getUsers();
+        Users users = getUsers(getContext());
 
         ScheduleReference schedule = getArguments().getParcelable("schedule");
         Transactions transactions = getArguments().getParcelable("transactions");
@@ -67,50 +71,44 @@ public class TicketsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void getUsers() {
-        SharedPreferences preference = getInstance(getContext()).getPreferences();
-        String uid = preference.getString("uid", "");
-        String name = preference.getString("name", "");
-        String email = preference.getString("email", "");
-        String phone = preference.getString("phone", "");
-        String photo = preference.getString("photo", "");
-        users = new Users(uid, name, phone, email, photo);
-    }
-
     private void getData(Users users) {
         MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mainViewModel.getTransactions(users.getUid()).observe(getViewLifecycleOwner(), ticket -> {
-            TicketsAdapter citiesAdapter = new TicketsAdapter(ticket);
             if(ticket != null){
-                binding.rvTickets.setVisibility(View.VISIBLE);
-                binding.layoutError.linearLayout.setVisibility(View.GONE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    sort(ticket, (o1, o2) -> o2.getTransactions().getDate()
+                            .compareTo(o1.getTransactions().getDate()));
+                }
+
+                TicketsAdapter citiesAdapter = new TicketsAdapter(ticket);
+                binding.rvTickets.setVisibility(VISIBLE);
+                binding.layoutError.linearLayout.setVisibility(GONE);
                 binding.rvTickets.showShimmerAdapter();
                 binding.rvTickets.setLayoutManager(new LinearLayoutManager(getContext()));
                 binding.rvTickets.setAdapter(citiesAdapter);
-            }else {
-                binding.rvTickets.setVisibility(View.GONE);
-                binding.layoutError.linearLayout.setVisibility(View.VISIBLE);
-            }
 
-            onListener(citiesAdapter, ticket, users);
+                onListener(citiesAdapter, ticket, users);
+            }else {
+                binding.rvTickets.setVisibility(GONE);
+                binding.layoutError.linearLayout.setVisibility(VISIBLE);
+            }
         });
     }
 
     @SuppressLint("InflateParams")
     public void getPopup(ScheduleReference schedule, Transactions transactions, Users users) {
-
-        View inflatedView = getLayoutInflater().inflate(R.layout.layout_rating, null);
-        TextView poName = inflatedView.findViewById(R.id.tvPOName);
-        TextView busNo = inflatedView.findViewById(R.id.tvBusNo);
-        TextView departureDate = inflatedView.findViewById(R.id.tvDepartureDate);
-        TextView status = inflatedView.findViewById(R.id.tvStatus);
-        TextView maxLine = inflatedView.findViewById(R.id.tvMaxLine);
-        EditText content = inflatedView.findViewById(R.id.etContent);
-        CheckedTextView star1 = inflatedView.findViewById(R.id.ctvStar1);
-        CheckedTextView star2 = inflatedView.findViewById(R.id.ctvStar2);
-        CheckedTextView star3 = inflatedView.findViewById(R.id.ctvStar3);
-        CheckedTextView star4 = inflatedView.findViewById(R.id.ctvStar4);
-        CheckedTextView star5 = inflatedView.findViewById(R.id.ctvStar5);
+        View layoutRating = getLayoutInflater().inflate(R.layout.layout_rating, null);
+        TextView poName = layoutRating.findViewById(R.id.tvPOName);
+        TextView busNo = layoutRating.findViewById(R.id.tvBusNo);
+        TextView departureDate = layoutRating.findViewById(R.id.tvDepartureDate);
+        TextView status = layoutRating.findViewById(R.id.tvStatus);
+        TextView maxLine = layoutRating.findViewById(R.id.tvMaxLine);
+        EditText content = layoutRating.findViewById(R.id.etContent);
+        CheckedTextView star1 = layoutRating.findViewById(R.id.ctvStar1);
+        CheckedTextView star2 = layoutRating.findViewById(R.id.ctvStar2);
+        CheckedTextView star3 = layoutRating.findViewById(R.id.ctvStar3);
+        CheckedTextView star4 = layoutRating.findViewById(R.id.ctvStar4);
+        CheckedTextView star5 = layoutRating.findViewById(R.id.ctvStar5);
         String id = schedule.getBuses().getId();
 
         poName.setText(schedule.getBuses().getPoName());
@@ -121,7 +119,7 @@ public class TicketsFragment extends Fragment {
         ReviewsRepository repository = new ReviewsRepository();
         repository.getReviewers(id, users).observe(getViewLifecycleOwner(), reviewers -> {
             if(reviewers==null) {
-                onShowPopup(transactions, users, inflatedView, maxLine,
+                onShowPopup(transactions, users, layoutRating, maxLine,
                         content, star1, star2, star3, star4, star5, id, repository);
             }
 

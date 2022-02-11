@@ -1,8 +1,9 @@
 package com.nuryadincjr.ebusantara.adapters;
 
+import static com.nuryadincjr.ebusantara.util.Constant.getTime;
+import static com.nuryadincjr.ebusantara.util.Constant.toUpperCase;
 import static java.lang.String.valueOf;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ItemDestinationBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
+import com.nuryadincjr.ebusantara.pojo.Buses;
+import com.nuryadincjr.ebusantara.pojo.Cities;
 import com.nuryadincjr.ebusantara.pojo.Reviewers;
+import com.nuryadincjr.ebusantara.pojo.ReviewersReference;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Seats;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -70,45 +71,32 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             this.db = FirebaseFirestore.getInstance();
         }
 
+        public void setDataToView(ScheduleReference schedule) {
+            Buses buses = schedule.getBuses();
+            ReviewersReference reviewers = schedule.getReviewers();
+            Cities departureCity = schedule.getDeparture();
+            Cities arrivalCity = schedule.getArrival();
+            String piece = "Rp"+buses.getPrice();
 
-        public void setDataToView(ScheduleReference dataToView) {
-            String piece = "Rp"+dataToView.getBuses().getPrice();
-
-            binding.tvPOName.setText(dataToView.getBuses().getPoName());
-            binding.tvBusNo.setText(dataToView.getBuses().getBusNo());
+            binding.tvPOName.setText(buses.getPoName());
+            binding.tvBusNo.setText(buses.getBusNo());
             binding.tvPiece.setText(piece);
-            binding.tvDeparture.setText(dataToView.getDeparture().getCity());
-            binding.tvArrival.setText(dataToView.getArrival().getCity());
-            binding.tvTerminalDeparture.setText(dataToView.getDeparture().getTerminal());
-            binding.tvTerminalArrival.setText(dataToView.getArrival().getTerminal());
+            binding.tvDeparture.setText(toUpperCase(departureCity.getCity()));
+            binding.tvArrival.setText(toUpperCase(arrivalCity.getCity()));
+            binding.tvTerminalDeparture.setText(toUpperCase(departureCity.getTerminal()));
+            binding.tvTerminalArrival.setText(toUpperCase(arrivalCity.getTerminal()));
 
-            List<Reviewers> reviewersList = dataToView.getReviewers().getReviewers();
+            List<Reviewers> reviewersList = reviewers.getReviewers();
             binding.tvReviews.setText(valueOf(reviewersList.size()));
-            binding.tvRatings.setText(dataToView.getReviewers().getRatingsCount());
+            binding.tvRatings.setText(reviewers.getRatingsCount());
+            binding.tvDepartureTime.setText(getTime(schedule).get("departureTime"));
+            binding.tvArrivalTime.setText(getTime(schedule).get("arrivalTime"));
 
-            getTime(dataToView);
-            getSeats(dataToView);
+            getSeats(schedule);
 
             binding.getRoot().setOnLongClickListener(this);
             binding.getRoot().setOnClickListener(this);
             binding.btnBookNow.setOnClickListener(this);
-        }
-
-        @SuppressLint("SimpleDateFormat")
-        private void getTime(ScheduleReference dataToView) {
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
-
-            Date departureDate = new Date();
-            Date arrivalDate = new Date();
-            try {
-                departureDate = format.parse(dataToView.getDepartureTime());
-                arrivalDate = format.parse(dataToView.getArrivalTime());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            binding.tvDepartureTime.setText(formatTime.format(departureDate));
-            binding.tvArrivalTime.setText(formatTime.format(arrivalDate));
         }
 
         private void getSeats(ScheduleReference dataToView) {
@@ -123,7 +111,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     Seats seats = new Seats();
 
                     int counter = 0;
-                    if (seatsA.size() != 0 || seatsB.size() != 0 || seatsC.size() != 0 || seatsD.size() != 0) {
+                    if (seatsA.size() != 0 || seatsB.size() != 0 ||
+                            seatsC.size() != 0 || seatsD.size() != 0) {
                         counter = getCounter(seatsA, counter);
                         counter = getCounter(seatsB, counter);
                         counter = getCounter(seatsC, counter);
@@ -164,15 +153,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         binding.btnBookNow.setText(titleButton);
                     }
                 }
-
             });
         }
 
-        private int getCounter(List<Boolean> booleanA, int counter) {
-            for (int i = 0; i < booleanA.size(); i++) {
-                boolean bool = booleanA.get(i);
-                booleanA.set(i, bool);
-                if(bool) counter += 1;
+        private int getCounter(List<Boolean> seatsList, int counter) {
+            for (int i = 0; i < seatsList.size(); i++) {
+                boolean isSeats = seatsList.get(i);
+                seatsList.set(i, isSeats);
+                if(isSeats) counter += 1;
             }
             return counter;
         }

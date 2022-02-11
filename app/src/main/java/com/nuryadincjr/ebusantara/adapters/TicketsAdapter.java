@@ -1,6 +1,8 @@
 package com.nuryadincjr.ebusantara.adapters;
 
-import android.annotation.SuppressLint;
+import static com.nuryadincjr.ebusantara.util.Constant.getTime;
+import static com.nuryadincjr.ebusantara.util.Constant.toUpperCase;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.nuryadincjr.ebusantara.databinding.ItemOrderBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
+import com.nuryadincjr.ebusantara.pojo.Buses;
+import com.nuryadincjr.ebusantara.pojo.Cities;
+import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
+import com.nuryadincjr.ebusantara.pojo.Transactions;
 import com.nuryadincjr.ebusantara.pojo.TransactionsReference;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TicketsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -64,34 +67,24 @@ public class TicketsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             this.db = FirebaseFirestore.getInstance();
         }
 
-        public void setDataToView(TransactionsReference dataToView) {
-            String bookNo = "Book No. "+dataToView.getTransactions().getBookNo();
+        public void setDataToView(TransactionsReference transactionsReference) {
+            Transactions transactions = transactionsReference.getTransactions();
+            ScheduleReference scheduleReference = transactionsReference.getReference();
+            Buses buses = scheduleReference.getBuses();
+            Cities departureCity = scheduleReference.getDeparture();
+            String bookNo = "Book No. "+transactionsReference.getTransactions().getBookNo();
 
-            binding.tvDate.setText(dataToView.getTransactions().getDate());
+            binding.tvDate.setText(transactions.getDate());
             binding.tvBookNo.setText(bookNo);
-            binding.tvStatus.setText(dataToView.getTransactions().getStatus());
-            binding.tvPOName.setText(dataToView.getReference().getBuses().getPoName());
-            binding.tvBusNo.setText(dataToView.getReference().getBuses().getBusNo());
-            binding.tvDeparture.setText(dataToView.getReference().getDeparture().getCity());
-            binding.tvTerminalDeparture.setText(dataToView.getReference().getDeparture().getTerminal());
+            binding.tvStatus.setText(toUpperCase(transactions.getStatus()));
+            binding.tvPOName.setText(toUpperCase(buses.getPoName()));
+            binding.tvBusNo.setText(buses.getBusNo());
+            binding.tvDeparture.setText(toUpperCase(departureCity.getCity()));
+            binding.tvTerminalDeparture.setText(toUpperCase(departureCity.getTerminal()));
+            binding.tvDepartureTime.setText(getTime(scheduleReference).get("departureTime"));
 
-            getTime(dataToView);
             binding.getRoot().setOnClickListener(this);
             binding.getRoot().setOnLongClickListener(this);
-        }
-
-        @SuppressLint("SimpleDateFormat")
-        private void getTime(TransactionsReference dataToView) {
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
-
-            Date departureDate = new Date();
-            try {
-                departureDate = format.parse(dataToView.getReference().getDepartureTime());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            binding.tvDepartureTime.setText(formatTime.format(departureDate));
         }
 
         @Override

@@ -1,5 +1,7 @@
 package com.nuryadincjr.ebusantara.login;
 
+import static com.google.android.material.snackbar.Snackbar.LENGTH_SHORT;
+import static com.google.android.material.snackbar.Snackbar.make;
 import static com.nuryadincjr.ebusantara.databinding.ActivitySetupBinding.inflate;
 import static com.nuryadincjr.ebusantara.util.LocalPreference.getInstance;
 
@@ -9,7 +11,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.api.UsersRepository;
 import com.nuryadincjr.ebusantara.databinding.ActivitySetupBinding;
@@ -56,16 +57,16 @@ public class SetupActivity extends AppCompatActivity {
                 finishAffinity();
             }).addOnFailureListener(e -> {
                 dialog.dismiss();
-                Snackbar.make(binding.getRoot(),
+                make(binding.getRoot(),
                         "Error adding document.",
-                        Snackbar.LENGTH_SHORT).show();
+                        LENGTH_SHORT).show();
             });
 
         }else{
             dialog.dismiss();
-            Snackbar.make(binding.getRoot(),
+            make(binding.getRoot(),
                     "Please enter your phone number",
-                    Snackbar.LENGTH_SHORT).show();
+                    LENGTH_SHORT).show();
         }
     }
 }

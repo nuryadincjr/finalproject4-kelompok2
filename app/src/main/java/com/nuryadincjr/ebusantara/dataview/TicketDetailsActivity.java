@@ -1,6 +1,13 @@
 package com.nuryadincjr.ebusantara.dataview;
 
+import static com.nuryadincjr.ebusantara.R.id.ivQrCode;
+import static com.nuryadincjr.ebusantara.R.id.tvTitle;
+import static com.nuryadincjr.ebusantara.R.layout.activity_ticket_details;
+import static com.nuryadincjr.ebusantara.R.layout.layout_qrcode;
+import static com.nuryadincjr.ebusantara.util.Constant.getEstimatedTimes;
 import static com.nuryadincjr.ebusantara.util.Constant.getQrCode;
+import static com.nuryadincjr.ebusantara.util.Constant.getTime;
+import static com.nuryadincjr.ebusantara.util.Constant.toUpperCase;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -11,7 +18,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.nuryadincjr.ebusantara.R;
+import com.nuryadincjr.ebusantara.api.ReviewsRepository;
 import com.nuryadincjr.ebusantara.databinding.ActivityTicketDetailsBinding;
 import com.nuryadincjr.ebusantara.pojo.Buses;
 import com.nuryadincjr.ebusantara.pojo.Cities;
@@ -20,20 +27,16 @@ import com.nuryadincjr.ebusantara.pojo.Transactions;
 import com.nuryadincjr.ebusantara.pojo.TransactionsReference;
 import com.nuryadincjr.ebusantara.pojo.Users;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
 public class TicketDetailsActivity extends AppCompatActivity {
     private ActivityTicketDetailsBinding binding;
     private ScheduleReference schedule;
     private Transactions transactions;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ticket_details);
+        setContentView(activity_ticket_details);
 
         binding = ActivityTicketDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -52,27 +55,41 @@ public class TicketDetailsActivity extends AppCompatActivity {
         binding.tvName.setText(users.getName());
         binding.tvPhoneNumber.setText(users.getPhoneNumber());
         binding.tvSeats.setText(String.valueOf(transactions.getSeatNo().size()));
-        binding.tvStatus.setText(transactions.getStatus());
-        binding.tvPOName.setText(buses.getPoName());
+        binding.tvStatus.setText(toUpperCase(transactions.getStatus()));
+        binding.tvPOName.setText(toUpperCase(buses.getPoName()));
         binding.tvBusNo.setText(buses.getBusNo());
-        binding.tvDeparture.setText(departureCity.getCity());
-        binding.tvTerminalDeparture.setText(departureCity.getTerminal());
-        binding.tvArrival.setText(arrivalCity.getCity());
-        binding.tvTerminalArrival.setText(arrivalCity.getTerminal());
+        binding.tvDeparture.setText(toUpperCase(departureCity.getCity()));
+        binding.tvTerminalDeparture.setText(toUpperCase(departureCity.getTerminal()));
+        binding.tvArrival.setText(toUpperCase(arrivalCity.getCity()));
+        binding.tvTerminalArrival.setText(toUpperCase(arrivalCity.getTerminal()));
         binding.tvSeatsNo.setText(transactions.getSeatNo().toString());
         binding.tvTotal.setText(transactions.getTotalPayment());
         binding.ivQrCode.setOnClickListener(this::onShowPopup);
+        binding.tvEstimation.setText(getEstimatedTimes(schedule));
+        binding.tvDepartureDate.setText(getTime(schedule).get("departureDate"));
+        binding.tvArrivalDate.setText(getTime(schedule).get("arrivalDate"));
+        binding.tvDepartureTime.setText(getTime(schedule).get("departureTime"));
+        binding.tvArrivalTime.setText(getTime(schedule).get("arrivalTime"));
 
-        getTime();
-        getEstimatedTimes();
+        getUserRating(users);
         binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
     }
 
-    @SuppressLint("InflateParams")
+    private void getUserRating(Users users) {
+        String id = schedule.getBuses().getId();
+        ReviewsRepository repository = new ReviewsRepository();
+        repository.getReviewers(id, users).observe(this, reviewers -> {
+            if(reviewers!=null) {
+                String reviewer = reviewers.get(0).getRatings()+"/5";
+                binding.tvRatings.setText(reviewer);
+            }
+        });
+    }
+
     public void onShowPopup(View view) {
-        View inflatedView = getLayoutInflater().inflate(R.layout.layout_qrcode, null);
-        ImageView imageQr = inflatedView.findViewById(R.id.ivQrCode);
-        TextView  titleQr = inflatedView.findViewById(R.id.tvTitle);
+        View inflatedView = getLayoutInflater().inflate(layout_qrcode, null);
+        ImageView imageQr = inflatedView.findViewById(ivQrCode);
+        TextView  titleQr = inflatedView.findViewById(tvTitle);
         String title = "Book Number";
 
         titleQr.setText(title);
@@ -80,55 +97,5 @@ public class TicketDetailsActivity extends AppCompatActivity {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         builder.setView(inflatedView);
         builder.show();
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private void getTime() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
-        SimpleDateFormat formatDate = new SimpleDateFormat("d MMM yyyy");
-
-        Date departureDate = new Date();
-        Date arrivalDate = new Date();
-        try {
-            departureDate = format.parse(schedule.getDepartureTime());
-            arrivalDate = format.parse(schedule.getArrivalTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        binding.tvDepartureDate.setText(formatDate.format(departureDate));
-        binding.tvArrivalDate.setText(formatDate.format(arrivalDate));
-
-        binding.tvDepartureTime.setText(formatTime.format(departureDate));
-        binding.tvArrivalTime.setText(formatTime.format(arrivalDate));
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private void getEstimatedTimes() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-        Date departureDate = new Date();
-        Date arrivalDate = new Date();
-        try {
-            departureDate = format.parse(schedule.getDepartureTime());
-            arrivalDate = format.parse(schedule.getArrivalTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        long millisTime = arrivalDate.getTime() - departureDate.getTime();
-        if(departureDate.getTime() > arrivalDate.getTime()){
-            millisTime = departureDate.getTime() - arrivalDate.getTime();
-        }
-
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisTime) % 60;
-        long hours = TimeUnit.MILLISECONDS.toHours(millisTime);
-        String estimatedTime;
-        if (hours > 0) {
-            estimatedTime = hours+"h"+minutes+"m";
-        } else estimatedTime = minutes+"m";
-
-        binding.tvEstimation.setText(estimatedTime);
     }
 }

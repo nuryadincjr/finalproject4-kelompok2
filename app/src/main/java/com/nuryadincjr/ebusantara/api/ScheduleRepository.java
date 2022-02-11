@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.nuryadincjr.ebusantara.pojo.Buses;
@@ -18,109 +17,124 @@ import com.nuryadincjr.ebusantara.pojo.ReviewersReference;
 import com.nuryadincjr.ebusantara.pojo.Schedule;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class ScheduleRepository {
     private final FirebaseFirestore db;
     private final CollectionReference collection;
+    private ArrayList<ScheduleReference> scheduleReferenceArrayList;
+    private MutableLiveData<ArrayList<ScheduleReference>> scheduleMutableLiveData;
 
     public ScheduleRepository() {
         db = FirebaseFirestore.getInstance();
         collection = db.collection(COLLECTION_SCHEDULE);
     }
 
+    public MutableLiveData<Schedule> getSchedule(String reference) {
+        MutableLiveData<Schedule> listMutableLiveData = new MutableLiveData<>();
+        db.document(reference)
+                .get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Schedule schedule = task.getResult().toObject(Schedule.class);
+                listMutableLiveData.setValue(schedule);
+            } else listMutableLiveData.setValue(null);
+        });
+        return listMutableLiveData;
+    }
+
     @SuppressLint("SimpleDateFormat")
-    public MutableLiveData<ArrayList<ScheduleReference>> getBus(
-            String departureCity, String arrivalCity, Calendar calendar) {
+    public MutableLiveData<ArrayList<ScheduleReference>> getSchedule(
+            Cities departureCity, Cities arrivalCity, Calendar calendar) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        MutableLiveData<ArrayList<ScheduleReference>> scheduleMutableLiveData = new MutableLiveData<>();
-        ArrayList<ScheduleReference> scheduleReferences = new ArrayList<>();
+        SimpleDateFormat formatTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        scheduleReferenceArrayList = new ArrayList<>();
+        scheduleMutableLiveData = new MutableLiveData<>();
 
         String date = format.format(calendar.getTime());
-        collection
+        collection.orderBy("departureTime")
                 .whereGreaterThanOrEqualTo("departureTime", date)
                 .whereLessThanOrEqualTo("departureTime",date+"~")
                 .get().addOnCompleteListener(task -> {
             if(task.isSuccessful() && task.getResult().size()!=0) {
                 for (QueryDocumentSnapshot  snapshot : task.getResult()) {
-                    Schedule data = snapshot.toObject(Schedule.class);
-                    db.document(data.getDeparture().getPath())
-                            .get().addOnCompleteListener(departureTask -> {
-                       if(departureTask.isSuccessful()){
-                           Cities departureCities = departureTask.getResult().toObject(Cities.class);
-                           if(departureCities != null){
-                               if(departureCities.getCity().equals(departureCity)){
-                                   db.document(data.getArrival().getPath())
-                                           .get().addOnCompleteListener(arrivalTask -> {
-                                       if(arrivalTask.isSuccessful()){
-                                           Cities arrivalCities = arrivalTask.getResult().toObject(Cities.class);
-                                           if(arrivalCities != null){
-                                               if(arrivalCities.getCity().equals(arrivalCity)){
-                                                   db.document(data.getBus().getPath())
-                                                           .get().addOnCompleteListener(busTask -> {
-                                                      if(busTask.isSuccessful()){
-                                                          Buses buses = busTask.getResult().toObject(Buses.class);
-                                                          ScheduleReference scheduleReference = new ScheduleReference();
-                                                          if(buses != null){
-                                                              scheduleReference.setId(data.getId());
-                                                              scheduleReference.setBuses(buses);
-                                                              scheduleReference.setDeparture(departureCities);
-                                                              scheduleReference.setArrival(arrivalCities);
-                                                              scheduleReference.setDepartureTime(data.getDepartureTime());
-                                                              scheduleReference.setArrivalTime(data.getArrivalTime());
+                    Schedule schedule = snapshot.toObject(Schedule.class);
 
-                                                              db.collection("reviews")
-                                                                      .document(buses.getId()).get().addOnCompleteListener(reviewsTask -> {
-                                                                  if (reviewsTask.isSuccessful()) {
-                                                                      DocumentSnapshot document = reviewsTask.getResult();
-                                                                      List<Map<String, Object>> reviewer = (List<Map<String, Object>>) document.get("reviewer");
-                                                                      double ratings = 0;
-                                                                      List<Reviewers> reviewersList = new ArrayList<>();
-                                                                      if(reviewer!=null){
-                                                                          for (Map<String, Object> map : reviewer) {
-                                                                              Reviewers reviewers = new Reviewers(
-                                                                                      valueOf(map.get("uid")),
-                                                                                      valueOf(map.get("date")),
-                                                                                      valueOf(map.get("content")),
-                                                                                      valueOf(map.get("ratings")));
+                    Date date1 = new Date();
+                    Date date2 = new Date();
+                    try {
+                        date2 = formatTime.parse(schedule.getDepartureTime());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
 
-                                                                              ratings += Double.parseDouble(reviewers.getRatings());
-
-                                                                              reviewersList.add(reviewers);
-                                                                          }
-                                                                          ratings /= reviewer.size();
-                                                                      }
-
-                                                                      if(valueOf(ratings).equals("NaN")) ratings = 0.0;
-                                                                      String displayRating = ratings +"/5";
-
-                                                                      ReviewersReference reviewersReference = new ReviewersReference();
-                                                                      reviewersReference.setRatingsCount(displayRating);
-                                                                      reviewersReference.setReviewers(reviewersList);
-                                                                      scheduleReference.setReviewers(reviewersReference);
-
-                                                                  }
-                                                                  scheduleReferences.add(scheduleReference);
-                                                                  scheduleMutableLiveData.postValue(scheduleReferences);
-                                                              });
-                                                          }
-                                                      }
-                                                   });
-                                               }
-                                           }
-                                       }
-                                   });
-                               }
-                           }
-                       }
-                    });
+                    if(date1.compareTo(date2) <= 0) {
+                        getDepartureCity(departureCity.getCity(),
+                                arrivalCity.getCity(),  schedule);
+                    } else scheduleMutableLiveData.setValue(null);
                 }
             } else scheduleMutableLiveData.setValue(null);
         });
         return scheduleMutableLiveData;
+    }
+
+    private void getDepartureCity(String departureCity, String arrivalCity, Schedule schedule) {
+        new CitiesRepository().getCity(schedule.getDeparture().getPath())
+                .observeForever(departureCities -> {
+                    if(departureCities != null && departureCities.getCity().equals(departureCity)){
+                        getArrivalCity(arrivalCity, schedule, departureCities);
+                    }else {
+                        scheduleMutableLiveData.postValue(null);
+                    }
+                });
+    }
+
+    private void getArrivalCity(String arrivalCity, Schedule schedule, Cities departureCities) {
+        new CitiesRepository().getCity(schedule.getArrival().getPath())
+                .observeForever(arrivalCities -> {
+                    if(arrivalCities != null && arrivalCities.getCity().equals(arrivalCity)){
+                        getBuses(schedule, departureCities, arrivalCities);
+                    }else {
+                        scheduleMutableLiveData.postValue(null);
+                    }
+                });
+    }
+
+    private void getBuses(Schedule schedule, Cities departureCities, Cities arrivalCities) {
+        new BusesRepository().getBuses(schedule.getBus().getPath()).observeForever(buses ->{
+            ScheduleReference scheduleReference = new ScheduleReference();
+            if(buses != null){
+                scheduleReference.setId(schedule.getId());
+                scheduleReference.setBuses(buses);
+                scheduleReference.setDeparture(departureCities);
+                scheduleReference.setArrival(arrivalCities);
+                scheduleReference.setDepartureTime(schedule.getDepartureTime());
+                scheduleReference.setArrivalTime(schedule.getArrivalTime());
+
+                getReviews(buses, scheduleReference);
+            }
+        });
+    }
+
+    private void getReviews(Buses buses, ScheduleReference schedule) {
+        new ReviewsRepository().getReviewers(buses).observeForever(data -> {
+            double ratings = (double) data.get("ratings");
+            List<Reviewers> reviewersList = (List<Reviewers>) data.get("reviewer");
+            if(valueOf(ratings).equals("NaN")) ratings = 0.0;
+            String displayRating = ratings +"/5";
+
+            ReviewersReference reviewersReference = new ReviewersReference();
+            reviewersReference.setRatingsCount(displayRating);
+            reviewersReference.setReviewers(reviewersList);
+            schedule.setReviewers(reviewersReference);
+
+            scheduleReferenceArrayList.add(schedule);
+            scheduleMutableLiveData.postValue(scheduleReferenceArrayList);
+        });
     }
 }

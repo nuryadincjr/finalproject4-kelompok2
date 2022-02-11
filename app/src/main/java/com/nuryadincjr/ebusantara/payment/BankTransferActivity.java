@@ -1,6 +1,8 @@
 package com.nuryadincjr.ebusantara.payment;
 
-import static com.nuryadincjr.ebusantara.databinding.ActivityBankTransferBinding.*;
+import static com.nuryadincjr.ebusantara.R.id;
+import static com.nuryadincjr.ebusantara.R.layout;
+import static com.nuryadincjr.ebusantara.databinding.ActivityBankTransferBinding.inflate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +10,6 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ActivityBankTransferBinding;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Transactions;
@@ -19,7 +20,7 @@ public class BankTransferActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bank_transfer);
+        setContentView(layout.activity_bank_transfer);
 
         ActivityBankTransferBinding binding = inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -35,9 +36,9 @@ public class BankTransferActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         String item = "";
-        if(v.getId()==R.id.llBankBni){
+        if(v.getId() == id.llBankBni){
             item = "BNI";
-        }else if(v.getId()==R.id.llBankCimb){
+        }else if(v.getId() == id.llBankCimb){
             item = "CIMB";
         }
 

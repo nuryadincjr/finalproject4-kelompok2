@@ -17,7 +17,6 @@ import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Transactions;
 
 public class CreditCardVerificationActivity extends AppCompatActivity {
-
     private Transactions transactions;
 
     @Override

@@ -1,5 +1,8 @@
 package com.nuryadincjr.ebusantara.adapters;
 
+import static com.nuryadincjr.ebusantara.util.Constant.toUpperCase;
+
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,9 +59,10 @@ public class CitiesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.scheduleAdapter = scheduleAdapter;
         }
 
+        @SuppressLint("SetTextI18n")
         public void setDataToView(Cities citiesList) {
-            binding.tvCity.setText(citiesList.getCity());
-            binding.tvTerminal.setText(citiesList.getTerminal());
+            binding.tvCity.setText(toUpperCase(citiesList.getCity()));
+            binding.tvTerminal.setText(toUpperCase(citiesList.getTerminal()));
 
             binding.getRoot().setOnLongClickListener(this);
             binding.getRoot().setOnClickListener(this);

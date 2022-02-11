@@ -2,6 +2,7 @@ package com.nuryadincjr.ebusantara.fragment;
 
 import static android.app.Activity.RESULT_OK;
 import static com.nuryadincjr.ebusantara.databinding.FragmentSearchBinding.inflate;
+import static com.nuryadincjr.ebusantara.util.Constant.toUpperCase;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -21,13 +22,10 @@ import com.nuryadincjr.ebusantara.chooser.DestinationChooserActivity;
 import com.nuryadincjr.ebusantara.databinding.FragmentSearchBinding;
 import com.nuryadincjr.ebusantara.dataview.BusChooserActivity;
 import com.nuryadincjr.ebusantara.pojo.Cities;
-import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class SearchFragment extends Fragment
         implements View.OnClickListener {
@@ -156,13 +154,13 @@ public class SearchFragment extends Fragment
             case 1:
                 if (data != null && resultCode == RESULT_OK) {
                     departureCity = data.getParcelableExtra("city");
-                    binding.tvDeparture.setText(departureCity.getCity());
+                    binding.tvDeparture.setText(toUpperCase(departureCity.getCity()));
                 }
                 break;
             case 2:
                 if (data != null && resultCode == RESULT_OK) {
                     arrivalCity = data.getParcelableExtra("city");
-                    binding.tvArrival.setText(arrivalCity.getCity());
+                    binding.tvArrival.setText(toUpperCase(arrivalCity.getCity()));
                 }
                 break;
             case 3:

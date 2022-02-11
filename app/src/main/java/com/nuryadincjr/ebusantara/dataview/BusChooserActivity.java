@@ -1,21 +1,28 @@
 package com.nuryadincjr.ebusantara.dataview;
 
+import static android.R.layout.simple_spinner_dropdown_item;
+import static android.view.View.GONE;
+import static android.view.View.OnClickListener;
+import static android.view.View.VISIBLE;
 import static android.widget.SeekBar.OnSeekBarChangeListener;
+import static com.nuryadincjr.ebusantara.R.array.sort;
+import static com.nuryadincjr.ebusantara.R.id;
+import static com.nuryadincjr.ebusantara.R.layout;
 import static com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding.inflate;
+import static com.nuryadincjr.ebusantara.util.Constant.toUpperCase;
 import static com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState.EXPANDED;
 import static com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState.HIDDEN;
 import static java.lang.Double.compare;
 import static java.lang.Double.parseDouble;
-import static java.lang.Integer.*;
-import static java.lang.String.format;
+import static java.lang.Integer.parseInt;
 import static java.lang.String.valueOf;
 import static java.util.Collections.sort;
 import static java.util.Comparator.comparingDouble;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,12 +30,10 @@ import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.ScheduleAdapter;
 import com.nuryadincjr.ebusantara.chooser.DatePickerActivity;
 import com.nuryadincjr.ebusantara.chooser.DestinationChooserActivity;
@@ -36,31 +41,28 @@ import com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.pojo.Cities;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
+import com.nuryadincjr.ebusantara.util.Constant;
 import com.nuryadincjr.ebusantara.util.MainViewModel;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 public class BusChooserActivity extends AppCompatActivity
-        implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+        implements OnClickListener {
     private ActivityBusChooserBinding binding;
     private Cities departureCity;
     private Cities arrivalCity;
     private Calendar calendar;
     private String passengers;
     private SimpleDateFormat format;
-    private ArrayList<ScheduleReference> scheduleReferences;
+    private ArrayList<ScheduleReference> schedules;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_chooser);
+        setContentView(layout.activity_bus_chooser);
 
         binding = inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -70,12 +72,12 @@ public class BusChooserActivity extends AppCompatActivity
         passengers = getIntent().getStringExtra("passengers");
         calendar =  (Calendar)getIntent().getSerializableExtra("date");
         format = new SimpleDateFormat("EEE, d MMM yyyy");
-        scheduleReferences = new ArrayList<>();
+        schedules = new ArrayList<>();
 
         String displayPassengers = "Seat " +passengers;
         binding.tvSeats.setText(displayPassengers);
-        binding.tvDeparture.setText(departureCity.getCity());
-        binding.tvArrival.setText(arrivalCity.getCity());
+        binding.tvDeparture.setText(toUpperCase(departureCity.getCity()));
+        binding.tvArrival.setText(toUpperCase(arrivalCity.getCity()));
         binding.tvDate.setText(format.format(calendar.getTime()));
 
         binding.ivBackArrow.setOnClickListener(this);
@@ -85,10 +87,21 @@ public class BusChooserActivity extends AppCompatActivity
         binding.tvDate.setOnClickListener(this);
         binding.layoutSlidingUp.btnSelected.setOnClickListener(this);
         binding.layoutSlidingUp.btnCancel.setOnClickListener(this);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sort,
-                android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter
+                .createFromResource(this, sort, simple_spinner_dropdown_item);
         binding.tvFilters.setAdapter(adapter);
-        binding.tvFilters.setOnItemSelectedListener(this);
+        binding.tvFilters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position!=0) getData();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         binding.tvApply.setOnClickListener(v -> getData());
         binding.getRoot().setFadeOnClickListener(view ->
@@ -120,124 +133,68 @@ public class BusChooserActivity extends AppCompatActivity
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelableArrayList("schedule", scheduleReferences);
+        outState.putParcelableArrayList("schedule", schedules);
         super.onSaveInstanceState(outState);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void onStateData(Bundle savedInstanceState) {
-        scheduleReferences = savedInstanceState.getParcelableArrayList("schedule");
-        if(scheduleReferences!=null){
-            binding.rvBuses.setVisibility(View.VISIBLE);
-            binding.layoutError.linearLayout.setVisibility(View.GONE);
+        schedules = savedInstanceState.getParcelableArrayList("schedule");
+        onSetData(schedules);
+    }
+
+    private void getData() {
+        MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mainViewModel.getSchedule(departureCity, arrivalCity, calendar).observe(this, schedules -> {
+            Log.d("XXX", String.valueOf(schedules==null));
+            this.schedules = schedules;
+            onSetData(schedules);
+        });
+    }
+
+    @SuppressLint({"NewApi", "SetTextI18n"})
+    private void onSetData(ArrayList<ScheduleReference> schedules) {
+        binding.rvBuses.showShimmerAdapter();
+        if (schedules != null) {
+            binding.rvBuses.setVisibility(VISIBLE);
+            binding.layoutError.linearLayout.setVisibility(GONE);
 
             boolean isLowestPiece = binding.tvFilters.getSelectedItem().toString().equals("Lowest price");
             boolean isHighestPiece = binding.tvFilters.getSelectedItem().toString().equals("Highest price");
             boolean isEstimation = binding.tvFilters.getSelectedItem().toString().equals("Estimate time");
 
-            if(isLowestPiece){
-                sort(scheduleReferences, comparingDouble(o -> parseDouble(o.getBuses().getPrice())));
-            }else if(isHighestPiece){
-                sort(scheduleReferences, (o1, o2) ->
+            if (isLowestPiece) {
+                sort(schedules, comparingDouble(o -> parseDouble(o.getBuses().getPrice())));
+            } else if (isHighestPiece) {
+                sort(schedules, (o1, o2) ->
                         compare(parseDouble(o2.getBuses().getPrice()),
                                 parseDouble(o1.getBuses().getPrice())));
-            }else if(isEstimation){
-                sort(scheduleReferences, comparingDouble(this::getEstimatedTimes));
-            }else {
-                sort(scheduleReferences, (o1, o2) ->
+            } else if (isEstimation) {
+                sort(schedules, comparingDouble(Constant::getIntEstimatedTimes));
+            } else {
+                sort(schedules, (o1, o2) ->
                         o2.getReviewers().getRatingsCount()
                                 .compareTo(o1.getReviewers().getRatingsCount()));
             }
 
             String seat = binding.tvSeats.getText().toString().replace("Seat ", "");
-            binding.rvBuses.showShimmerAdapter();
-            ScheduleAdapter scheduleAdapter = new ScheduleAdapter(scheduleReferences, parseInt(seat));
+            ScheduleAdapter scheduleAdapter = new ScheduleAdapter(schedules, parseInt(seat));
             binding.rvBuses.setLayoutManager(new LinearLayoutManager(this));
             binding.rvBuses.setAdapter(scheduleAdapter);
-            onListener(scheduleAdapter, scheduleReferences);
-        }else {
-            binding.rvBuses.setVisibility(View.GONE);
+            onListener(scheduleAdapter, schedules);
+        } else {
+            binding.rvBuses.hideShimmerAdapter();
+            binding.rvBuses.setVisibility(GONE);
             binding.layoutError.textView.setText("Sorry!");
             binding.layoutError.tvMassage.setText("The destination location you selected was not found");
-            binding.layoutError.linearLayout.setVisibility(View.VISIBLE);
+            binding.layoutError.linearLayout.setVisibility(VISIBLE);
         }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void getData() {
-        MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mainViewModel.getBuses(departureCity.getCity(), arrivalCity.getCity(),
-                calendar).observe(this, schedules -> {
-            if(schedules!=null){
-
-                scheduleReferences = schedules;
-
-                binding.rvBuses.setVisibility(View.VISIBLE);
-                binding.layoutError.linearLayout.setVisibility(View.GONE);
-
-                boolean isLowestPiece = binding.tvFilters.getSelectedItem().toString().equals("Lowest price");
-                boolean isHighestPiece = binding.tvFilters.getSelectedItem().toString().equals("Highest price");
-                boolean isEstimation = binding.tvFilters.getSelectedItem().toString().equals("Estimate time");
-
-                if(isLowestPiece){
-                    sort(schedules, comparingDouble(o -> parseDouble(o.getBuses().getPrice())));
-                }else if(isHighestPiece){
-                    sort(schedules, (o1, o2) ->
-                            compare(parseDouble(o2.getBuses().getPrice()),
-                            parseDouble(o1.getBuses().getPrice())));
-                }else if(isEstimation){
-                    sort(schedules, comparingDouble(this::getEstimatedTimes));
-                }else {
-                    sort(schedules, (o1, o2) ->
-                            o2.getReviewers().getRatingsCount()
-                                    .compareTo(o1.getReviewers().getRatingsCount()));
-                }
-
-                String seat = binding.tvSeats.getText().toString().replace("Seat ", "");
-                binding.rvBuses.showShimmerAdapter();
-                ScheduleAdapter scheduleAdapter = new ScheduleAdapter(schedules, parseInt(seat));
-                binding.rvBuses.setLayoutManager(new LinearLayoutManager(this));
-                binding.rvBuses.setAdapter(scheduleAdapter);
-                onListener(scheduleAdapter, schedules);
-            }else {
-                binding.rvBuses.setVisibility(View.GONE);
-                binding.layoutError.textView.setText("Sorry!");
-                binding.layoutError.tvMassage.setText("The destination location you selected was not found");
-                binding.layoutError.linearLayout.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
-    @SuppressLint("SimpleDateFormat, DefaultLocale")
-    private int getEstimatedTimes(ScheduleReference schedule) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-        Date departureDate = new Date();
-        Date arrivalDate = new Date();
-        try {
-            departureDate = format.parse(schedule.getDepartureTime());
-            arrivalDate = format.parse(schedule.getArrivalTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        long millisTime = arrivalDate.getTime() - departureDate.getTime();
-        if(departureDate.getTime() > arrivalDate.getTime()){
-            millisTime = departureDate.getTime() - arrivalDate.getTime();
-        }
-
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisTime) % 60;
-        long hours = TimeUnit.MILLISECONDS.toHours(millisTime);
-        String estimatedTime = format("%s%d", hours, minutes);
-
-       return parseInt(estimatedTime);
     }
 
     private void onListener(ScheduleAdapter scheduleAdapter, ArrayList<ScheduleReference> schedules) {
         scheduleAdapter.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                if(view.getId()==R.id.btnBookNow){
+                if(view.getId()== id.btnBookNow){
                     startActivity(new Intent(getApplicationContext(),
                             BusDetailsActivity.class)
                             .putExtra("schedule", schedules.get(position))
@@ -258,29 +215,29 @@ public class BusChooserActivity extends AppCompatActivity
     public void onClick(View v) {
         Intent intent = new Intent(this, DestinationChooserActivity.class);
         switch (v.getId()){
-            case R.id.ivBackArrow:
+            case id.ivBackArrow:
                 onBackPressed();
                 break;
-            case R.id.llDeparture:
+            case id.llDeparture:
                 intent.putExtra("hint", binding.tvDeparture.getText().toString());
                 startActivityForResult(intent, 1);
                 break;
-            case R.id.llArrival:
+            case id.llArrival:
                 intent.putExtra("hint", binding.tvArrival.getText().toString());
                 startActivityForResult(intent, 2);
                 break;
-            case R.id.tvDate:
+            case id.tvDate:
                 startActivityForResult(new Intent(this, DatePickerActivity.class), 3);
                 break;
-            case R.id.tvSeats:
+            case id.tvSeats:
                 binding.slidingLayout.setPanelState(EXPANDED);
                 break;
-            case R.id.btnSelected:
+            case id.btnSelected:
                 String passenger = "Seat "+binding.layoutSlidingUp.tvPassenger.getText();
                 binding.tvSeats.setText(passenger);
                 binding.getRoot().setPanelState(HIDDEN);
                 break;
-            case R.id.btnCancel:
+            case id.btnCancel:
                 binding.getRoot().setPanelState(HIDDEN);
                 break;
         }
@@ -294,13 +251,13 @@ public class BusChooserActivity extends AppCompatActivity
             case 1:
                 if (data != null && resultCode == RESULT_OK) {
                     departureCity = data.getParcelableExtra("city");
-                    binding.tvDeparture.setText(departureCity.getCity());
+                    binding.tvDeparture.setText(toUpperCase(departureCity.getCity()));
                 }
                 break;
             case 2:
                 if (data != null && resultCode == RESULT_OK) {
                     arrivalCity = data.getParcelableExtra("city");
-                    binding.tvArrival.setText(arrivalCity.getCity());
+                    binding.tvArrival.setText(toUpperCase(arrivalCity.getCity()));
                 }
                 break;
             case 3:
@@ -310,16 +267,5 @@ public class BusChooserActivity extends AppCompatActivity
                 }
                 break;
         }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        getData();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }

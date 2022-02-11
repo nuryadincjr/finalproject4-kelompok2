@@ -1,5 +1,6 @@
 package com.nuryadincjr.ebusantara.login;
 
+import static android.content.Intent.*;
 import static com.nuryadincjr.ebusantara.databinding.ActivityAboutBinding.*;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +29,7 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void getPortfolio(TextView view, String url) {
-        view.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW)
+        view.setOnClickListener(v -> startActivity(new Intent(ACTION_VIEW)
                 .setData(Uri.parse(url))));
     }
 }

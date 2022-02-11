@@ -12,6 +12,7 @@ public class Transactions implements Parcelable {
     private String bookNo;
     private String status;
     private String schedule;
+    private String uniqueCode;
     private String totalPayment;
     private String paymentMethod;
     private String paymentPartner;
@@ -20,16 +21,16 @@ public class Transactions implements Parcelable {
     public Transactions() {
     }
 
-    public Transactions(String id, String uid, String date,
-                        String bookNo, String status, String schedule,
-                        String totalPayment, String paymentMethod,
-                        String paymentPartner, ArrayList<String> seatNo) {
+    public Transactions(String id, String uid, String date, String bookNo, String status,
+                        String schedule, String uniqueCode, String totalPayment,
+                        String paymentMethod, String paymentPartner, ArrayList<String> seatNo) {
         this.id = id;
         this.uid = uid;
         this.date = date;
         this.bookNo = bookNo;
         this.status = status;
         this.schedule = schedule;
+        this.uniqueCode = uniqueCode;
         this.totalPayment = totalPayment;
         this.paymentMethod = paymentMethod;
         this.paymentPartner = paymentPartner;
@@ -43,6 +44,7 @@ public class Transactions implements Parcelable {
         bookNo = in.readString();
         status = in.readString();
         schedule = in.readString();
+        uniqueCode = in.readString();
         totalPayment = in.readString();
         paymentMethod = in.readString();
         paymentPartner = in.readString();
@@ -57,6 +59,7 @@ public class Transactions implements Parcelable {
         dest.writeString(bookNo);
         dest.writeString(status);
         dest.writeString(schedule);
+        dest.writeString(uniqueCode);
         dest.writeString(totalPayment);
         dest.writeString(paymentMethod);
         dest.writeString(paymentPartner);
@@ -126,6 +129,14 @@ public class Transactions implements Parcelable {
 
     public void setSchedule(String schedule) {
         this.schedule = schedule;
+    }
+
+    public String getUniqueCode() {
+        return uniqueCode;
+    }
+
+    public void setUniqueCode(String uniqueCode) {
+        this.uniqueCode = uniqueCode;
     }
 
     public String getTotalPayment() {

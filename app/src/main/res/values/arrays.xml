@@ -15,6 +15,7 @@
     </array>
 
     <array name="sort">
+        <item>Sort by</item>
         <item>Best experience</item>
         <item>Estimate time</item>
         <item>Highest price</item>

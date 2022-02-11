@@ -6,17 +6,17 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
 import com.nuryadincjr.ebusantara.R;
-import com.nuryadincjr.ebusantara.api.UsersRepository;
 import com.nuryadincjr.ebusantara.databinding.ItemReviewsBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.pojo.Reviewers;
-import com.nuryadincjr.ebusantara.pojo.Users;
+import com.nuryadincjr.ebusantara.util.MainViewModel;
 
 import java.util.List;
 
@@ -81,18 +81,16 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 binding.getRoot().setLayoutParams(params);
             }
 
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.document("users/"+reviewers.getUid()).get().addOnCompleteListener(task -> {
-               if(task.isSuccessful()){
-                   Users users = task.getResult().toObject(Users.class);
-                   binding.tvName.setText(users.getName());
+            MainViewModel mainViewModel = new ViewModelProvider((ViewModelStoreOwner) itemView.getContext())
+                    .get(MainViewModel.class);
+            mainViewModel.getUsers(reviewers).observe((LifecycleOwner) itemView.getContext(), users -> {
+                binding.tvName.setText(users.getName());
 
-                   Glide.with(itemView)
-                           .load(users.getPhotoUrl())
-                           .centerCrop()
-                           .placeholder(R.drawable.ic_brand)
-                           .into(binding.ivProfile);
-               }
+                Glide.with(itemView)
+                        .load(users.getPhotoUrl())
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_brand)
+                        .into(binding.ivProfile);
             });
 
             String rating = reviewers.getRatings();

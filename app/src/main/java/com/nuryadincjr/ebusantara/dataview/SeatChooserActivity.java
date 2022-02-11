@@ -1,5 +1,11 @@
 package com.nuryadincjr.ebusantara.dataview;
 
+import static com.google.android.material.snackbar.Snackbar.LENGTH_SHORT;
+import static com.google.android.material.snackbar.Snackbar.make;
+import static com.nuryadincjr.ebusantara.R.id;
+import static com.nuryadincjr.ebusantara.R.layout;
+import static java.lang.Integer.parseInt;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,14 +14,12 @@ import android.widget.CheckedTextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.databinding.ActivitySeatChooserBinding;
 import com.nuryadincjr.ebusantara.databinding.LayoutSeatsChooserBinding;
+import com.nuryadincjr.ebusantara.payment.DetailPaymentActivity;
 import com.nuryadincjr.ebusantara.pojo.Buses;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Seats;
-import com.nuryadincjr.ebusantara.payment.DetailPaymentActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,6 +30,7 @@ import java.util.Set;
 public class SeatChooserActivity extends AppCompatActivity
         implements View.OnClickListener {
     private ActivitySeatChooserBinding binding;
+    private LayoutSeatsChooserBinding layoutSeatChooser;
     private ScheduleReference schedule;
     private Calendar calendar;
     private String passengers;
@@ -40,10 +45,11 @@ public class SeatChooserActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seat_chooser);
+        setContentView(layout.activity_seat_chooser);
         binding = ActivitySeatChooserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        layoutSeatChooser = binding.layoutSeatChooser;
         schedule = getIntent().getParcelableExtra("schedule");
         passengers = getIntent().getStringExtra("passengers");
         calendar =  (Calendar)getIntent().getSerializableExtra("date");
@@ -58,49 +64,48 @@ public class SeatChooserActivity extends AppCompatActivity
         String displayStatus = "Selected: "+ seatChooser.size()+"/"+passengers;
         binding.tvStatus.setText(displayStatus);
 
-        LayoutSeatsChooserBinding view = binding.layoutSeatChooser;
-        view.ivSeatA1.setOnClickListener(this);
-        view.ivSeatA2.setOnClickListener(this);
-        view.ivSeatA3.setOnClickListener(this);
-        view.ivSeatA4.setOnClickListener(this);
-        view.ivSeatA5.setOnClickListener(this);
-        view.ivSeatA6.setOnClickListener(this);
-        view.ivSeatA7.setOnClickListener(this);
-        view.ivSeatA8.setOnClickListener(this);
-        view.ivSeatA9.setOnClickListener(this);
+        layoutSeatChooser.ivSeatA1.setOnClickListener(this);
+        layoutSeatChooser.ivSeatA2.setOnClickListener(this);
+        layoutSeatChooser.ivSeatA3.setOnClickListener(this);
+        layoutSeatChooser.ivSeatA4.setOnClickListener(this);
+        layoutSeatChooser.ivSeatA5.setOnClickListener(this);
+        layoutSeatChooser.ivSeatA6.setOnClickListener(this);
+        layoutSeatChooser.ivSeatA7.setOnClickListener(this);
+        layoutSeatChooser.ivSeatA8.setOnClickListener(this);
+        layoutSeatChooser.ivSeatA9.setOnClickListener(this);
 
-        view.ivSeatB1.setOnClickListener(this);
-        view.ivSeatB2.setOnClickListener(this);
-        view.ivSeatB3.setOnClickListener(this);
-        view.ivSeatB4.setOnClickListener(this);
-        view.ivSeatB5.setOnClickListener(this);
-        view.ivSeatB6.setOnClickListener(this);
-        view.ivSeatB7.setOnClickListener(this);
-        view.ivSeatB8.setOnClickListener(this);
-        view.ivSeatB9.setOnClickListener(this);
-        view.ivSeatB10.setOnClickListener(this);
+        layoutSeatChooser.ivSeatB1.setOnClickListener(this);
+        layoutSeatChooser.ivSeatB2.setOnClickListener(this);
+        layoutSeatChooser.ivSeatB3.setOnClickListener(this);
+        layoutSeatChooser.ivSeatB4.setOnClickListener(this);
+        layoutSeatChooser.ivSeatB5.setOnClickListener(this);
+        layoutSeatChooser.ivSeatB6.setOnClickListener(this);
+        layoutSeatChooser.ivSeatB7.setOnClickListener(this);
+        layoutSeatChooser.ivSeatB8.setOnClickListener(this);
+        layoutSeatChooser.ivSeatB9.setOnClickListener(this);
+        layoutSeatChooser.ivSeatB10.setOnClickListener(this);
 
-        view.ivSeatC1.setOnClickListener(this);
-        view.ivSeatC2.setOnClickListener(this);
-        view.ivSeatC3.setOnClickListener(this);
-        view.ivSeatC4.setOnClickListener(this);
-        view.ivSeatC5.setOnClickListener(this);
-        view.ivSeatC6.setOnClickListener(this);
-        view.ivSeatC7.setOnClickListener(this);
-        view.ivSeatC8.setOnClickListener(this);
-        view.ivSeatC9.setOnClickListener(this);
-        view.ivSeatC10.setOnClickListener(this);
+        layoutSeatChooser.ivSeatC1.setOnClickListener(this);
+        layoutSeatChooser.ivSeatC2.setOnClickListener(this);
+        layoutSeatChooser.ivSeatC3.setOnClickListener(this);
+        layoutSeatChooser.ivSeatC4.setOnClickListener(this);
+        layoutSeatChooser.ivSeatC5.setOnClickListener(this);
+        layoutSeatChooser.ivSeatC6.setOnClickListener(this);
+        layoutSeatChooser.ivSeatC7.setOnClickListener(this);
+        layoutSeatChooser.ivSeatC8.setOnClickListener(this);
+        layoutSeatChooser.ivSeatC9.setOnClickListener(this);
+        layoutSeatChooser.ivSeatC10.setOnClickListener(this);
 
-        view.ivSeatD1.setOnClickListener(this);
-        view.ivSeatD2.setOnClickListener(this);
-        view.ivSeatD3.setOnClickListener(this);
-        view.ivSeatD4.setOnClickListener(this);
-        view.ivSeatD5.setOnClickListener(this);
-        view.ivSeatD6.setOnClickListener(this);
-        view.ivSeatD7.setOnClickListener(this);
-        view.ivSeatD8.setOnClickListener(this);
-        view.ivSeatD9.setOnClickListener(this);
-        view.ivSeatD10.setOnClickListener(this);
+        layoutSeatChooser.ivSeatD1.setOnClickListener(this);
+        layoutSeatChooser.ivSeatD2.setOnClickListener(this);
+        layoutSeatChooser.ivSeatD3.setOnClickListener(this);
+        layoutSeatChooser.ivSeatD4.setOnClickListener(this);
+        layoutSeatChooser.ivSeatD5.setOnClickListener(this);
+        layoutSeatChooser.ivSeatD6.setOnClickListener(this);
+        layoutSeatChooser.ivSeatD7.setOnClickListener(this);
+        layoutSeatChooser.ivSeatD8.setOnClickListener(this);
+        layoutSeatChooser.ivSeatD9.setOnClickListener(this);
+        layoutSeatChooser.ivSeatD10.setOnClickListener(this);
 
         getSeats();
 
@@ -110,27 +115,33 @@ public class SeatChooserActivity extends AppCompatActivity
 
     private void getSeats() {
         if (seatsA != null || seatsB != null || seatsC != null || seatsD != null) {
-            LayoutSeatsChooserBinding view = binding.layoutSeatChooser;
 
-            getSelected(seatsA, view.ivSeatA1, view.ivSeatA2,
-                    view.ivSeatA3, view.ivSeatA4, view.ivSeatA5, view.ivSeatA6,
-                    view.ivSeatA7, view.ivSeatA8, view.ivSeatA9, null);
+            getSelected(seatsA, layoutSeatChooser.ivSeatA1, layoutSeatChooser.ivSeatA2,
+                    layoutSeatChooser.ivSeatA3, layoutSeatChooser.ivSeatA4,
+                    layoutSeatChooser.ivSeatA5, layoutSeatChooser.ivSeatA6,
+                    layoutSeatChooser.ivSeatA7, layoutSeatChooser.ivSeatA8,
+                    layoutSeatChooser.ivSeatA9, null);
 
-            getSelected(seatsB, view.ivSeatB1, view.ivSeatB2,
-                    view.ivSeatB3, view.ivSeatB4, view.ivSeatB5, view.ivSeatB6,
-                    view.ivSeatB7, view.ivSeatB8, view.ivSeatB9, view.ivSeatB10);
+            getSelected(seatsB, layoutSeatChooser.ivSeatB1, layoutSeatChooser.ivSeatB2,
+                    layoutSeatChooser.ivSeatB3, layoutSeatChooser.ivSeatB4,
+                    layoutSeatChooser.ivSeatB5, layoutSeatChooser.ivSeatB6,
+                    layoutSeatChooser.ivSeatB7, layoutSeatChooser.ivSeatB8,
+                    layoutSeatChooser.ivSeatB9, layoutSeatChooser.ivSeatB10);
 
-            getSelected(seatsC, view.ivSeatC1, view.ivSeatC2,
-                    view.ivSeatC3, view.ivSeatC4, view.ivSeatC5, view.ivSeatC6,
-                    view.ivSeatC7, view.ivSeatC8, view.ivSeatC9, view.ivSeatC10);
+            getSelected(seatsC, layoutSeatChooser.ivSeatC1, layoutSeatChooser.ivSeatC2,
+                    layoutSeatChooser.ivSeatC3, layoutSeatChooser.ivSeatC4,
+                    layoutSeatChooser.ivSeatC5, layoutSeatChooser.ivSeatC6,
+                    layoutSeatChooser.ivSeatC7, layoutSeatChooser.ivSeatC8,
+                    layoutSeatChooser.ivSeatC9, layoutSeatChooser.ivSeatC10);
 
-            getSelected(seatsD, view.ivSeatD1, view.ivSeatD2,
-                    view.ivSeatD3, view.ivSeatD4, view.ivSeatD5, view.ivSeatD6,
-                    view.ivSeatD7, view.ivSeatD8, view.ivSeatD9, view.ivSeatD10);
+            getSelected(seatsD, layoutSeatChooser.ivSeatD1, layoutSeatChooser.ivSeatD2,
+                    layoutSeatChooser.ivSeatD3, layoutSeatChooser.ivSeatD4,
+                    layoutSeatChooser.ivSeatD5, layoutSeatChooser.ivSeatD6,
+                    layoutSeatChooser.ivSeatD7, layoutSeatChooser.ivSeatD8,
+                    layoutSeatChooser.ivSeatD9, layoutSeatChooser.ivSeatD10);
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     private void getSelected(List<Boolean> booleanList,
                              CheckedTextView seat1, CheckedTextView seat2,
                              CheckedTextView seat3, CheckedTextView seat4,
@@ -181,124 +192,124 @@ public class SeatChooserActivity extends AppCompatActivity
     public void onClick(View v) {
         LayoutSeatsChooserBinding layoutSeatChooser = binding.layoutSeatChooser;
         switch (v.getId()) {
-            case R.id.ivSeatA1:
+            case id.ivSeatA1:
                 getChooserListener(layoutSeatChooser.ivSeatA1, "A", 1);
                 break;
-            case R.id.ivSeatA2:
+            case id.ivSeatA2:
                 getChooserListener(layoutSeatChooser.ivSeatA2, "A", 2);
                 break;
-            case R.id.ivSeatA3:
+            case id.ivSeatA3:
                 getChooserListener(layoutSeatChooser.ivSeatA3, "A", 3);
                 break;
-            case R.id.ivSeatA4:
+            case id.ivSeatA4:
                 getChooserListener(layoutSeatChooser.ivSeatA4, "A", 4);
                 break;
-            case R.id.ivSeatA5:
+            case id.ivSeatA5:
                 getChooserListener(layoutSeatChooser.ivSeatA5, "A", 5);
                 break;
-            case R.id.ivSeatA6:
+            case id.ivSeatA6:
                 getChooserListener(layoutSeatChooser.ivSeatA6, "A", 6);
                 break;
-            case R.id.ivSeatA7:
+            case id.ivSeatA7:
                 getChooserListener(layoutSeatChooser.ivSeatA7, "A", 7);
                 break;
-            case R.id.ivSeatA8:
+            case id.ivSeatA8:
                 getChooserListener(layoutSeatChooser.ivSeatA8, "A", 8);
                 break;
-            case R.id.ivSeatA9:
+            case id.ivSeatA9:
                 getChooserListener(layoutSeatChooser.ivSeatA9, "A", 9);
                 break;
 
-            case R.id.ivSeatB1:
+            case id.ivSeatB1:
                 getChooserListener(layoutSeatChooser.ivSeatB1, "B", 1);
                 break;
-            case R.id.ivSeatB2:
+            case id.ivSeatB2:
                 getChooserListener(layoutSeatChooser.ivSeatB2, "B", 2);
                 break;
-            case R.id.ivSeatB3:
+            case id.ivSeatB3:
                 getChooserListener(layoutSeatChooser.ivSeatB3, "B", 3);
                 break;
-            case R.id.ivSeatB4:
+            case id.ivSeatB4:
                 getChooserListener(layoutSeatChooser.ivSeatB4, "B", 4);
                 break;
-            case R.id.ivSeatB5:
+            case id.ivSeatB5:
                 getChooserListener(layoutSeatChooser.ivSeatB5, "B", 5);
                 break;
-            case R.id.ivSeatB6:
+            case id.ivSeatB6:
                 getChooserListener(layoutSeatChooser.ivSeatB6, "B", 6);
                 break;
-            case R.id.ivSeatB7:
+            case id.ivSeatB7:
                 getChooserListener(layoutSeatChooser.ivSeatB7, "B", 7);
                 break;
-            case R.id.ivSeatB8:
+            case id.ivSeatB8:
                 getChooserListener(layoutSeatChooser.ivSeatB8, "B", 8);
                 break;
-            case R.id.ivSeatB9:
+            case id.ivSeatB9:
                 getChooserListener(layoutSeatChooser.ivSeatB9, "B", 9);
                 break;
-            case R.id.ivSeatB10:
+            case id.ivSeatB10:
                 getChooserListener(layoutSeatChooser.ivSeatB10, "B", 10);
                 break;
 
-            case R.id.ivSeatC1:
+            case id.ivSeatC1:
                 getChooserListener(layoutSeatChooser.ivSeatC1, "C", 1);
                 break;
-            case R.id.ivSeatC2:
+            case id.ivSeatC2:
                 getChooserListener(layoutSeatChooser.ivSeatC2, "C", 2);
                 break;
-            case R.id.ivSeatC3:
+            case id.ivSeatC3:
                 getChooserListener(layoutSeatChooser.ivSeatC3, "C", 3);
                 break;
-            case R.id.ivSeatC4:
+            case id.ivSeatC4:
                 getChooserListener(layoutSeatChooser.ivSeatC4, "C", 4);
                 break;
-            case R.id.ivSeatC5:
+            case id.ivSeatC5:
                 getChooserListener(layoutSeatChooser.ivSeatC5, "C", 5);
                 break;
-            case R.id.ivSeatC6:
+            case id.ivSeatC6:
                 getChooserListener(layoutSeatChooser.ivSeatC6, "C",6);
                 break;
-            case R.id.ivSeatC7:
+            case id.ivSeatC7:
                 getChooserListener(layoutSeatChooser.ivSeatC7, "C", 7);
                 break;
-            case R.id.ivSeatC8:
+            case id.ivSeatC8:
                 getChooserListener(layoutSeatChooser.ivSeatC8, "C", 8);
                 break;
-            case R.id.ivSeatC9:
+            case id.ivSeatC9:
                 getChooserListener(layoutSeatChooser.ivSeatC9, "C", 9);
                 break;
-            case R.id.ivSeatC10:
+            case id.ivSeatC10:
                 getChooserListener(layoutSeatChooser.ivSeatC10, "C", 10);
                 break;
 
-            case R.id.ivSeatD1:
+            case id.ivSeatD1:
                 getChooserListener(layoutSeatChooser.ivSeatD1, "D", 1);
                 break;
-            case R.id.ivSeatD2:
+            case id.ivSeatD2:
                 getChooserListener(layoutSeatChooser.ivSeatD2, "D", 2);
                 break;
-            case R.id.ivSeatD3:
+            case id.ivSeatD3:
                 getChooserListener(layoutSeatChooser.ivSeatD3, "D", 3);
                 break;
-            case R.id.ivSeatD4:
+            case id.ivSeatD4:
                 getChooserListener(layoutSeatChooser.ivSeatD4, "D", 4);
                 break;
-            case R.id.ivSeatD5:
+            case id.ivSeatD5:
                 getChooserListener(layoutSeatChooser.ivSeatD5, "D", 5);
                 break;
-            case R.id.ivSeatD6:
+            case id.ivSeatD6:
                 getChooserListener(layoutSeatChooser.ivSeatD6, "D", 6);
                 break;
-            case R.id.ivSeatD7:
+            case id.ivSeatD7:
                 getChooserListener(layoutSeatChooser.ivSeatD7, "D", 7);
                 break;
-            case R.id.ivSeatD8:
+            case id.ivSeatD8:
                 getChooserListener(layoutSeatChooser.ivSeatD8, "D",8);
                 break;
-            case R.id.ivSeatD9:
+            case id.ivSeatD9:
                 getChooserListener(layoutSeatChooser.ivSeatD9, "D", 9);
                 break;
-            case R.id.ivSeatD10:
+            case id.ivSeatD10:
                 getChooserListener(layoutSeatChooser.ivSeatD10, "D", 10);
                 break;
         }
@@ -306,7 +317,7 @@ public class SeatChooserActivity extends AppCompatActivity
 
     private void getChooserListener(CheckedTextView view, String itemX, int itemY) {
         String seatNo = itemX+itemY;
-        if (seatChooser.size() < Integer.parseInt(passengers)) {
+        if (seatChooser.size() < parseInt(passengers)) {
             if(view.isChecked()) seatChooser.remove(seatNo);
             else seatChooser.add(seatNo);
 
@@ -341,12 +352,9 @@ public class SeatChooserActivity extends AppCompatActivity
     }
 
     private void onStartActivity() {
-        if(seatChooser.size()==Integer.parseInt(passengers)){
+        if(seatChooser.size() == parseInt(passengers)){
             ArrayList<String> seatList = new ArrayList<>(seatChooser);
-            seats.setSeatsA(seatsA);
-            seats.setSeatsB(seatsB);
-            seats.setSeatsC(seatsC);
-            seats.setSeatsD(seatsD);
+            seats = new Seats(seatsA, seatsB, seatsC, seatsD);
             buses.setSeats(seats);
             schedule.setBuses(buses);
 
@@ -357,10 +365,10 @@ public class SeatChooserActivity extends AppCompatActivity
                     .putExtra("passengers", passengers)
                     .putStringArrayListExtra("seats", seatList));
         }else {
-            int available = Integer.parseInt(passengers) - seatChooser.size();
-            Snackbar.make(binding.getRoot(),
+            int available = parseInt(passengers) - seatChooser.size();
+            make(binding.getRoot(),
                     "Please choose "+available+" more seats ",
-                    Snackbar.LENGTH_SHORT).show();
+                    LENGTH_SHORT).show();
         }
     }
 }

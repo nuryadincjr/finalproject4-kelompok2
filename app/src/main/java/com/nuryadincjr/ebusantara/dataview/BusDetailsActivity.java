@@ -1,8 +1,15 @@
 package com.nuryadincjr.ebusantara.dataview;
 
+import static android.view.View.VISIBLE;
 import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
-import static java.lang.Double.parseDouble;
-import static java.text.DecimalFormat.getCurrencyInstance;
+import static com.nuryadincjr.ebusantara.R.drawable.ic_brand;
+import static com.nuryadincjr.ebusantara.R.id.ivViewer;
+import static com.nuryadincjr.ebusantara.R.layout.activity_bus_details;
+import static com.nuryadincjr.ebusantara.R.layout.layout_image_viewer;
+import static com.nuryadincjr.ebusantara.util.Constant.getEstimatedTimes;
+import static com.nuryadincjr.ebusantara.util.Constant.getPieces;
+import static com.nuryadincjr.ebusantara.util.Constant.getTime;
+import static com.nuryadincjr.ebusantara.util.Constant.toUpperCase;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,7 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.ReviewersAdapter;
 import com.nuryadincjr.ebusantara.databinding.ActivityBusDetailsBinding;
 import com.nuryadincjr.ebusantara.pojo.Buses;
@@ -24,14 +30,9 @@ import com.nuryadincjr.ebusantara.pojo.ReviewersReference;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Seats;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class BusDetailsActivity extends AppCompatActivity {
     private ActivityBusDetailsBinding binding;
@@ -45,7 +46,7 @@ public class BusDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_details);
+        setContentView(activity_bus_details);
 
         binding = ActivityBusDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -64,41 +65,26 @@ public class BusDetailsActivity extends AppCompatActivity {
         format = new SimpleDateFormat("d MMM yyyy");
         binding.layoutBookATrip.tvDate.setText(format.format(calendar.getTime()));
 
-        binding.layoutBookATrip.tvPOName.setText(buses.getPoName());
-        binding.layoutBookATrip.tvDeparture.setText(departureCity.getCity());
-        binding.layoutBookATrip.tvArrival.setText(arrivalCity.getCity());
+        binding.layoutBookATrip.tvPOName.setText(toUpperCase(buses.getPoName()));
+        binding.layoutBookATrip.tvDeparture.setText(toUpperCase(departureCity.getCity()));
+        binding.layoutBookATrip.tvArrival.setText(toUpperCase(arrivalCity.getCity()));
         binding.layoutBookATrip.tvBusNo.setText(buses.getBusNo());
         binding.layoutBookATrip.tvClass.setText(buses.getClassType());
         binding.layoutBookATrip.tvRatings.setText(reviewers.getRatingsCount());
+        binding.layoutBookATrip.tvEstimation.setText(getEstimatedTimes(schedule));
+        binding.layoutBookATrip.tvDepartureTime.setText(getTime(schedule).get("departureTime"));
+        binding.layoutBookATrip.tvArrivalTime.setText(getTime(schedule).get("arrivalTime"));
+        binding.tvSubTotals.setText(getPieces(buses, passengers).get("displaySubTotal"));
+        binding.tvTotals.setText(getPieces(buses, passengers).get("subTotal"));
 
-        getTime();
         getSeats();
         getImage();
-        getFacilities();
-        getEstimatedTimes();
-        getPieces();
         getReviewers();
+        getFacilities();
 
         binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
         binding.btnBookNow.setOnClickListener(v -> onStartActivity(calendar));
         binding.layoutBookATrip.tvSeePicture.setOnClickListener(this::onImageShow);
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private void getTime() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
-
-        Date departureDate = new Date();
-        Date arrivalDate = new Date();
-        try {
-            departureDate = format.parse(schedule.getDepartureTime());
-            arrivalDate = format.parse(schedule.getArrivalTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        binding.layoutBookATrip.tvDepartureTime.setText(formatTime.format(departureDate));
-        binding.layoutBookATrip.tvArrivalTime.setText(formatTime.format(arrivalDate));
     }
 
     private void onStartActivity(Calendar calendar) {
@@ -141,27 +127,11 @@ public class BusDetailsActivity extends AppCompatActivity {
         return counter;
     }
 
-    private void getPieces() {
-        String piece = buses.getPrice();
-        double subTotal = parseDouble(passengers) * parseDouble(piece);
-
-        DecimalFormat format = (DecimalFormat) getCurrencyInstance();
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setCurrencySymbol("Rp");
-        symbols.setMonetaryDecimalSeparator(',');
-        symbols.setGroupingSeparator('.');
-        format.setDecimalFormatSymbols(symbols);
-
-        String displaySubTotal = passengers+"x"+format.format(parseDouble(piece));
-        binding.tvSubTotals.setText(displaySubTotal);
-        binding.tvTotals.setText(format.format(subTotal));
-    }
-
     private void getImage() {
         Glide.with(this)
                 .load(buses.getImageUrl())
                 .centerCrop()
-                .placeholder(R.drawable.ic_brand)
+                .placeholder(ic_brand)
                 .into(binding.layoutBookATrip.ivBus);
     }
 
@@ -171,50 +141,22 @@ public class BusDetailsActivity extends AppCompatActivity {
             switch (facility){
                 case "Toilet":
                     binding.layoutBookATrip.tvToiletFacility
-                            .setVisibility(View.VISIBLE);
+                            .setVisibility(VISIBLE);
                     break;
                 case "Rest stop":
                     binding.layoutBookATrip.tvRestFacility
-                            .setVisibility(View.VISIBLE);
+                            .setVisibility(VISIBLE);
                     break;
                 case "Luggage":
                     binding.layoutBookATrip.tvLuggageFacility
-                            .setVisibility(View.VISIBLE);
+                            .setVisibility(VISIBLE);
                     break;
                 case "AC":
                     binding.layoutBookATrip.tvACFacility
-                            .setVisibility(View.VISIBLE);
+                            .setVisibility(VISIBLE);
                     break;
             }
         }
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private void getEstimatedTimes() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-        Date departureDate = new Date();
-        Date arrivalDate = new Date();
-        try {
-            departureDate = format.parse(schedule.getDepartureTime());
-            arrivalDate = format.parse(schedule.getArrivalTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        long millisTime = arrivalDate.getTime() - departureDate.getTime();
-        if(departureDate.getTime() > arrivalDate.getTime()){
-            millisTime = departureDate.getTime() - arrivalDate.getTime();
-        }
-
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisTime) % 60;
-        long hours = TimeUnit.MILLISECONDS.toHours(millisTime);
-        String estimatedTime;
-        if (hours > 0) {
-            estimatedTime = hours+"h"+minutes+"m";
-        } else estimatedTime = minutes+"m";
-
-        binding.layoutBookATrip.tvEstimation.setText(estimatedTime);
     }
 
     private void getReviewers() {
@@ -225,12 +167,12 @@ public class BusDetailsActivity extends AppCompatActivity {
     }
 
     private void onImageShow(View v) {
-        View inflatedView = getLayoutInflater().inflate(R.layout.layout_image_viewer, null);
-        ImageView imageView = inflatedView.findViewById(R.id.ivViewer);
+        View inflatedView = getLayoutInflater().inflate(layout_image_viewer, null);
+        ImageView imageView = inflatedView.findViewById(ivViewer);
         Glide.with(this)
                 .load(buses.getImageUrl())
                 .centerCrop()
-                .placeholder(R.drawable.ic_brand)
+                .placeholder(ic_brand)
                 .into(imageView);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         builder.setView(inflatedView).show();

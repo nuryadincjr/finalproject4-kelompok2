@@ -2,6 +2,8 @@ package com.nuryadincjr.ebusantara.chooser;
 
 import static com.nuryadincjr.ebusantara.databinding.ActivityDatePickerBinding.inflate;
 
+import static java.text.DateFormat.*;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -25,7 +27,7 @@ public class DatePickerActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         Calendar calendar = Calendar.getInstance();
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL);
+        DateFormat dateFormat = getDateInstance(FULL);
         binding.tvSelectedDate.setText(dateFormat.format(calendar.getTime()));
 
         binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
@@ -35,12 +37,9 @@ public class DatePickerActivity extends AppCompatActivity {
         });
 
         binding.btnSelectedDate.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra("date", calendar);
-            setResult(RESULT_OK, intent);
+            setResult(RESULT_OK, new Intent().putExtra("date", calendar));
             onBackPressed();
         });
-
     }
 
     @Override
