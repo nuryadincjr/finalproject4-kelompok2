@@ -9,6 +9,7 @@ import static com.nuryadincjr.ebusantara.R.array.sort;
 import static com.nuryadincjr.ebusantara.R.id;
 import static com.nuryadincjr.ebusantara.R.layout;
 import static com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding.inflate;
+import static com.nuryadincjr.ebusantara.util.Constant.getUsers;
 import static com.nuryadincjr.ebusantara.util.Constant.toUpperCase;
 import static com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState.EXPANDED;
 import static com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState.HIDDEN;
@@ -35,6 +36,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.nuryadincjr.ebusantara.adapters.ScheduleAdapter;
+import com.nuryadincjr.ebusantara.api.ScheduleRepository;
 import com.nuryadincjr.ebusantara.chooser.DatePickerActivity;
 import com.nuryadincjr.ebusantara.chooser.DestinationChooserActivity;
 import com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding;
@@ -66,7 +68,6 @@ public class BusChooserActivity extends AppCompatActivity
 
         binding = inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         departureCity = getIntent().getParcelableExtra("departure_city");
         arrivalCity = getIntent().getParcelableExtra("arrival_city");
         passengers = getIntent().getStringExtra("passengers");
@@ -143,21 +144,25 @@ public class BusChooserActivity extends AppCompatActivity
     }
 
     private void getData() {
-        MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mainViewModel.getSchedule(departureCity, arrivalCity, calendar).observe(this, schedules -> {
-            Log.d("XXX", String.valueOf(schedules==null));
+        binding.layoutError.linearLayout.setVisibility(GONE);
+        binding.rvBuses.setVisibility(VISIBLE);
+        binding.rvBuses.showShimmerAdapter();
+
+        Log.d("xxx.", "404");
+
+        new ScheduleRepository().getSchedule(departureCity, arrivalCity, calendar, getUsers(this))
+                .observe(this, schedules -> {
+            if(schedules==null) schedules = new ArrayList<>();
             this.schedules = schedules;
             onSetData(schedules);
+            Log.d("xxx.", "505");
         });
     }
 
     @SuppressLint({"NewApi", "SetTextI18n"})
     private void onSetData(ArrayList<ScheduleReference> schedules) {
-        binding.rvBuses.showShimmerAdapter();
-        if (schedules != null) {
-            binding.rvBuses.setVisibility(VISIBLE);
-            binding.layoutError.linearLayout.setVisibility(GONE);
 
+        if (schedules == null) schedules = new ArrayList<>();
             boolean isLowestPiece = binding.tvFilters.getSelectedItem().toString().equals("Lowest price");
             boolean isHighestPiece = binding.tvFilters.getSelectedItem().toString().equals("Highest price");
             boolean isEstimation = binding.tvFilters.getSelectedItem().toString().equals("Estimate time");
@@ -181,13 +186,16 @@ public class BusChooserActivity extends AppCompatActivity
             binding.rvBuses.setLayoutManager(new LinearLayoutManager(this));
             binding.rvBuses.setAdapter(scheduleAdapter);
             onListener(scheduleAdapter, schedules);
-        } else {
-            binding.rvBuses.hideShimmerAdapter();
-            binding.rvBuses.setVisibility(GONE);
-            binding.layoutError.textView.setText("Sorry!");
-            binding.layoutError.tvMassage.setText("The destination location you selected was not found");
-            binding.layoutError.linearLayout.setVisibility(VISIBLE);
-        }
+
+            if(scheduleAdapter.getItemCount()==0){
+                binding.rvBuses.setVisibility(GONE);
+                binding.layoutError.textView.setText("Sorry!");
+                binding.layoutError.tvMassage.setText("The destination location you selected was not found");
+                binding.layoutError.linearLayout.setVisibility(VISIBLE);
+            }else {
+                binding.layoutError.linearLayout.setVisibility(GONE);
+                binding.rvBuses.setVisibility(VISIBLE);
+            }
     }
 
     private void onListener(ScheduleAdapter scheduleAdapter, ArrayList<ScheduleReference> schedules) {

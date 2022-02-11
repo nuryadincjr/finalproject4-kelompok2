@@ -2,6 +2,7 @@ package com.nuryadincjr.ebusantara.api;
 
 import static com.nuryadincjr.ebusantara.util.Constant.COLLECTION_SCHEDULE;
 import static java.lang.String.valueOf;
+import static java.util.Collections.sort;
 
 import android.annotation.SuppressLint;
 
@@ -16,6 +17,7 @@ import com.nuryadincjr.ebusantara.pojo.Reviewers;
 import com.nuryadincjr.ebusantara.pojo.ReviewersReference;
 import com.nuryadincjr.ebusantara.pojo.Schedule;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
+import com.nuryadincjr.ebusantara.pojo.Users;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,12 +29,14 @@ import java.util.List;
 public class ScheduleRepository {
     private final FirebaseFirestore db;
     private final CollectionReference collection;
-    private ArrayList<ScheduleReference> scheduleReferenceArrayList;
-    private MutableLiveData<ArrayList<ScheduleReference>> scheduleMutableLiveData;
+    private final ArrayList<ScheduleReference> scheduleReferenceArrayList;
+    private final MutableLiveData<ArrayList<ScheduleReference>> scheduleMutableLiveData;
 
     public ScheduleRepository() {
         db = FirebaseFirestore.getInstance();
         collection = db.collection(COLLECTION_SCHEDULE);
+        scheduleReferenceArrayList = new ArrayList<>();
+        scheduleMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<Schedule> getSchedule(String reference) {
@@ -49,12 +53,9 @@ public class ScheduleRepository {
 
     @SuppressLint("SimpleDateFormat")
     public MutableLiveData<ArrayList<ScheduleReference>> getSchedule(
-            Cities departureCity, Cities arrivalCity, Calendar calendar) {
+            Cities departureCity, Cities arrivalCity, Calendar calendar, Users user) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-        scheduleReferenceArrayList = new ArrayList<>();
-        scheduleMutableLiveData = new MutableLiveData<>();
 
         String date = format.format(calendar.getTime());
         collection.orderBy("departureTime")
@@ -75,37 +76,34 @@ public class ScheduleRepository {
 
                     if(date1.compareTo(date2) <= 0) {
                         getDepartureCity(departureCity.getCity(),
-                                arrivalCity.getCity(),  schedule);
+                                arrivalCity.getCity(),  schedule, user);
                     } else scheduleMutableLiveData.setValue(null);
                 }
-            } else scheduleMutableLiveData.setValue(null);
+            }
+            else scheduleMutableLiveData.setValue(null);
         });
         return scheduleMutableLiveData;
     }
 
-    private void getDepartureCity(String departureCity, String arrivalCity, Schedule schedule) {
+    private void getDepartureCity(String departureCity, String arrivalCity, Schedule schedule,  Users user) {
         new CitiesRepository().getCity(schedule.getDeparture().getPath())
                 .observeForever(departureCities -> {
                     if(departureCities != null && departureCities.getCity().equals(departureCity)){
-                        getArrivalCity(arrivalCity, schedule, departureCities);
-                    }else {
-                        scheduleMutableLiveData.postValue(null);
-                    }
+                        getArrivalCity(arrivalCity, schedule, departureCities, user);
+                    } else scheduleMutableLiveData.postValue(null);
                 });
     }
 
-    private void getArrivalCity(String arrivalCity, Schedule schedule, Cities departureCities) {
+    private void getArrivalCity(String arrivalCity, Schedule schedule, Cities departureCities, Users user) {
         new CitiesRepository().getCity(schedule.getArrival().getPath())
                 .observeForever(arrivalCities -> {
                     if(arrivalCities != null && arrivalCities.getCity().equals(arrivalCity)){
-                        getBuses(schedule, departureCities, arrivalCities);
-                    }else {
-                        scheduleMutableLiveData.postValue(null);
-                    }
+                        getBuses(schedule, departureCities, arrivalCities,user);
+                    } else scheduleMutableLiveData.postValue(null);
                 });
     }
 
-    private void getBuses(Schedule schedule, Cities departureCities, Cities arrivalCities) {
+    private void getBuses(Schedule schedule, Cities departureCities, Cities arrivalCities, Users user) {
         new BusesRepository().getBuses(schedule.getBus().getPath()).observeForever(buses ->{
             ScheduleReference scheduleReference = new ScheduleReference();
             if(buses != null){
@@ -116,15 +114,21 @@ public class ScheduleRepository {
                 scheduleReference.setDepartureTime(schedule.getDepartureTime());
                 scheduleReference.setArrivalTime(schedule.getArrivalTime());
 
-                getReviews(buses, scheduleReference);
+                getReviews(buses, scheduleReference, user);
             }
         });
     }
 
-    private void getReviews(Buses buses, ScheduleReference schedule) {
+    private void getReviews(Buses buses, ScheduleReference schedule, Users user) {
         new ReviewsRepository().getReviewers(buses).observeForever(data -> {
             double ratings = (double) data.get("ratings");
             List<Reviewers> reviewersList = (List<Reviewers>) data.get("reviewer");
+            sort(reviewersList, (o1, o2) -> {
+                if(o1.getUid().equals(user.getUid())){
+                    return -1;
+                }else return 1;
+            });
+
             if(valueOf(ratings).equals("NaN")) ratings = 0.0;
             String displayRating = ratings +"/5";
 

@@ -4,8 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/p10"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="?selectableItemBackground">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="250dp"
@@ -40,26 +39,34 @@
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:maxLines="2"
                 android:fontFamily="@font/nunito_extrabold"
                 android:gravity="center_vertical"
+                android:maxLines="2"
                 android:textStyle="bold"
                 tools:text="Merry" />
 
-            <TextView
-                android:id="@+id/tvRatings"
+            <ImageView
+                android:id="@+id/ivMore"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/lato_bold"
-                android:gravity="center|end"
-                android:text="@string/str_default_ratings"
-                app:drawableStartCompat="@drawable/ic_round_star"
-                app:drawableTint="@color/secondary"
-                tools:text="9/10" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center"
+                android:background="?selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_baseline_more_vert_24" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvRatings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="center"
+            android:text="@string/str_default_ratings"
+            app:drawableStartCompat="@drawable/ic_round_star"
+            app:drawableTint="@color/secondary"
+            tools:text="9/10" />
 
         <TextView
             android:id="@+id/tvReviewsContent"
@@ -67,8 +74,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:maxLines="5"
             android:fontFamily="@font/lato"
+            android:maxLines="5"
             android:paddingTop="10dp"
             android:paddingBottom="20dp"
             tools:text="pretty good, this bus serve very well. drivers and staffs are friendly." />
@@ -79,10 +86,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawablePadding="10dp"
-            android:gravity="center|start"
             android:ellipsize="end"
-            android:maxLines="5"
             android:fontFamily="@font/lato"
+            android:gravity="center|start"
+            android:maxLines="5"
             android:text="@string/str_default_count"
             app:drawableStartCompat="@drawable/ic_thumbs_up"
             tools:text="87 user agree with Merry" />

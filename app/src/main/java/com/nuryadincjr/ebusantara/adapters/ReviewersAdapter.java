@@ -3,6 +3,7 @@ package com.nuryadincjr.ebusantara.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nuryadincjr.ebusantara.R;
+import com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding;
 import com.nuryadincjr.ebusantara.databinding.ItemReviewsBinding;
+import com.nuryadincjr.ebusantara.databinding.LayoutBookATripBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.pojo.Reviewers;
+import com.nuryadincjr.ebusantara.pojo.Users;
+import com.nuryadincjr.ebusantara.util.Constant;
 import com.nuryadincjr.ebusantara.util.MainViewModel;
 
 import java.util.List;
@@ -23,9 +28,11 @@ import java.util.List;
 public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public ItemClickListener itemClickListener;
     private final List<Reviewers> reviewersList;
+    private final LayoutBookATripBinding layoutBookATrip;
 
-    public ReviewersAdapter(List<Reviewers> reviewersList) {
+    public ReviewersAdapter(List<Reviewers> reviewersList, LayoutBookATripBinding layoutBookATrip) {
         this.reviewersList = reviewersList;
+        this.layoutBookATrip = layoutBookATrip;
     }
 
     @NonNull
@@ -34,7 +41,7 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ItemReviewsBinding binding = ItemReviewsBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
-        return new ScheduleViewHolder(binding, this);
+        return new ScheduleViewHolder(binding,this, layoutBookATrip);
     }
 
     @Override
@@ -56,11 +63,14 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             implements View.OnClickListener, View.OnLongClickListener {
         private final ItemReviewsBinding binding;
         private final ReviewersAdapter scheduleAdapter;
+        private final LayoutBookATripBinding layoutBookATrip;
 
-        public ScheduleViewHolder(ItemReviewsBinding binding, ReviewersAdapter scheduleAdapter) {
+        public ScheduleViewHolder(ItemReviewsBinding binding, ReviewersAdapter scheduleAdapter,
+                                  LayoutBookATripBinding layoutBookATrip) {
             super(binding.getRoot());
             this.binding = binding;
             this.scheduleAdapter = scheduleAdapter;
+            this.layoutBookATrip = layoutBookATrip;
         }
 
         public void setDataToView(Reviewers reviewers, int position) {
@@ -86,6 +96,10 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             mainViewModel.getUsers(reviewers).observe((LifecycleOwner) itemView.getContext(), users -> {
                 binding.tvName.setText(users.getName());
 
+                Users user = Constant.getUsers(itemView.getContext());
+                if(users.getUid().equals(user.getUid())){
+                    layoutBookATrip.llRating.setVisibility(View.GONE);
+                }
                 Glide.with(itemView)
                         .load(users.getPhotoUrl())
                         .centerCrop()
@@ -101,6 +115,8 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             binding.getRoot().setOnLongClickListener(this);
             binding.getRoot().setOnClickListener(this);
+            binding.ivMore.setOnClickListener(this);
+            binding.ivMore.setOnLongClickListener(this);
         }
 
         @Override
