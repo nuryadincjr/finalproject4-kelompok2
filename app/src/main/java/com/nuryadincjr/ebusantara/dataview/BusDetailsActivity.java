@@ -16,16 +16,18 @@ import static java.util.Collections.sort;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -34,6 +36,8 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.ReviewersAdapter;
@@ -48,7 +52,6 @@ import com.nuryadincjr.ebusantara.pojo.ReviewersReference;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Seats;
 import com.nuryadincjr.ebusantara.pojo.Users;
-import com.nuryadincjr.ebusantara.util.Constant;
 import com.nuryadincjr.ebusantara.util.MainViewModel;
 
 import java.text.SimpleDateFormat;
@@ -66,6 +69,7 @@ public class BusDetailsActivity extends AppCompatActivity {
     private Seats seats;
     private Users user;
     private LayoutBookATripBinding layoutBookATrip;
+    private ReviewsRepository repository;
 
     @SuppressLint("SimpleDateFormat")
     @Override
@@ -83,7 +87,7 @@ public class BusDetailsActivity extends AppCompatActivity {
         reviewers = schedule.getReviewers();
         buses = schedule.getBuses();
         seats = buses.getSeats();
-
+        repository = new ReviewsRepository();
         layoutBookATrip = binding.layoutBookATrip;
         Calendar calendar =  (Calendar) getIntent().getSerializableExtra("date");
         SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy");
@@ -109,7 +113,7 @@ public class BusDetailsActivity extends AppCompatActivity {
 
         getSeats();
         getImage();
-        getReviewers(reviewers.getReviewers());
+        getReviewers();
         getFacilities();
 
         binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
@@ -135,7 +139,7 @@ public class BusDetailsActivity extends AppCompatActivity {
         poName.setText(schedule.getBuses().getPoName());
         busNo.setText(schedule.getBuses().getBusNo());
 
-        ReviewsRepository repository = new ReviewsRepository();
+
         repository.getReviewers(id, users).observe(this, reviewers -> {
 
             if(reviewers!=null && reviewers.size()!=0) {
@@ -250,7 +254,7 @@ public class BusDetailsActivity extends AppCompatActivity {
                     repository.deleteReview(id, reviewers.get(0));
                 }
                 repository.updateReview(id, reviewer);
-                onReviews();
+                getReviewers();
             }
             dialog.hide();
         });
@@ -339,7 +343,7 @@ public class BusDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void getReviewers(List<Reviewers> reviewers) {
+    private void onReviewers(List<Reviewers> reviewers) {
         ReviewersAdapter reviewersAdapter = new ReviewersAdapter(reviewers, layoutBookATrip);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, HORIZONTAL, false);
         binding.layoutBookATrip.rvReviews.setLayoutManager(layoutManager);
@@ -350,12 +354,42 @@ public class BusDetailsActivity extends AppCompatActivity {
 
     private void onListener(ReviewersAdapter scheduleAdapter, List<Reviewers> schedules) {
         scheduleAdapter.setItemClickListener(new ItemClickListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public void onClick(View view, int position) {
                 if(view.getId()== R.id.ivMore){
-                    if(schedules.get(position).getUid().equals(user.getUid())){
-                        getPopup(schedule, user);
-                    }
+                    PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                    popupMenu.inflate(R.menu.menu_more_item);
+                    Menu menu = popupMenu.getMenu();
+                    if(!schedules.get(position).getUid().equals(user.getUid())){
+                        menu.findItem(R.id.itemEdit).setVisible(false);
+                        menu.findItem(R.id.itemDelete).setVisible(false);
+                    }else menu.findItem(R.id.itemReport).setVisible(false);
+
+                    popupMenu.setOnMenuItemClickListener(item -> {
+                        switch (item.getItemId()){
+                            case R.id.itemEdit:
+                                getPopup(schedule, user);
+                                return true;
+                            case R.id.itemDelete:
+                                new MaterialAlertDialogBuilder(view.getContext())
+                                        .setTitle("Delete your review?")
+                                        .setNeutralButton("Cancel", (dialog, which) -> { })
+                                        .setNegativeButton("Ok", (dialog, which) -> {
+                                            repository.deleteReview(buses.getId(), schedules.get(position));
+                                            getReviewers();
+                                            layoutBookATrip.llRating.setVisibility(View.VISIBLE);
+                                        }).show();
+
+                                return true;
+                            case R.id.itemReport:
+                                return true;
+                            default:
+                                return false;
+                        }
+                    });
+                    popupMenu.show();
+
                 }else if(view.getId()== R.id.ivProfile){
                     MainViewModel mainViewModel = new ViewModelProvider((ViewModelStoreOwner) view.getContext())
                             .get(MainViewModel.class);
@@ -384,7 +418,7 @@ public class BusDetailsActivity extends AppCompatActivity {
         builder.setView(inflatedView).show();
     }
 
-    private void onReviews(){
+    private void getReviewers(){
         new ReviewsRepository().getReviewers(buses).observe(this, data -> {
             List<Reviewers> reviewersList = (List<Reviewers>) data.get("reviewer");
             sort(reviewersList, (o1, o2) -> {
@@ -392,7 +426,7 @@ public class BusDetailsActivity extends AppCompatActivity {
                 else return 1;
             });
 
-            getReviewers(reviewersList);
+            onReviewers(reviewersList);
         });
     }
 }

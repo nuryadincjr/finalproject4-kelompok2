@@ -100,6 +100,7 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 if(users.getUid().equals(user.getUid())){
                     layoutBookATrip.llRating.setVisibility(View.GONE);
                 }
+
                 Glide.with(itemView)
                         .load(users.getPhotoUrl())
                         .centerCrop()
