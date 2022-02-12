@@ -89,8 +89,9 @@
             android:ellipsize="end"
             android:fontFamily="@font/lato"
             android:gravity="center|start"
-            android:maxLines="5"
+            android:maxLines="1"
             android:text="@string/str_default_count"
+            android:background="?selectableItemBackground"
             app:drawableStartCompat="@drawable/ic_thumbs_up"
             tools:text="87 user agree with Merry" />
 

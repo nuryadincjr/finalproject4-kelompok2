@@ -3,21 +3,24 @@ package com.nuryadincjr.ebusantara.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 public class Reviewers implements Parcelable {
     private String uid;
     private String date;
     private String content;
     private String ratings;
+    private List<String> likes;
 
     public Reviewers() {
     }
 
-    public Reviewers(String uid, String date,
-                     String content, String ratings) {
+    public Reviewers(String uid, String date, String content, String ratings, List<String> likes) {
         this.uid = uid;
         this.date = date;
         this.content = content;
         this.ratings = ratings;
+        this.likes = likes;
     }
 
     protected Reviewers(Parcel in) {
@@ -25,6 +28,7 @@ public class Reviewers implements Parcelable {
         date = in.readString();
         content = in.readString();
         ratings = in.readString();
+        likes = in.createStringArrayList();
     }
 
     @Override
@@ -33,6 +37,7 @@ public class Reviewers implements Parcelable {
         dest.writeString(date);
         dest.writeString(content);
         dest.writeString(ratings);
+        dest.writeStringList(likes);
     }
 
     @Override
@@ -82,5 +87,13 @@ public class Reviewers implements Parcelable {
 
     public void setRatings(String ratings) {
         this.ratings = ratings;
+    }
+
+    public List<String> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<String> likes) {
+        this.likes = likes;
     }
 }

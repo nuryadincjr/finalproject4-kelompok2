@@ -27,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -36,8 +35,6 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.ReviewersAdapter;
@@ -62,7 +59,6 @@ import java.util.List;
 
 public class BusDetailsActivity extends AppCompatActivity {
     private ActivityBusDetailsBinding binding;
-    private ReviewersReference reviewers;
     private ScheduleReference schedule;
     private String passengers;
     private Buses buses;
@@ -84,7 +80,7 @@ public class BusDetailsActivity extends AppCompatActivity {
         passengers = getIntent().getStringExtra("passengers");
         Cities departureCity = schedule.getDeparture();
         Cities arrivalCity = schedule.getArrival();
-        reviewers = schedule.getReviewers();
+        ReviewersReference reviewers = schedule.getReviewers();
         buses = schedule.getBuses();
         seats = buses.getSeats();
         repository = new ReviewsRepository();
@@ -246,8 +242,13 @@ public class BusDetailsActivity extends AppCompatActivity {
                 rating = 0;
             }
 
+            List<String> likes = new ArrayList<>();
+            if(reviewers!=null && reviewers.size()!=0) {
+                likes = reviewers.get(0).getLikes();
+            }
+
             Reviewers reviewer = new Reviewers(users.getUid(), format.format(date),
-                    content.getText().toString(), valueOf(rating));
+                    content.getText().toString(), valueOf(rating), likes);
 
             if(rating !=0) {
                 if(reviewers!=null && reviewers.size()!=0) {
@@ -396,6 +397,17 @@ public class BusDetailsActivity extends AppCompatActivity {
                     mainViewModel.getUsers(schedules.get(position).getUid())
                             .observe((LifecycleOwner) view.getContext(), users ->
                             onImageShow(users.getPhotoUrl()));
+                }else if(view.getId()== R.id.tvReaction){
+                    repository.deleteReview(buses.getId(), schedules.get(position));
+                    List<String> newLike = new ArrayList<>(schedules.get(position).getLikes());
+                    if(newLike.contains(user.getUid())){
+                        newLike.remove(user.getUid());
+                    }else newLike.add(user.getUid());
+
+                    Reviewers reviewers = schedules.get(position);
+                    reviewers.setLikes(newLike);
+                    repository.updateReview(buses.getId(), reviewers);
+                    getReviewers();
                 }
             }
 

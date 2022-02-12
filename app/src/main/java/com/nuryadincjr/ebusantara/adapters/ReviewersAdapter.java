@@ -1,9 +1,9 @@
 package com.nuryadincjr.ebusantara.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nuryadincjr.ebusantara.R;
-import com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding;
 import com.nuryadincjr.ebusantara.databinding.ItemReviewsBinding;
 import com.nuryadincjr.ebusantara.databinding.LayoutBookATripBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
@@ -74,6 +73,36 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         public void setDataToView(Reviewers reviewers, int position) {
+
+            Users user = Constant.getUsers(itemView.getContext());
+            MainViewModel mainViewModel = new ViewModelProvider((ViewModelStoreOwner)
+                    itemView.getContext()).get(MainViewModel.class);
+            mainViewModel.getUsers(reviewers.getUid()).observe((LifecycleOwner)
+                    itemView.getContext(), users -> {
+
+                binding.tvName.setText(users.getName());
+                if(users.getUid().equals(user.getUid())){
+                    layoutBookATrip.llRating.setVisibility(View.GONE);
+
+                }
+
+                Glide.with(itemView)
+                        .load(users.getPhotoUrl())
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_brand)
+                        .into(binding.ivProfile);
+
+                if(reviewers.getLikes()!=null){
+                    int like = reviewers.getLikes().size();
+                    String message = like+" user agree with "+users.getName();
+                    binding.tvReaction.setText(message);
+
+                    if(reviewers.getLikes().contains(user.getUid())){
+                        binding.tvReaction.setTextColor(Color.BLUE);
+                    }
+                }
+            });
+
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT,
                     RelativeLayout.LayoutParams.WRAP_CONTENT
@@ -91,23 +120,6 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 binding.getRoot().setLayoutParams(params);
             }
 
-            MainViewModel mainViewModel = new ViewModelProvider((ViewModelStoreOwner) itemView.getContext())
-                    .get(MainViewModel.class);
-            mainViewModel.getUsers(reviewers.getUid()).observe((LifecycleOwner) itemView.getContext(), users -> {
-                binding.tvName.setText(users.getName());
-
-                Users user = Constant.getUsers(itemView.getContext());
-                if(users.getUid().equals(user.getUid())){
-                    layoutBookATrip.llRating.setVisibility(View.GONE);
-                }
-
-                Glide.with(itemView)
-                        .load(users.getPhotoUrl())
-                        .centerCrop()
-                        .placeholder(R.drawable.ic_brand)
-                        .into(binding.ivProfile);
-            });
-
             String rating = reviewers.getRatings();
             if(rating.equals("NaN")) rating = "0";
             binding.tvReviewsContent.setText(reviewers.getContent());
@@ -118,6 +130,7 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             binding.getRoot().setOnClickListener(this);
             binding.ivMore.setOnClickListener(this);
             binding.ivProfile.setOnClickListener(this);
+            binding.tvReaction.setOnClickListener(this);
         }
 
         @Override

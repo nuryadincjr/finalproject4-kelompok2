@@ -18,6 +18,7 @@ import com.nuryadincjr.ebusantara.pojo.Reviewers;
 import com.nuryadincjr.ebusantara.pojo.Users;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +74,8 @@ public class ReviewsRepository {
                                 valueOf(map.get("uid")),
                                 valueOf(map.get("date")),
                                 valueOf(map.get("content")),
-                                valueOf(map.get("ratings")));
+                                valueOf(map.get("ratings")),
+                                (List<String>) map.get("likes"));
 
                         ratings += Double.parseDouble(reviewers.getRatings());
                         reviewersList.add(reviewers);
