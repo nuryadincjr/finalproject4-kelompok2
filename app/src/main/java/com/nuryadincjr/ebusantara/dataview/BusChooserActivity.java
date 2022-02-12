@@ -32,6 +32,7 @@ import android.widget.SeekBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -42,6 +43,7 @@ import com.nuryadincjr.ebusantara.chooser.DestinationChooserActivity;
 import com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.pojo.Cities;
+import com.nuryadincjr.ebusantara.pojo.Schedule;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.util.Constant;
 import com.nuryadincjr.ebusantara.util.MainViewModel;
@@ -49,6 +51,8 @@ import com.nuryadincjr.ebusantara.util.MainViewModel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BusChooserActivity extends AppCompatActivity
         implements OnClickListener {
@@ -148,15 +152,13 @@ public class BusChooserActivity extends AppCompatActivity
         binding.rvBuses.setVisibility(VISIBLE);
         binding.rvBuses.showShimmerAdapter();
 
-        Log.d("xxx.", "404");
-
-        new ScheduleRepository().getSchedule(departureCity, arrivalCity, calendar, getUsers(this))
-                .observe(this, schedules -> {
-            if(schedules==null) schedules = new ArrayList<>();
-            this.schedules = schedules;
-            onSetData(schedules);
-            Log.d("xxx.", "505");
-        });
+        ScheduleRepository repository = new ScheduleRepository();
+        repository.getSchedule(departureCity, arrivalCity, calendar, getUsers(this))
+                .observeForever(schedules -> {
+                    if(schedules==null) schedules = new ArrayList<>();
+                    this.schedules = schedules;
+                    onSetData(schedules);
+                });
     }
 
     @SuppressLint({"NewApi", "SetTextI18n"})

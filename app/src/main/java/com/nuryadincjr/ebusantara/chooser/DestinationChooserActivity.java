@@ -106,6 +106,7 @@ public class DestinationChooserActivity extends AppCompatActivity {
     }
 
     private void onDataChanged(ArrayList<Cities> cities) {
+        if(cities==null) cities = new ArrayList<>();
         CitiesAdapter citiesAdapter = new CitiesAdapter(cities);
         binding.rvSearch.showShimmerAdapter();
         binding.rvSearch.setLayoutManager(new LinearLayoutManager(this));

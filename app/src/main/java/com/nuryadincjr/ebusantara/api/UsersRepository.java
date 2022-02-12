@@ -23,9 +23,9 @@ public class UsersRepository {
         return collection.document(user.getUid()).set(user);
     }
 
-    public MutableLiveData<Users> getUsers(Reviewers reviewers) {
+    public MutableLiveData<Users> getUsers(String uid) {
         MutableLiveData<Users> listMutableLiveData = new MutableLiveData<>();
-        db.document("users/"+reviewers.getUid())
+        db.document("users/"+uid)
                 .get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 Users users = task.getResult().toObject(Users.class);

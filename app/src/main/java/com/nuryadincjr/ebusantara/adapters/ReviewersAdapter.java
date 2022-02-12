@@ -93,7 +93,7 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             MainViewModel mainViewModel = new ViewModelProvider((ViewModelStoreOwner) itemView.getContext())
                     .get(MainViewModel.class);
-            mainViewModel.getUsers(reviewers).observe((LifecycleOwner) itemView.getContext(), users -> {
+            mainViewModel.getUsers(reviewers.getUid()).observe((LifecycleOwner) itemView.getContext(), users -> {
                 binding.tvName.setText(users.getName());
 
                 Users user = Constant.getUsers(itemView.getContext());
@@ -116,7 +116,7 @@ public class ReviewersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             binding.getRoot().setOnLongClickListener(this);
             binding.getRoot().setOnClickListener(this);
             binding.ivMore.setOnClickListener(this);
-            binding.ivMore.setOnLongClickListener(this);
+            binding.ivProfile.setOnClickListener(this);
         }
 
         @Override

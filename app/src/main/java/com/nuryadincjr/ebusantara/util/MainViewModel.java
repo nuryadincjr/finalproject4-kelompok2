@@ -51,7 +51,7 @@ public class MainViewModel extends AndroidViewModel {
         return scheduleRepository.getSchedule(departureCity, arrivalCity, calendar, user);
     }
 
-    public MutableLiveData<Users> getUsers(Reviewers reviewers) {
-        return usersRepository.getUsers(reviewers);
+    public MutableLiveData<Users> getUsers(String uid) {
+        return usersRepository.getUsers(uid);
     }
 }

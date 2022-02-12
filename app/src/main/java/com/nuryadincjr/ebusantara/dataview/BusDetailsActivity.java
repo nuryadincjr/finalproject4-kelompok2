@@ -12,13 +12,14 @@ import static com.nuryadincjr.ebusantara.util.Constant.getTime;
 import static com.nuryadincjr.ebusantara.util.Constant.getUsers;
 import static com.nuryadincjr.ebusantara.util.Constant.toUpperCase;
 import static java.lang.String.valueOf;
+import static java.util.Collections.sort;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
@@ -27,13 +28,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.nuryadincjr.ebusantara.R;
 import com.nuryadincjr.ebusantara.adapters.ReviewersAdapter;
-import com.nuryadincjr.ebusantara.adapters.ScheduleAdapter;
 import com.nuryadincjr.ebusantara.api.ReviewsRepository;
 import com.nuryadincjr.ebusantara.databinding.ActivityBusDetailsBinding;
 import com.nuryadincjr.ebusantara.databinding.LayoutBookATripBinding;
@@ -45,6 +48,8 @@ import com.nuryadincjr.ebusantara.pojo.ReviewersReference;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.pojo.Seats;
 import com.nuryadincjr.ebusantara.pojo.Users;
+import com.nuryadincjr.ebusantara.util.Constant;
+import com.nuryadincjr.ebusantara.util.MainViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -104,12 +109,12 @@ public class BusDetailsActivity extends AppCompatActivity {
 
         getSeats();
         getImage();
-        getReviewers();
+        getReviewers(reviewers.getReviewers());
         getFacilities();
 
         binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
         binding.btnBookNow.setOnClickListener(v -> onStartActivity(calendar));
-        layoutBookATrip.tvSeePicture.setOnClickListener(this::onImageShow);
+        layoutBookATrip.tvSeePicture.setOnClickListener(v-> onImageShow(buses.getImageUrl()));
     }
 
     @SuppressLint("InflateParams")
@@ -245,6 +250,7 @@ public class BusDetailsActivity extends AppCompatActivity {
                     repository.deleteReview(id, reviewers.get(0));
                 }
                 repository.updateReview(id, reviewer);
+                onReviews();
             }
             dialog.hide();
         });
@@ -333,13 +339,13 @@ public class BusDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void getReviewers() {
-        ReviewersAdapter reviewersAdapter = new ReviewersAdapter(reviewers.getReviewers(), layoutBookATrip);
+    private void getReviewers(List<Reviewers> reviewers) {
+        ReviewersAdapter reviewersAdapter = new ReviewersAdapter(reviewers, layoutBookATrip);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, HORIZONTAL, false);
         binding.layoutBookATrip.rvReviews.setLayoutManager(layoutManager);
         binding.layoutBookATrip.rvReviews.setAdapter(reviewersAdapter);
 
-        onListener(reviewersAdapter, reviewers.getReviewers());
+        onListener(reviewersAdapter, reviewers);
     }
 
     private void onListener(ReviewersAdapter scheduleAdapter, List<Reviewers> schedules) {
@@ -350,6 +356,12 @@ public class BusDetailsActivity extends AppCompatActivity {
                     if(schedules.get(position).getUid().equals(user.getUid())){
                         getPopup(schedule, user);
                     }
+                }else if(view.getId()== R.id.ivProfile){
+                    MainViewModel mainViewModel = new ViewModelProvider((ViewModelStoreOwner) view.getContext())
+                            .get(MainViewModel.class);
+                    mainViewModel.getUsers(schedules.get(position).getUid())
+                            .observe((LifecycleOwner) view.getContext(), users ->
+                            onImageShow(users.getPhotoUrl()));
                 }
             }
 
@@ -360,15 +372,27 @@ public class BusDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void onImageShow(View v) {
+    private void onImageShow(String uri) {
         View inflatedView = getLayoutInflater().inflate(layout_image_viewer, null);
         ImageView imageView = inflatedView.findViewById(ivViewer);
         Glide.with(this)
-                .load(buses.getImageUrl())
+                .load(uri)
                 .centerCrop()
                 .placeholder(ic_brand)
                 .into(imageView);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         builder.setView(inflatedView).show();
+    }
+
+    private void onReviews(){
+        new ReviewsRepository().getReviewers(buses).observe(this, data -> {
+            List<Reviewers> reviewersList = (List<Reviewers>) data.get("reviewer");
+            sort(reviewersList, (o1, o2) -> {
+                if(o1.getUid().equals(user.getUid())) return -1;
+                else return 1;
+            });
+
+            getReviewers(reviewersList);
+        });
     }
 }
