@@ -423,7 +423,6 @@ public class BusDetailsActivity extends AppCompatActivity {
         ImageView imageView = inflatedView.findViewById(ivViewer);
         Glide.with(this)
                 .load(uri)
-                .centerCrop()
                 .placeholder(ic_brand)
                 .into(imageView);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);

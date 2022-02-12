@@ -131,9 +131,8 @@ public class BusChooserActivity extends AppCompatActivity
 
         if(savedInstanceState != null) {
             onStateData(savedInstanceState);
-        }else {
-            getData();
-        }
+        }else getData();
+
     }
 
     @Override

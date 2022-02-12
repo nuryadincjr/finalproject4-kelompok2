@@ -43,6 +43,8 @@ import java.util.ArrayList;
 
 public class TicketsFragment extends Fragment {
     private FragmentTicketsBinding binding;
+    ArrayList<TransactionsReference> ticket;
+    Users users;
 
     public TicketsFragment() {
         // Required empty public constructor
@@ -57,7 +59,7 @@ public class TicketsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentTicketsBinding.inflate(inflater, container, false);
-        Users users = getUsers(getContext());
+        users = getUsers(getContext());
 
         ScheduleReference schedule = getArguments().getParcelable("schedule");
         Transactions transactions = getArguments().getParcelable("transactions");
@@ -66,32 +68,50 @@ public class TicketsFragment extends Fragment {
                 .getBoolean("isRating", false);
         if(isRating) getPopup(schedule, transactions, users);
 
-        getData(users);
+        if(savedInstanceState != null) {
+            onStateData(savedInstanceState);
+        }else getData();
+
         return binding.getRoot();
     }
 
-    private void getData(Users users) {
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelableArrayList("ticket", ticket);
+        super.onSaveInstanceState(outState);
+    }
+
+    private void onStateData(Bundle savedInstanceState) {
+        ticket = savedInstanceState.getParcelableArrayList("ticket");
+        onSetData(ticket);
+    }
+
+    private void getData() {
         MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mainViewModel.getTransactions(users.getUid()).observe(getViewLifecycleOwner(), ticket -> {
-            if(ticket != null){
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    sort(ticket, (o1, o2) -> o2.getTransactions().getDate()
-                            .compareTo(o1.getTransactions().getDate()));
-                }
-
-                TicketsAdapter citiesAdapter = new TicketsAdapter(ticket);
-                binding.rvTickets.setVisibility(VISIBLE);
-                binding.layoutError.linearLayout.setVisibility(GONE);
-                binding.rvTickets.showShimmerAdapter();
-                binding.rvTickets.setLayoutManager(new LinearLayoutManager(getContext()));
-                binding.rvTickets.setAdapter(citiesAdapter);
-
-                onListener(citiesAdapter, ticket, users);
-            }else {
-                binding.rvTickets.setVisibility(GONE);
-                binding.layoutError.linearLayout.setVisibility(VISIBLE);
-            }
+            if (ticket == null) ticket = new ArrayList<>();
+            this.ticket = ticket;
+            onSetData(ticket);
         });
+    }
+
+    private void onSetData(ArrayList<TransactionsReference> ticket) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            sort(ticket, (o1, o2) -> o2.getTransactions().getDate()
+                    .compareTo(o1.getTransactions().getDate()));
+        }
+        TicketsAdapter citiesAdapter = new TicketsAdapter(ticket);
+        binding.rvTickets.setVisibility(VISIBLE);
+        binding.layoutError.linearLayout.setVisibility(GONE);
+        binding.rvTickets.showShimmerAdapter();
+        binding.rvTickets.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvTickets.setAdapter(citiesAdapter);
+        onListener(citiesAdapter, ticket, users);
+
+        if(citiesAdapter.getItemCount()==0){
+            binding.rvTickets.setVisibility(GONE);
+            binding.layoutError.linearLayout.setVisibility(VISIBLE);
+        }
     }
 
     @SuppressLint("InflateParams")
