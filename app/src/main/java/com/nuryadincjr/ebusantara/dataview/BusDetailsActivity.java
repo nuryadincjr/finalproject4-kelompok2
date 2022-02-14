@@ -6,6 +6,7 @@ import static com.nuryadincjr.ebusantara.R.drawable.ic_brand;
 import static com.nuryadincjr.ebusantara.R.id.ivViewer;
 import static com.nuryadincjr.ebusantara.R.layout.activity_bus_details;
 import static com.nuryadincjr.ebusantara.R.layout.layout_image_viewer;
+import static com.nuryadincjr.ebusantara.databinding.ActivityBusDetailsBinding.*;
 import static com.nuryadincjr.ebusantara.util.Constant.getEstimatedTimes;
 import static com.nuryadincjr.ebusantara.util.Constant.getPieces;
 import static com.nuryadincjr.ebusantara.util.Constant.getTime;
@@ -29,9 +30,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
@@ -58,13 +57,12 @@ import java.util.Date;
 import java.util.List;
 
 public class BusDetailsActivity extends AppCompatActivity {
-    private ActivityBusDetailsBinding binding;
-    private ScheduleReference schedule;
+    private LayoutBookATripBinding layoutBookATrip;
+    private ScheduleReference scheduleReference;
     private String passengers;
     private Buses buses;
     private Seats seats;
     private Users user;
-    private LayoutBookATripBinding layoutBookATrip;
     private ReviewsRepository repository;
 
     @SuppressLint("SimpleDateFormat")
@@ -73,19 +71,21 @@ public class BusDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(activity_bus_details);
 
-        binding = ActivityBusDetailsBinding.inflate(getLayoutInflater());
+        ActivityBusDetailsBinding binding = inflate(getLayoutInflater());
+        layoutBookATrip = binding.layoutBookATrip;
         setContentView(binding.getRoot());
 
-        schedule = getIntent().getParcelableExtra("schedule");
+        scheduleReference = getIntent().getParcelableExtra("schedule");
         passengers = getIntent().getStringExtra("passengers");
-        Cities departureCity = schedule.getDeparture();
-        Cities arrivalCity = schedule.getArrival();
-        ReviewersReference reviewers = schedule.getReviewers();
-        buses = schedule.getBuses();
+        Cities departureCity = scheduleReference.getDeparture();
+        Cities arrivalCity = scheduleReference.getArrival();
+        ReviewersReference reviewers = scheduleReference.getReviewers();
+        buses = scheduleReference.getBuses();
         seats = buses.getSeats();
         repository = new ReviewsRepository();
-        layoutBookATrip = binding.layoutBookATrip;
-        Calendar calendar =  (Calendar) getIntent().getSerializableExtra("date");
+        user = getUsers(this);
+
+        Calendar calendar = (Calendar) getIntent().getSerializableExtra("date");
         SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy");
         layoutBookATrip.tvBookingDate.setText(format.format(calendar.getTime()));
         format = new SimpleDateFormat("d MMM yyyy");
@@ -97,15 +97,11 @@ public class BusDetailsActivity extends AppCompatActivity {
         layoutBookATrip.tvBusNo.setText(buses.getBusNo());
         layoutBookATrip.tvClass.setText(buses.getClassType());
         layoutBookATrip.tvRatings.setText(reviewers.getRatingsCount());
-        layoutBookATrip.tvEstimation.setText(getEstimatedTimes(schedule));
-        layoutBookATrip.tvDepartureTime.setText(getTime(schedule).get("departureTime"));
-        layoutBookATrip.tvArrivalTime.setText(getTime(schedule).get("arrivalTime"));
+        layoutBookATrip.tvEstimation.setText(getEstimatedTimes(scheduleReference));
+        layoutBookATrip.tvDepartureTime.setText(getTime(scheduleReference).get("departureTime"));
+        layoutBookATrip.tvArrivalTime.setText(getTime(scheduleReference).get("arrivalTime"));
         binding.tvSubTotals.setText(getPieces(buses, passengers).get("displaySubTotal"));
         binding.tvTotals.setText(getPieces(buses, passengers).get("subTotal"));
-
-        user = getUsers(this);
-        binding.layoutBookATrip.llRating.setOnClickListener(v ->
-                getPopup(schedule, user));
 
         getSeats();
         getImage();
@@ -114,11 +110,12 @@ public class BusDetailsActivity extends AppCompatActivity {
 
         binding.ivBackArrow.setOnClickListener(v -> onBackPressed());
         binding.btnBookNow.setOnClickListener(v -> onStartActivity(calendar));
+        layoutBookATrip.llRating.setOnClickListener(v -> getPopup(new Reviewers()));
         layoutBookATrip.tvSeePicture.setOnClickListener(v-> onImageShow(buses.getImageUrl()));
     }
 
     @SuppressLint("InflateParams")
-    public void getPopup(ScheduleReference schedule, Users users) {
+    public void getPopup(Reviewers reviewer) {
         View layoutRating = getLayoutInflater().inflate(R.layout.layout_review, null);
         TextView poName = layoutRating.findViewById(R.id.tvPOName);
         TextView busNo = layoutRating.findViewById(R.id.tvBusNo);
@@ -130,50 +127,48 @@ public class BusDetailsActivity extends AppCompatActivity {
         CheckedTextView star3 = layoutRating.findViewById(R.id.ctvStar3);
         CheckedTextView star4 = layoutRating.findViewById(R.id.ctvStar4);
         CheckedTextView star5 = layoutRating.findViewById(R.id.ctvStar5);
-        String id = schedule.getBuses().getId();
 
-        poName.setText(schedule.getBuses().getPoName());
-        busNo.setText(schedule.getBuses().getBusNo());
+        poName.setText(scheduleReference.getBuses().getPoName());
+        busNo.setText(scheduleReference.getBuses().getBusNo());
 
-
-        repository.getReviewers(id, users).observe(this, reviewers -> {
-
-            if(reviewers!=null && reviewers.size()!=0) {
-                Reviewers reviewer = reviewers.get(0);
-                content.setText(reviewer.getContent());
-                switch (reviewer.getRatings()){
-                    case "1":
-                        getSelected(star1, star2, star3, star4, star5, !star1.isChecked(),
-                                false, false, false, false);
-                        break;
-                    case "2":
-                        getSelected(star1, star2, star3, star4, star5,
-                                true, true, false, false, false);
-                        break;
-                    case "3":
-                        getSelected(star1, star2, star3, star4, star5,
-                                true, true, true, false, false);
-                        break;
-                    case "4":
-                        getSelected(star1, star2, star3, star4, star5,
-                                true, true, true, true, false);
-                        break;
-                    case "5":
-                        getSelected(star1, star2, star3, star4, star5,
-                                true, true, true, true, true);
-                        break;
-                }
+        if(reviewer.getUid()!=null){
+            content.setText(reviewer.getContent());
+            switch (reviewer.getRatings()){
+                case "1":
+                    getSelected(star1, star2, star3, star4, star5,
+                            !star1.isChecked(), false, false,
+                            false, false);
+                    break;
+                case "2":
+                    getSelected(star1, star2, star3, star4, star5,
+                            true, true, false,
+                            false, false);
+                    break;
+                case "3":
+                    getSelected(star1, star2, star3, star4, star5,
+                            true, true, true,
+                            false, false);
+                    break;
+                case "4":
+                    getSelected(star1, star2, star3, star4, star5,
+                            true, true, true,
+                            true, false);
+                    break;
+                case "5":
+                    getSelected(star1, star2, star3, star4, star5,
+                            true, true, true,
+                            true, true);
+                    break;
             }
-
-            onShowPopup(reviewers, users, layoutRating, maxLine,rate,
-                    content, star1, star2, star3, star4, star5, id, repository);
-        });
+        }
+        onShowPopup(reviewer, layoutRating, maxLine, rate,
+                content, star1, star2, star3, star4, star5);
     }
 
-    private void onShowPopup(ArrayList<Reviewers> reviewers, Users users, View inflatedView,
-                             TextView maxLine, TextView rate, EditText content, CheckedTextView star1,
-                             CheckedTextView star2, CheckedTextView star3, CheckedTextView star4,
-                             CheckedTextView star5, String id, ReviewsRepository repository) {
+    @SuppressLint("SimpleDateFormat")
+    private void onShowPopup(Reviewers reviewer, View inflatedView, TextView maxLine, TextView rate,
+                             EditText content, CheckedTextView star1, CheckedTextView star2,
+                             CheckedTextView star3, CheckedTextView star4, CheckedTextView star5) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(inflatedView);
@@ -198,28 +193,17 @@ public class BusDetailsActivity extends AppCompatActivity {
             }
         });
 
-        star1.setOnClickListener(v -> {
-            getSelected(star1, star2, star3, star4, star5, !star1.isChecked(),
-                    false, false, false, false);
-        });
-        star2.setOnClickListener(v -> {
-            getSelected(star1, star2, star3, star4, star5,
-                    true, true, false, false, false);
-        });
-        star3.setOnClickListener(v -> {
-            getSelected(star1, star2, star3, star4, star5,
-                    true, true, true, false, false);
-        });
-        star4.setOnClickListener(v -> {
-            getSelected(star1, star2, star3, star4, star5,
-                    true, true, true, true, false);
-        });
-        star5.setOnClickListener(v -> {
-            getSelected(star1, star2, star3, star4, star5,
-                    true, true, true, true, true);
-        });
+        star1.setOnClickListener(v -> getSelected(star1, star2, star3, star4, star5,
+                !star1.isChecked(), false, false, false, false));
+        star2.setOnClickListener(v -> getSelected(star1, star2, star3, star4, star5,
+                true, true, false, false, false));
+        star3.setOnClickListener(v -> getSelected(star1, star2, star3, star4, star5,
+                true, true, true, false, false));
+        star4.setOnClickListener(v -> getSelected(star1, star2, star3, star4, star5,
+                true, true, true, true, false));
+        star5.setOnClickListener(v -> getSelected(star1, star2, star3, star4, star5,
+                true, true, true, true, true));
 
-        @SuppressLint("SimpleDateFormat")
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date date = new Date();
 
@@ -242,18 +226,19 @@ public class BusDetailsActivity extends AppCompatActivity {
                 rating = 0;
             }
 
-            List<String> likes = new ArrayList<>();
-            if(reviewers!=null && reviewers.size()!=0) {
-                likes = reviewers.get(0).getLikes();
-            }
+            String id = scheduleReference.getBuses().getId();
 
-            Reviewers reviewer = new Reviewers(users.getUid(), format.format(date),
-                    content.getText().toString(), valueOf(rating), likes);
+            if(rating !=0){
+                repository.deleteReview(id, reviewer);
 
-            if(rating !=0) {
-                if(reviewers!=null && reviewers.size()!=0) {
-                    repository.deleteReview(id, reviewers.get(0));
+                reviewer.setUid(user.getUid());
+                reviewer.setDate(format.format(date));
+                reviewer.setContent(content.getText().toString());
+                reviewer.setRatings(valueOf(rating));
+                if(reviewer.getLikes()==null || reviewer.getLikes().size()==0){
+                    reviewer.setLikes(new ArrayList<>());
                 }
+
                 repository.updateReview(id, reviewer);
                 getReviewers();
             }
@@ -275,7 +260,7 @@ public class BusDetailsActivity extends AppCompatActivity {
     private void onStartActivity(Calendar calendar) {
         startActivity(new Intent(this,
                 SeatChooserActivity.class)
-                .putExtra("schedule", schedule)
+                .putExtra("schedule", scheduleReference)
                 .putExtra("date", calendar)
                 .putExtra("passengers", passengers));
     }
@@ -287,19 +272,17 @@ public class BusDetailsActivity extends AppCompatActivity {
             List<Boolean> seatsC = seats.getSeatsC();
             List<Boolean> seatsD = seats.getSeatsD();
 
-            if (seatsA != null || seatsB != null || seatsC != null || seatsD != null) {
-                int counter = 0;
-                counter = getCounter(seatsA, counter);
-                counter = getCounter(seatsB, counter);
-                counter = getCounter(seatsC, counter);
-                counter = getCounter(seatsD, counter);
+            int counter = 0;
+            if(seatsA != null) counter = getCounter(seatsA, counter);
+            if(seatsB != null) counter = getCounter(seatsB, counter);
+            if(seatsC != null) counter = getCounter(seatsC, counter);
+            if(seatsD != null) counter = getCounter(seatsD, counter);
 
-                if(counter < Integer.parseInt(passengers)){
-                    passengers = String.valueOf(counter);
-                }
-                String displaySeats = counter + " Seat are available";
-                binding.layoutBookATrip.tvSeatAvailable.setText(displaySeats);
+            if(counter < Integer.parseInt(passengers)){
+                passengers = String.valueOf(counter);
             }
+            String displaySeats = counter + " Seat are available";
+            layoutBookATrip.tvSeatAvailable.setText(displaySeats);
         }
     }
 
@@ -317,7 +300,7 @@ public class BusDetailsActivity extends AppCompatActivity {
                 .load(buses.getImageUrl())
                 .centerCrop()
                 .placeholder(ic_brand)
-                .into(binding.layoutBookATrip.ivBus);
+                .into(layoutBookATrip.ivBus);
     }
 
     private void getFacilities() {
@@ -325,90 +308,29 @@ public class BusDetailsActivity extends AppCompatActivity {
         for(String facility:facilityList){
             switch (facility){
                 case "Toilet":
-                    binding.layoutBookATrip.tvToiletFacility
-                            .setVisibility(VISIBLE);
+                    layoutBookATrip.tvToiletFacility.setVisibility(VISIBLE);
                     break;
                 case "Rest stop":
-                    binding.layoutBookATrip.tvRestFacility
-                            .setVisibility(VISIBLE);
+                    layoutBookATrip.tvRestFacility.setVisibility(VISIBLE);
                     break;
                 case "Luggage":
-                    binding.layoutBookATrip.tvLuggageFacility
-                            .setVisibility(VISIBLE);
+                    layoutBookATrip.tvLuggageFacility.setVisibility(VISIBLE);
                     break;
                 case "AC":
-                    binding.layoutBookATrip.tvACFacility
-                            .setVisibility(VISIBLE);
+                    layoutBookATrip.tvACFacility.setVisibility(VISIBLE);
                     break;
             }
         }
     }
 
-    private void onReviewers(List<Reviewers> reviewers) {
-        ReviewersAdapter reviewersAdapter = new ReviewersAdapter(reviewers, layoutBookATrip);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, HORIZONTAL, false);
-        binding.layoutBookATrip.rvReviews.setLayoutManager(layoutManager);
-        binding.layoutBookATrip.rvReviews.setAdapter(reviewersAdapter);
-
-        onListener(reviewersAdapter, reviewers);
-    }
-
-    private void onListener(ReviewersAdapter scheduleAdapter, List<Reviewers> schedules) {
+    private void onListener(ReviewersAdapter scheduleAdapter, List<Reviewers> reviewersList) {
         scheduleAdapter.setItemClickListener(new ItemClickListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public void onClick(View view, int position) {
-                if(view.getId()== R.id.ivMore){
-                    PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
-                    popupMenu.inflate(R.menu.menu_more_item);
-                    Menu menu = popupMenu.getMenu();
-                    if(!schedules.get(position).getUid().equals(user.getUid())){
-                        menu.findItem(R.id.itemEdit).setVisible(false);
-                        menu.findItem(R.id.itemDelete).setVisible(false);
-                    }else menu.findItem(R.id.itemReport).setVisible(false);
-
-                    popupMenu.setOnMenuItemClickListener(item -> {
-                        switch (item.getItemId()){
-                            case R.id.itemEdit:
-                                getPopup(schedule, user);
-                                return true;
-                            case R.id.itemDelete:
-                                new MaterialAlertDialogBuilder(view.getContext())
-                                        .setTitle("Delete your review?")
-                                        .setNeutralButton("Cancel", (dialog, which) -> { })
-                                        .setNegativeButton("Ok", (dialog, which) -> {
-                                            repository.deleteReview(buses.getId(), schedules.get(position));
-                                            getReviewers();
-                                            layoutBookATrip.llRating.setVisibility(View.VISIBLE);
-                                        }).show();
-
-                                return true;
-                            case R.id.itemReport:
-                                return true;
-                            default:
-                                return false;
-                        }
-                    });
-                    popupMenu.show();
-
-                }else if(view.getId()== R.id.ivProfile){
-                    MainViewModel mainViewModel = new ViewModelProvider((ViewModelStoreOwner) view.getContext())
-                            .get(MainViewModel.class);
-                    mainViewModel.getUsers(schedules.get(position).getUid())
-                            .observe((LifecycleOwner) view.getContext(), users ->
-                            onImageShow(users.getPhotoUrl()));
-                }else if(view.getId()== R.id.tvReaction){
-                    repository.deleteReview(buses.getId(), schedules.get(position));
-                    List<String> newLike = new ArrayList<>(schedules.get(position).getLikes());
-                    if(newLike.contains(user.getUid())){
-                        newLike.remove(user.getUid());
-                    }else newLike.add(user.getUid());
-
-                    Reviewers reviewers = schedules.get(position);
-                    reviewers.setLikes(newLike);
-                    repository.updateReview(buses.getId(), reviewers);
-                    getReviewers();
-                }
+                if(view.getId()== R.id.ivMore) onOptionMore(view, position, reviewersList);
+                else if(view.getId()== R.id.ivProfile) onImagePreview(position, reviewersList);
+                else if(view.getId()== R.id.tvReaction) onReaction(position, reviewersList);
             }
 
             @Override
@@ -416,6 +338,61 @@ public class BusDetailsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void onReaction(int position, List<Reviewers> schedules) {
+        repository.deleteReview(buses.getId(), schedules.get(position));
+        List<String> newLike = new ArrayList<>(schedules.get(position).getLikes());
+        if(newLike.contains(user.getUid())){
+            newLike.remove(user.getUid());
+        }else newLike.add(user.getUid());
+
+        Reviewers reviewers = schedules.get(position);
+        reviewers.setLikes(newLike);
+        repository.updateReview(buses.getId(), reviewers);
+        getReviewers();
+    }
+
+    private void onImagePreview(int position, List<Reviewers> schedules) {
+        new ViewModelProvider(this)
+                .get(MainViewModel.class)
+                .getUsers(schedules.get(position).getUid())
+                .observe(this, users -> onImageShow(users.getPhotoUrl()));
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    private void onOptionMore(View view, int position, List<Reviewers> reviewersList) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        popupMenu.inflate(R.menu.menu_more_item);
+        Menu menu = popupMenu.getMenu();
+        if(!reviewersList.get(position).getUid().equals(user.getUid())){
+            menu.findItem(R.id.itemEdit).setVisible(false);
+            menu.findItem(R.id.itemDelete).setVisible(false);
+        }else menu.findItem(R.id.itemReport).setVisible(false);
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()){
+                case R.id.itemEdit:
+                    getPopup(reviewersList.get(position));
+                    return true;
+                case R.id.itemDelete:
+                    new MaterialAlertDialogBuilder(this)
+                            .setTitle("Delete your review?")
+                            .setNeutralButton("Cancel", (dialog, which) -> { })
+                            .setNegativeButton("Ok", (dialog, which) -> {
+                                repository.deleteReview(buses.getId(), reviewersList.get(position));
+                                getReviewers();
+                                layoutBookATrip.llRating.setVisibility(View.VISIBLE);
+                            }).show();
+
+                    return true;
+                case R.id.itemReport:
+                    return true;
+                default:
+                    return false;
+            }
+        });
+        popupMenu.show();
     }
 
     private void onImageShow(String uri) {
@@ -432,12 +409,22 @@ public class BusDetailsActivity extends AppCompatActivity {
     private void getReviewers(){
         new ReviewsRepository().getReviewers(buses).observe(this, data -> {
             List<Reviewers> reviewersList = (List<Reviewers>) data.get("reviewer");
-            sort(reviewersList, (o1, o2) -> {
-                if(o1.getUid().equals(user.getUid())) return -1;
-                else return 1;
-            });
-
+            if(reviewersList!=null){
+                sort(reviewersList, (o1, o2) -> {
+                    if(o1.getUid().equals(user.getUid())) return -1;
+                    else return 1;
+                });
+            }
             onReviewers(reviewersList);
         });
+    }
+
+    private void onReviewers(List<Reviewers> reviewers) {
+        ReviewersAdapter reviewersAdapter = new ReviewersAdapter(reviewers, layoutBookATrip);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, HORIZONTAL, false);
+        layoutBookATrip.rvReviews.setLayoutManager(layoutManager);
+        layoutBookATrip.rvReviews.setAdapter(reviewersAdapter);
+
+        onListener(reviewersAdapter, reviewers);
     }
 }
