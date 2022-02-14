@@ -32,7 +32,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:text="@string/str_total_payment"
                     android:textSize="12sp" />
@@ -41,11 +40,11 @@
                     android:id="@+id/tvTotal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:textColor="@color/primary_light"
-                    android:textSize="23dp"
+                    android:textSize="23sp"
                     android:textStyle="bold"
+                    tools:ignore="TextContrastCheck"
                     tools:text="Rp332.333,00" />
             </LinearLayout>
 

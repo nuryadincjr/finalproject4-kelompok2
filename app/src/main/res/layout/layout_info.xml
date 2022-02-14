@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_illustrator_enjoy"
-        android:contentDescription="Enjoy it!" />
+        android:contentDescription="@string/str_enjoy_it" />
 
     <TextView
         android:id="@+id/textView"
@@ -24,7 +24,7 @@
         android:fontFamily="@font/nunito_extrabold"
         android:gravity="center"
         android:layout_marginTop="@dimen/m50"
-        android:text="Enjoy it!" />
+        android:text="@string/str_enjoy_it" />
 
     <TextView
         android:id="@+id/textView3"
@@ -35,5 +35,6 @@
         android:layout_marginEnd="@dimen/m50"
         android:gravity="center"
         android:lineHeight="28dp"
-        android:text="We will always provide the latest information for you." />
+        android:text="@string/info_enjoy" />
+
 </LinearLayout>

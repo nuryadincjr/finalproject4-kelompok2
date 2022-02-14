@@ -26,4 +26,5 @@
         android:fontFamily="@font/lato"
         android:textSize="12sp"
         tools:text="Terminal Bandaraya" />
+
 </LinearLayout>

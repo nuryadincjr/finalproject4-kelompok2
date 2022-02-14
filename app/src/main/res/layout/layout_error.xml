@@ -36,4 +36,5 @@
         android:gravity="center"
         android:lineHeight="28dp"
         android:text="@string/str_error_description" />
+
 </LinearLayout>

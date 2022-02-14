@@ -20,8 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_extrabold"
-            android:text="@string/str_how_was_your_trip"
             android:padding="@dimen/p20"
+            android:text="@string/str_how_was_your_trip"
             android:textColor="@color/black"
             android:textSize="@dimen/s18"
             android:textStyle="bold" />
@@ -40,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/m20"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -91,7 +92,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -133,10 +135,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="5dp"
-                    tools:text="Issued"
                     android:textColor="@color/gren_success"
                     android:textStyle="bold"
-                    app:drawableLeftCompat="@drawable/ic_success" />
+                    app:drawableLeftCompat="@drawable/ic_success"
+                    tools:ignore="TextContrastCheck"
+                    tools:text="Issued" />
             </LinearLayout>
 
         </LinearLayout>
@@ -196,14 +199,14 @@
             android:id="@+id/etContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:gravity="start|top"
+            android:padding="20dp"
+            android:background="@drawable/bg_rounded"
+            android:ems="10"
             android:hint="@string/str_describe"
             android:inputType="textMultiLine"
             android:maxLines="5"
             android:textSize="@dimen/s12"
-            android:background="@drawable/bg_rounded"
-            android:padding="20dp"
             android:maxLength="500"
             android:autofillHints="" />
 
@@ -212,7 +215,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:text="0/500" />
+            android:text="@string/str_0_500" />
 
     </LinearLayout>
 

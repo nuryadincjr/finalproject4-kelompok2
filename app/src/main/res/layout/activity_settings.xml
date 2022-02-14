@@ -35,6 +35,7 @@
                 android:fontFamily="@font/nunito_extrabold"
                 android:text="@string/str_setting" />
         </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -43,70 +44,71 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         tools:ignore="SpeakableTextPresentCheck">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
         <LinearLayout
-            android:id="@+id/llAbout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/p10"
-                android:contentDescription="@string/str_image_profile"
-                android:src="@drawable/ic_outline_info"
-                tools:ignore="ImageContrastCheck" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/llAbout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/nunito_extrabold"
-                android:gravity="center|start"
-                android:text="About"
-                android:textColor="@color/primary_light"
-                android:textSize="@dimen/s22"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/p10"
+                    android:contentDescription="@string/str_image_profile"
+                    android:src="@drawable/ic_outline_info"
+                    tools:ignore="ImageContrastCheck" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="center|start"
+                    android:text="@string/str_about"
+                    android:textColor="@color/primary_light"
+                    android:textSize="@dimen/s22"
+                    android:textStyle="bold"
+                    tools:ignore="TextContrastCheck" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/p10"
+                    android:contentDescription="@string/str_image_profile"
+                    android:src="@drawable/ic_outline_arrow_circle_right"
+                    tools:ignore="ImageContrastCheck" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="center|start"
+                    android:text="@string/str_logout"
+                    android:textColor="@color/primary_light"
+                    android:textSize="@dimen/s22"
+                    android:textStyle="bold"
+                    tools:ignore="TextContrastCheck" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/p10"
-                android:contentDescription="@string/str_image_profile"
-                android:src="@drawable/ic_outline_arrow_circle_right"
-                tools:ignore="ImageContrastCheck" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/nunito_extrabold"
-                android:gravity="center|start"
-                android:text="Logout"
-                android:textColor="@color/primary_light"
-                android:textSize="@dimen/s22"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-    </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

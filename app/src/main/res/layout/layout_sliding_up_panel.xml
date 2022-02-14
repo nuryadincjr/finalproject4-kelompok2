@@ -43,7 +43,7 @@
         android:textColor="@color/primary_hover"
         android:textSize="36sp"
         android:textStyle="bold"
-        android:text="1" />
+        android:text="@string/str_1" />
 
     <TextView
         android:layout_width="match_parent"
@@ -58,25 +58,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
         android:layout_marginEnd="@dimen/m30"
         android:layout_marginStart="@dimen/m30"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="40dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="1" />
+            android:text="@string/str_1" />
 
         <SeekBar
             android:id="@+id/seekBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:padding="20dp"
             android:min="1"
             android:max="10"
-            android:layout_weight="1"
             android:thumbTint="@color/primary_hover"
             tools:targetApi="o" />
 
@@ -84,7 +84,7 @@
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="10" />
+            android:text="@string/str_10" />
     </LinearLayout>
 
     <LinearLayout
@@ -94,18 +94,19 @@
 
         <Button
             android:id="@+id/btnCancel"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
+            android:background="@drawable/selector_btn"
             android:fontFamily="@font/nunito_extrabold"
-            android:textStyle="bold"
+            android:text="@string/str_cancel"
             android:textColor="@color/primary_light"
             android:textSize="@dimen/s12"
-            android:text="@string/str_cancel"
-            android:background="@drawable/selector_btn"
+            android:textStyle="bold"
             app:backgroundTint="@color/gray_e5"
-            style="?android:attr/buttonBarButtonStyle" />
+            tools:ignore="TextContrastCheck" />
 
         <Button
             android:id="@+id/btnSelected"
@@ -121,5 +122,7 @@
             android:background="@drawable/selector_btn"
             app:backgroundTint="@null"
             style="?android:attr/buttonBarButtonStyle" />
+
     </LinearLayout>
+
 </LinearLayout>

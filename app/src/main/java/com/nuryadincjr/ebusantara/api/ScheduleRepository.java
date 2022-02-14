@@ -5,7 +5,6 @@ import static java.lang.String.valueOf;
 import static java.util.Collections.sort;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 

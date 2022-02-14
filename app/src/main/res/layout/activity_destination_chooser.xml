@@ -25,12 +25,13 @@
             android:drawablePadding="@dimen/p10"
             android:elevation="@dimen/e8"
             android:fontFamily="@font/nunito_extrabold"
+            android:hint="@string/str_try_arrival"
             android:inputType="textPersonName"
             android:padding="10dp"
             android:textColor="@color/black"
             app:drawableTint="@color/red_selector"
-            tools:ignore="TouchTargetSizeCheck"
-            android:hint="@string/str_try_arrival" />
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            android:importantForAutofill="no" />
 
         <TextView
             android:id="@+id/tvCancel"
@@ -76,6 +77,7 @@
                 tools:listitem="@layout/item_destination_search"/>
 
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

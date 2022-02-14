@@ -78,7 +78,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/lato"
-                            android:text="@string/str_departure" />
+                            android:text="@string/str_departure"
+                            tools:ignore="TextContrastCheck" />
 
                         <TextView
                             android:id="@+id/tvDeparture"
@@ -106,7 +107,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/lato"
-                            android:text="@string/str_arrival" />
+                            android:text="@string/str_arrival"
+                            tools:ignore="TextContrastCheck" />
 
                         <TextView
                             android:id="@+id/tvArrival"
@@ -156,7 +158,7 @@
 
                     <Spinner
                         android:id="@+id/tvFilters"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:layout_marginEnd="5dp"
@@ -175,7 +177,7 @@
                         android:fontFamily="@font/lato"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="Apply"
+                        android:text="@string/str_apply"
                         android:textColor="@color/white"
                         tools:ignore="TextContrastCheck" />
 

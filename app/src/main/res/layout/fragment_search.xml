@@ -95,7 +95,6 @@
                                     android:src="@drawable/ic_round_my_location"
                                     app:tint="@color/red_selector" />
 
-
                                 <View
                                     android:id="@+id/view9"
                                     android:layout_width="match_parent"
@@ -284,6 +283,7 @@
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
+
     </RelativeLayout>
 
 </RelativeLayout>

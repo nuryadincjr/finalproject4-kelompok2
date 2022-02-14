@@ -24,9 +24,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/str_todo_back_button"
                 android:padding="8dp"
                 android:src="@drawable/ic_back_arrow"
-                android:contentDescription="@string/str_todo_back_button" />
+                tools:ignore="RedundantDescriptionCheck" />
 
             <TextView
                 android:id="@+id/ivBrand"
@@ -71,6 +72,7 @@
             android:text="@string/str_continue_to_payment"
             android:textSize="@dimen/s12"
             app:backgroundTint="@null" />
+
     </LinearLayout>
 
 </RelativeLayout>

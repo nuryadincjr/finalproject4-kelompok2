@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.nuryadincjr.ebusantara.pojo.Reviewers;
 import com.nuryadincjr.ebusantara.pojo.Users;
 
 public class UsersRepository {

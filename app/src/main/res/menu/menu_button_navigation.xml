@@ -4,19 +4,18 @@
     <item
         android:id="@+id/itemSearch"
         android:icon="@drawable/ic_search"
-
-        android:title="Search" />
+        android:title="@string/str_search" />
     <item
         android:id="@+id/itemMyTicket"
         android:icon="@drawable/ic_outline_article"
-        android:title="My Ticket" />
+        android:title="@string/str_my_ticket" />
     <item
         android:id="@+id/itemNotifications"
         android:icon="@drawable/ic_outline_notifications"
-        android:title="Notifications" />
+        android:title="@string/str_notifications" />
     <item
         android:id="@+id/itemProfile"
         android:icon="@drawable/ic_outline_person"
-        android:title="Profile" />
+        android:title="@string/str_profile" />
 
 </menu>

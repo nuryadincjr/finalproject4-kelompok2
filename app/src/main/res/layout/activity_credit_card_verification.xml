@@ -57,7 +57,7 @@
                             android:textStyle="bold" />
 
                         <EditText
-                            android:id="@+id/etPhoneNumber"
+                            android:id="@+id/etCardNumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
@@ -67,7 +67,10 @@
                             android:fontFamily="@font/nunito_extrabold"
                             android:hint="@string/str_hide_number"
                             android:padding="16dp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:ignore="TextContrastCheck"
+                            android:importantForAutofill="no"
+                            android:inputType="number" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -93,9 +96,11 @@
                                 android:background="@drawable/selector_input"
                                 android:fontFamily="@font/nunito_extrabold"
                                 android:hint="@string/str_month"
+                                android:importantForAutofill="no"
                                 android:inputType="number"
                                 android:padding="16dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:ignore="TextContrastCheck" />
 
                             <EditText
                                 android:id="@+id/etYear"
@@ -110,7 +115,9 @@
                                 android:inputType="number"
                                 android:minHeight="48dp"
                                 android:padding="16dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:ignore="TextContrastCheck"
+                                android:importantForAutofill="no" />
                         </LinearLayout>
 
                         <TextView
@@ -131,9 +138,11 @@
                             android:drawablePadding="20dp"
                             android:fontFamily="@font/nunito_extrabold"
                             android:hint="@string/str_surname"
+                            android:importantForAutofill="no"
                             android:inputType="number"
                             android:padding="16dp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -157,9 +166,11 @@
                                 android:background="@drawable/selector_input"
                                 android:fontFamily="@font/nunito_extrabold"
                                 android:hint="@string/str_surname"
+                                android:importantForAutofill="no"
                                 android:inputType="number"
                                 android:padding="16dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:ignore="TextContrastCheck" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -190,4 +201,5 @@
         android:text="@string/str_verify_payment"
         android:textSize="@dimen/s12"
         app:backgroundTint="@null" />
+
 </RelativeLayout>

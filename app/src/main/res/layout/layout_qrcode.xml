@@ -11,16 +11,17 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_extrabold"
             android:padding="@dimen/p20"
+            android:fontFamily="@font/nunito_extrabold"
             android:textColor="@color/black"
             android:textSize="@dimen/s22"
             android:textStyle="bold"

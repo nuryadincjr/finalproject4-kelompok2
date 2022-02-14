@@ -9,7 +9,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.nuryadincjr.ebusantara.pojo.Cities;
-import com.nuryadincjr.ebusantara.pojo.Schedule;
 
 import java.util.ArrayList;
 

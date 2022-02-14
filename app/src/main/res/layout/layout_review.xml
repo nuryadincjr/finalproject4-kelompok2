@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
@@ -19,9 +18,9 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_extrabold"
-            android:text="Rate this bus!"
             android:padding="@dimen/p20"
+            android:fontFamily="@font/nunito_extrabold"
+            android:text="@string/str_rate_this_bus"
             android:textColor="@color/black"
             android:textSize="@dimen/s18"
             android:textStyle="bold" />
@@ -30,16 +29,17 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:paddingBottom="@dimen/p20"
+            android:gravity="center"
             android:textSize="@dimen/s12"
             android:ems="2"
-            android:text="Tell other what you think" />
+            android:text="@string/str_tell_other_what_you_think" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -143,13 +143,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:padding="20dp"
             android:gravity="start|top"
+            android:background="@drawable/bg_rounded"
             android:hint="@string/str_describe"
             android:inputType="textMultiLine"
             android:maxLines="5"
             android:textSize="@dimen/s12"
-            android:background="@drawable/bg_rounded"
-            android:padding="20dp"
             android:maxLength="500"
             android:autofillHints="" />
 
@@ -158,7 +158,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:text="0/500" />
+            android:text="@string/str_0_500" />
 
         <TextView
             android:id="@+id/btnRate"
@@ -167,11 +167,11 @@
             android:fontFamily="@font/nunito_extrabold"
             android:padding="@dimen/p20"
             android:gravity="center"
-            android:textColor="@color/primary"
             android:background="?selectableItemBackground"
+            android:textColor="@color/primary"
             android:textSize="@dimen/s18"
             android:textStyle="bold"
-            android:text="Rate This Trip" />
+            android:text="@string/str_rate_this_trip" />
 
     </LinearLayout>
 

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".login.AboutActivity">
 
-
 <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_height="wrap_content"
@@ -37,6 +36,7 @@
                 android:fontFamily="@font/nunito_extrabold"
                 android:text="@string/str_about" />
         </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -179,8 +179,5 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

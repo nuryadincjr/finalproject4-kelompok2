@@ -35,7 +35,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:ignore="NestedWeights">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -144,7 +145,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/lato"
                                 android:paddingTop="5dp"
-                                android:text="Riau"
+                                tools:text="@string/str_riau"
                                 android:textSize="12sp" />
                         </LinearLayout>
 
@@ -229,7 +230,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:id="@+id/tvPiece"

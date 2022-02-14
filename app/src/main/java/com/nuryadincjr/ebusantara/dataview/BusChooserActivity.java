@@ -23,7 +23,6 @@ import static java.util.Comparator.comparingDouble;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,8 +31,6 @@ import android.widget.SeekBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.nuryadincjr.ebusantara.adapters.ScheduleAdapter;
@@ -43,16 +40,12 @@ import com.nuryadincjr.ebusantara.chooser.DestinationChooserActivity;
 import com.nuryadincjr.ebusantara.databinding.ActivityBusChooserBinding;
 import com.nuryadincjr.ebusantara.interfaces.ItemClickListener;
 import com.nuryadincjr.ebusantara.pojo.Cities;
-import com.nuryadincjr.ebusantara.pojo.Schedule;
 import com.nuryadincjr.ebusantara.pojo.ScheduleReference;
 import com.nuryadincjr.ebusantara.util.Constant;
-import com.nuryadincjr.ebusantara.util.MainViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
 
 public class BusChooserActivity extends AppCompatActivity
         implements OnClickListener {

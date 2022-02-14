@@ -99,6 +99,9 @@
                     tools:text="+6281541181633" />
 
             </LinearLayout>
+
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

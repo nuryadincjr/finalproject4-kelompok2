@@ -47,7 +47,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:padding="20dp">
+                            android:padding="20dp"
+                            tools:ignore="UseCompoundDrawables">
 
                             <ImageView
                                 android:id="@+id/ivBankLogo"
@@ -55,7 +56,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"
                                 android:padding="2dp"
-                                app:srcCompat="@drawable/ic_bni" />
+                                app:srcCompat="@drawable/ic_bni"
+                                android:contentDescription="@string/str_mitra" />
 
                             <TextView
                                 android:id="@+id/tvBankName"
@@ -66,7 +68,8 @@
                                 android:fontFamily="@font/lato_bold"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
-                                tools:text="BNI Mobile banking" />
+                                tools:text="BNI Mobile banking"
+                                tools:ignore="NestedWeights" />
 
                         </LinearLayout>
 

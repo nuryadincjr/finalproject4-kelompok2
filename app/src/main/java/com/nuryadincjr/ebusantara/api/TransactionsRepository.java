@@ -74,6 +74,5 @@ public class TransactionsRepository {
             transactionsArrayList.add(transactionsReference);
             transactionsMutableLiveData.postValue(transactionsArrayList);
         });
-
     }
 }

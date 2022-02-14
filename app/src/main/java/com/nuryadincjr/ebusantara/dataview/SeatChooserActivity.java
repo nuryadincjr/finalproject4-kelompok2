@@ -114,26 +114,31 @@ public class SeatChooserActivity extends AppCompatActivity
     }
 
     private void getSeats() {
-        if (seatsA != null || seatsB != null || seatsC != null || seatsD != null) {
-
+        if(seatsA != null){
             getSelected(seatsA, layoutSeatChooser.ivSeatA1, layoutSeatChooser.ivSeatA2,
                     layoutSeatChooser.ivSeatA3, layoutSeatChooser.ivSeatA4,
                     layoutSeatChooser.ivSeatA5, layoutSeatChooser.ivSeatA6,
                     layoutSeatChooser.ivSeatA7, layoutSeatChooser.ivSeatA8,
                     layoutSeatChooser.ivSeatA9, null);
+        }
 
+        if(seatsB != null) {
             getSelected(seatsB, layoutSeatChooser.ivSeatB1, layoutSeatChooser.ivSeatB2,
                     layoutSeatChooser.ivSeatB3, layoutSeatChooser.ivSeatB4,
                     layoutSeatChooser.ivSeatB5, layoutSeatChooser.ivSeatB6,
                     layoutSeatChooser.ivSeatB7, layoutSeatChooser.ivSeatB8,
                     layoutSeatChooser.ivSeatB9, layoutSeatChooser.ivSeatB10);
+        }
 
+        if(seatsC != null){
             getSelected(seatsC, layoutSeatChooser.ivSeatC1, layoutSeatChooser.ivSeatC2,
                     layoutSeatChooser.ivSeatC3, layoutSeatChooser.ivSeatC4,
                     layoutSeatChooser.ivSeatC5, layoutSeatChooser.ivSeatC6,
                     layoutSeatChooser.ivSeatC7, layoutSeatChooser.ivSeatC8,
                     layoutSeatChooser.ivSeatC9, layoutSeatChooser.ivSeatC10);
+        }
 
+        if(seatsD != null){
             getSelected(seatsD, layoutSeatChooser.ivSeatD1, layoutSeatChooser.ivSeatD2,
                     layoutSeatChooser.ivSeatD3, layoutSeatChooser.ivSeatD4,
                     layoutSeatChooser.ivSeatD5, layoutSeatChooser.ivSeatD6,

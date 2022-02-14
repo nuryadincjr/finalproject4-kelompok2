@@ -4,15 +4,14 @@
     <item
         android:id="@+id/itemEdit"
         android:icon="@drawable/ic_search"
-
-        android:title="Edit" />
+        android:title="@string/str_edit" />
     <item
         android:id="@+id/itemDelete"
         android:icon="@drawable/ic_outline_article"
-        android:title="Delete" />
+        android:title="@string/str_delete" />
     <item
         android:id="@+id/itemReport"
         android:icon="@drawable/ic_outline_notifications"
-        android:title="Report" />
+        android:title="@string/str_report" />
 
 </menu>

@@ -70,21 +70,23 @@
                                 android:layout_weight="1"
                                 android:text="@string/str_bni_mobile_banking"
                                 android:textSize="12sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:ignore="NestedWeights" />
 
                             <TextView
                                 android:id="@+id/tvSelectBNI"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:gravity="center|end"
                                 android:layout_weight="3"
                                 android:background="?selectableItemBackground"
+                                android:gravity="center|end"
                                 android:text="@string/str_select_payment"
                                 android:textColor="@color/primary_light"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 app:drawableEndCompat="@drawable/ic_round_keyboard_arrow_right"
-                                app:drawableTint="@color/primary_light" />
+                                app:drawableTint="@color/primary_light"
+                                tools:ignore="TextContrastCheck" />
                         </LinearLayout>
 
                         <View
@@ -134,7 +136,8 @@
                                 android:layout_weight="1"
                                 android:text="@string/str_cimb"
                                 android:textSize="12sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:ignore="NestedWeights" />
 
                             <TextView
                                 android:id="@+id/tvSelectCIMB"
@@ -148,7 +151,8 @@
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 app:drawableEndCompat="@drawable/ic_round_keyboard_arrow_right"
-                                app:drawableTint="@color/primary_light" />
+                                app:drawableTint="@color/primary_light"
+                                tools:ignore="TextContrastCheck" />
                         </LinearLayout>
 
                         <View
@@ -171,6 +175,7 @@
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
+
     </RelativeLayout>
 
 </RelativeLayout>

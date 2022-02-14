@@ -22,10 +22,11 @@
                 android:id="@+id/ivBackArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
                 android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/str_todo_back_button"
+                android:padding="8dp"
                 android:src="@drawable/ic_back_arrow"
-                android:contentDescription="@string/str_todo_back_button" />
+                tools:ignore="RedundantDescriptionCheck" />
 
             <TextView
                 android:id="@+id/ivBrand"
@@ -83,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_extrabold"
                 android:text="@string/str_default_count"
-                android:textColor="@color/primary_light"
+                android:textColor="#039BE5"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="Rp332.000,00" />

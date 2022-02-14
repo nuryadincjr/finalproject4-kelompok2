@@ -97,7 +97,8 @@
                                 android:layout_weight="1"
                                 tools:text="23 JUL 2019. 17:35"
                                 android:textColor="@color/white"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:ignore="NestedWeights" />
 
                             <TextView
                                 android:id="@+id/tvBookNo"
@@ -121,7 +122,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                tools:ignore="NestedWeights">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -194,7 +196,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                tools:ignore="NestedWeights">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -290,7 +293,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                tools:ignore="NestedWeights">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -505,7 +509,8 @@
                                 android:gravity="end"
                                 tools:text="Rp332.333"
                                 android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:ignore="NestedWeights" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -515,5 +520,7 @@
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
+
     </RelativeLayout>
+
 </RelativeLayout>

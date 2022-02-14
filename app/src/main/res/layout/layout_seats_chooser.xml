@@ -27,8 +27,9 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center">
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -62,7 +63,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="5"
                     android:gravity="center">
 
                     <TextView
@@ -98,8 +99,9 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center">
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -130,7 +132,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="5"
                     android:gravity="center">
 
                     <CheckedTextView
@@ -158,12 +160,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="5"
                     android:gravity="center"
                     tools:ignore="NestedWeights">
 
@@ -196,7 +199,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="5"
                     android:gravity="center">
 
                     <CheckedTextView
@@ -224,13 +227,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center">
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -261,7 +266,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="5"
                     android:gravity="center">
 
                     <CheckedTextView
@@ -289,13 +294,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center">
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -326,7 +333,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="5"
                     android:gravity="center">
 
                     <CheckedTextView
@@ -354,13 +361,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center">
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -391,7 +400,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="5"
                     android:gravity="center">
 
                     <CheckedTextView
@@ -419,13 +428,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center">
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -456,7 +467,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="5"
                     android:gravity="center">
 
                     <CheckedTextView
@@ -484,13 +495,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center">
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -521,7 +534,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="5"
                     android:gravity="center">
 
                     <CheckedTextView
@@ -549,13 +562,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center">
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -586,7 +601,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="5"
                     android:gravity="center">
 
                     <CheckedTextView
@@ -614,13 +629,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center">
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -644,14 +661,15 @@
                         android:layout_height="36dp"
                         android:layout_marginStart="4dp"
                         android:background="@drawable/selector_chooser"
-                        android:checked="false" />
+                        android:checked="false"
+                        tools:ignore="TooManyViews" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="5"
                     android:gravity="center">
 
                     <CheckedTextView
@@ -679,13 +697,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center">
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -708,7 +728,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="5"
                     android:gravity="center">
 
                     <CheckedTextView

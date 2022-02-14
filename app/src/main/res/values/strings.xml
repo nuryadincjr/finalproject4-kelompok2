@@ -138,4 +138,26 @@
     <string name="str_you_ve_been_complete_your_trip_with_this_detail">You\'ve been complete your trip with this detail</string>
     <string name="str_please_give_your_rating">Please give your rating</string>
     <string name="str_describe">Describe your experience (optional)</string>
+    <string name="str_report">Report</string>
+    <string name="str_delete">Delete</string>
+    <string name="str_edit">Edit</string>
+    <string name="str_search">Search</string>
+    <string name="str_my_ticket">My Ticket</string>
+    <string name="str_notifications">Notifications</string>
+    <string name="str_profile">Profile</string>
+    <string name="str_rate_this_bus">Rate this bus!</string>
+    <string name="str_tell_other_what_you_think">Tell other what you think</string>
+    <string name="str_0_500">0/500</string>
+    <string name="str_rate_this_trip">Rate This Trip</string>
+    <string name="str_enjoy_it">Enjoy it!</string>
+    <string name="info_enjoy">We will always provide the latest information for you.</string>
+    <string name="str_tickets">Tickets</string>
+    <string name="str_give_your_best_review">Give your best review..</string>
+    <string name="str_more">More</string>
+    <string name="str_riau">Riau</string>
+    <string name="str_your_tickets">Your Tickets</string>
+    <string name="str_logout">Logout</string>
+    <string name="str_selected_0_0">Selected: 0/0</string>
+    <string name="str_partner_logo">Mitra Logo</string>
+    <string name="str_apply">Apply</string>
 </resources>

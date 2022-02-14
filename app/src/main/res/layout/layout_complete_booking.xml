@@ -73,13 +73,15 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="horizontal"
-                    android:padding="20dp">
+                    android:padding="20dp"
+                    android:baselineAligned="false">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        tools:ignore="NestedWeights">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -156,7 +158,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="20dp">
+                    android:padding="20dp"
+                    android:baselineAligned="false">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -257,7 +260,8 @@
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/lato"
                                         android:textSize="12sp"
-                                        tools:text="Terminal Amplas" />
+                                        tools:text="Terminal Amplas"
+                                        tools:ignore="TooDeepLayout" />
 
                                     <TextView
                                         android:id="@+id/tvDepartureDate"
@@ -413,7 +417,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        tools:ignore="NestedWeights">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -421,7 +426,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/lato_bold"
                             android:textColor="@color/black"
-                            android:text="Tickets"
+                            android:text="@string/str_tickets"
                             android:textStyle="bold" />
 
                         <TextView
@@ -478,7 +483,8 @@
                         android:text="@string/str_total"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="NestedWeights" />
 
                     <TextView
                         android:id="@+id/tvTotals"
@@ -498,4 +504,5 @@
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>
+
 </ScrollView>

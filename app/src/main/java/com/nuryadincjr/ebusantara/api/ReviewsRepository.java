@@ -3,7 +3,6 @@ package com.nuryadincjr.ebusantara.api;
 import static com.google.firebase.firestore.FieldValue.arrayRemove;
 import static com.google.firebase.firestore.FieldValue.arrayUnion;
 import static com.nuryadincjr.ebusantara.util.Constant.COLLECTION_REVIEWS;
-
 import static java.lang.String.valueOf;
 
 import androidx.lifecycle.MutableLiveData;
@@ -18,7 +17,6 @@ import com.nuryadincjr.ebusantara.pojo.Reviewers;
 import com.nuryadincjr.ebusantara.pojo.Users;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setMessage("Setup..");
         dialog.setCancelable(false);
 
+        // R.string.default_web_client_id : get client id apter build
         GoogleSignInOptions gso = new Builder(DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestProfile()
@@ -99,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
-                        updateUI(user);
+                        if(user!=null) updateUI(user);
                         signInClient.signOut();
                     } else {
                         dialog.dismiss();
@@ -116,12 +117,14 @@ public class LoginActivity extends AppCompatActivity {
             if(task.isSuccessful()){
                 if(task.getResult().getData() != null){
                     Users user = task.getResult().toObject(Users.class);
-                    getInstance(this).getEditor()
-                            .putString("uid", user.getUid())
-                            .putString("name", user.getName())
-                            .putString("email", user.getEmail())
-                            .putString("photo", user.getPhotoUrl())
-                            .putString("phone", user.getPhoneNumber()).apply();
+                    if(user!=null){
+                        getInstance(this).getEditor()
+                                .putString("uid", user.getUid())
+                                .putString("name", user.getName())
+                                .putString("email", user.getEmail())
+                                .putString("photo", user.getPhotoUrl())
+                                .putString("phone", user.getPhoneNumber()).apply();
+                    }
 
                     dialog.dismiss();
                     startActivity(new Intent(this, MainActivity.class)
