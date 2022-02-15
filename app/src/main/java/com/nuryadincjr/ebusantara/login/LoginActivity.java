@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // R.string.default_web_client_id : get client id apter build
         GoogleSignInOptions gso = new Builder(DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.web_client_id))
                 .requestProfile()
                 .requestScopes(new Scope(Scopes.PLUS_ME), new Scope(Scopes.PROFILE))
                 .requestEmail()
