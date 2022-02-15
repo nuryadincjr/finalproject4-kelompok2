@@ -6,9 +6,9 @@ Introduction
 
 E-Busantara
 
-- Build variant 'release':\app\release
-- Build variant 'debug':\app\debug
-- Current options if testing without emulator:\app\build\intermediates\apk\debug\app-debug.apk
+- Build variant [release](https://github.com/nuryadincjr/finalproject4-kelompok2/tree/main/app/release)
+- Build variant [debug](https://github.com/nuryadincjr/finalproject4-kelompok2/tree/main/app/release)
+- Current options if testing without emulator: [debug apk](https://github.com/nuryadincjr/finalproject4-kelompok2/tree/main/app/build/intermediates/apk/debug)
 
 Pre-requisites
 --------------
