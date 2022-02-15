@@ -1,1 +1,9 @@
-/build
+!/build/
+/build/*
+!/build/intermediates/
+/build/intermediates/*
+!/build/intermediates/apk/
+/build/intermediates/apk/*
+!/build/intermediates/apk/debug/
+/build/intermediates/apk/debug/*
+!/build/intermediates/apk/debug/app-debug.apk

@@ -8,6 +8,7 @@ E-Busantara
 
 - Build variant 'release':\app\release
 - Build variant 'debug':\app\debug
+- Current options if testing without emulator:\app\build\intermediates\apk\debug\app-debug.apk
 
 Pre-requisites
 --------------
