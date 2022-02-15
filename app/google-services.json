@@ -14,15 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "674799976836-elrothd90st0svg1to0n73nnk6nbk9rq.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.nuryadincjr.ebusantara",
-            "certificate_hash": "7dd706cbb33e3b1aa289d30e2addbe21e2211e3c"
-          }
-        },
-        {
-          "client_id": "674799976836-o5937i6j2fhr04f37c3s6p40tnofhigc.apps.googleusercontent.com",
+          "client_id": "674799976836-r51mpsbgpiru9a6u7hn354gfvseqv9iu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.nuryadincjr.ebusantara",
@@ -59,7 +51,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "674799976836-al6oreeujkgq17m4b1ak5gm1o9ljaabg.apps.googleusercontent.com",
+          "client_id": "674799976836-tgngng1fnt191qkupj6m9c0kl8kfnfb3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.nuyradincjr.ebusantara",
