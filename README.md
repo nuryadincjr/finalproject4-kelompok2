@@ -8,7 +8,7 @@ E-Busantara
 
 - Build variant [release](https://github.com/nuryadincjr/finalproject4-kelompok2/tree/main/app/release)
 - Build variant [debug](https://github.com/nuryadincjr/finalproject4-kelompok2/tree/main/app/release)
-- Current options if testing without emulator: [debug apk](https://github.com/nuryadincjr/finalproject4-kelompok2/tree/main/app/build/intermediates/apk/debug)
+- Current options if testing without emulator: [debug apk](https://drive.google.com/file/d/1yHUsYjxrJzZ5VmLBbMDjMJ1iYbN-xD5H/view?usp=sharing)
 
 Pre-requisites
 --------------
