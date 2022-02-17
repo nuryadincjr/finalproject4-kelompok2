@@ -1,5 +1,6 @@
 package com.nuryadincjr.ebusantara.login;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder;
 import static com.google.android.gms.auth.api.signin.GoogleSignInOptions.DEFAULT_SIGN_IN;
 import static com.nuryadincjr.ebusantara.databinding.ActivityLoginBinding.inflate;
@@ -10,6 +11,7 @@ import static java.lang.String.valueOf;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,9 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
@@ -53,9 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // R.string.default_web_client_id : get client id apter build
         GoogleSignInOptions gso = new Builder(DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.web_client_id))
-                .requestProfile()
-                .requestScopes(new Scope(Scopes.PLUS_ME), new Scope(Scopes.PROFILE))
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -82,13 +80,13 @@ public class LoginActivity extends AppCompatActivity {
         try {
             dialog.show();
             GoogleSignInAccount account = task.getResult(ApiException.class);
-            if(account != null){
-                account.getGrantedScopes().size();
-                firebaseAuthWithGoogle(account.getIdToken());
-            }
+            Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+            firebaseAuthWithGoogle(account.getIdToken());
+
         } catch (ApiException e) {
             dialog.dismiss();
-            signInClient.signOut();
+            signInClient.signOut();;
+            Log.d(TAG, "Google sign in failed", e);
             Snackbar.make(binding.getRoot(), "signInResult:failed code=" + e.getStatusCode(),
                     Snackbar.LENGTH_SHORT).show();
         }
@@ -100,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
-                        if(user!=null) updateUI(user);
+                        updateUI(user);
                         signInClient.signOut();
                     } else {
                         dialog.dismiss();
